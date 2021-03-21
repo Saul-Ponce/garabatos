@@ -1,0 +1,38 @@
+.header {
+    border-top: 7px solid var(--dark);
+    border-right: 7px solid var(--dark);
+    border-bottom: 7px solid var(--dark);
+    grid-area: header;
+    max-height: 125px;
+    background-color: var(--secondary);
+    display: flex;
+
+    &__shapes {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 40px);
+        gap: 10px;
+        padding: 1rem 0;
+        justify-content: center;
+        justify-items: start;
+        background-color: rgba(0, 0, 0, 0.5);
+        flex-wrap: wrap;
+        overflow-y: auto;
+        flex-basis: 400px;
+    }
+
+    &__shape-button {
+        width: 40px;
+        max-width: 40px;
+        height: 40px;
+        max-height: 40px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--white);
+        border: 0;
+        &--rotate{
+            transform: rotate(180deg);
+        }
+    }
+}
