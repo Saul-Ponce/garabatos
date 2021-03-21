@@ -1,10 +1,6 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 
 export const Canvas = () => {
-
-
-    const { shape } = useSelector(state => state.shape)
 
     const handleMouseActions = (e) => {
 

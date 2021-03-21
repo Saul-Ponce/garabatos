@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { Canvas } from './Canvas';
 
 export const Blackboard = () => {
