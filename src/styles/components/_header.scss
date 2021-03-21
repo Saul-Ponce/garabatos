@@ -1,23 +1,35 @@
 .header {
-    border-top: 7px solid var(--dark);
-    border-right: 7px solid var(--dark);
-    border-bottom: 7px solid var(--dark);
+    border-top: $border solid $dark;
+    border-right: $border solid $dark;
+    border-bottom: $border solid $dark;
     grid-area: header;
     max-height: 125px;
-    background-color: var(--secondary);
+    background-color: $secondary;
     display: flex;
+    padding: .5rem;
+    align-items: center;
 
     &__shapes {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, 40px);
-        gap: 10px;
-        padding: 1rem 0;
-        justify-content: center;
-        justify-items: start;
-        background-color: rgba(0, 0, 0, 0.5);
-        flex-wrap: wrap;
         overflow-y: auto;
-        flex-basis: 400px;
+        border: 4px solid $dark;
+        width: 400px;
+        padding: .5rem;
+        background-color: $primary;
+
+        &-title {
+            margin: 0 0 .3rem 0;
+            font-weight: bold;
+        }
+
+        &-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 40px);
+            gap: 10px;
+            width: 100%;
+            overflow-y: auto;
+            max-height: 40px;
+        }
+
     }
 
     &__shape-button {
@@ -29,10 +41,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: var(--white);
+        background: $white;
         border: 0;
-        &--rotate{
+        cursor: pointer;
+
+
+        &:hover {
+            background-color: darken($white, $amount: 10%);
+        }
+
+        &--rotate {
             transform: rotate(180deg);
+        }
+
+        &--active {
+            background-color: $warning;
         }
     }
 }

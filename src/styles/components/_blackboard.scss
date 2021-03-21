@@ -1,7 +1,6 @@
 .blackboard {
     grid-area: blackboard;
     height: calc(100vh - 125px);
-    background-color: var(--white);
-    background: tomato;
+    background-color: $white;
     box-sizing: border-box;
 }

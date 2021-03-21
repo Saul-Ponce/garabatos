@@ -1,6 +1,6 @@
-.sidebar{
-    border: 7px solid  var(--dark);
+.sidebar {
+    border: $border solid $dark;
     grid-area: sidebar;
-    background-color: var(--primary);
+    background-color: $primary;
     overflow-y: auto;
 }

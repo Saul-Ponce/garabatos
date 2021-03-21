@@ -1,19 +1,14 @@
-*, *::after, *::before{
+*,
+*::after,
+*::before {
     box-sizing: border-box;
 }
 
-body{
+body {
     margin: 0;
 }
 
-html{
+html {
     font-family: system-ui;
-
-    --white: #FDFFFC;
-    --primary: #A0C4FF;
-    --secondary: #2ec4b6;
-    --dark: #011627;
-    --danger: #E71D36;
-    --warning: #FF9F1C;
 
 }
