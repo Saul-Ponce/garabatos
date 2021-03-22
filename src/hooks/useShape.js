@@ -89,7 +89,7 @@ export const useShape = (canvas) => {
 
 
     const eliminarCuadroAnterior = (x1, y1, x2, y2) => {
-        plano.fillStyle = "#fff";
+        plano.fillStyle = "#ff0";
         dibujarLinea(x1, y1, x2, y1)
 
         // x1,y1 -> x1,y2
