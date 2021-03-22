@@ -1,57 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { shapeEnd, shapeStart, clearShapeDrawing } from '../actions/shape'
+import { addCoordinate } from '../actions/shape'
 import { useShape } from '../hooks/useShape'
 
 export const Canvas = () => {
 
     const canvas = document.querySelector("canvas")
 
-    const { shapePositionStart } = useSelector(state => state.shape)
+    const { maxPoints, countPoints } = useSelector(state => state.shape)
+    const { pintarPunto } = useShape(canvas)
 
-    const { drawShape, resetDeleteShapes } = useShape(canvas)
 
     const dispatch = useDispatch()
 
-    const handleMouseDownCapture = (e) => {
-
+    const handleMouseCapture = (e) => {
         const { layerX: x, layerY: y } = e.nativeEvent
-        dispatch(shapeStart(x, y))
-    }
 
-    const handleMouseUpCapture = (e) => {
-        const { layerX: x, layerY: y } = e.nativeEvent
-        if (shapePositionStart.x === null && shapePositionStart.y === null) {
-            return;
+        if (maxPoints > countPoints) {
+            dispatch(addCoordinate(x, y))
         }
 
-        dispatch(shapeEnd(x, y))
-        drawShape()
-        dispatch(clearShapeDrawing())
-        resetDeleteShapes()
+
     }
-
-    const handleMouseMoveCapture = (e) => {
-        const { layerX: x, layerY: y } = e.nativeEvent
-
-        if (shapePositionStart.x === null && shapePositionStart.y === null) {
-            return;
-        }
-        dispatch(shapeEnd(x, y))
-        drawShape()
-    }
-
-
-
-
-
-    //TODO: hacer que dibuje un cuadrado
 
     return (
         <canvas
-            onMouseDownCapture={handleMouseDownCapture}    //* Captura la posicion inicial
-            onMouseUpCapture={handleMouseUpCapture}      //* Captura la posicion final
-            onMouseMoveCapture={handleMouseMoveCapture}    //* Captura el movimiento
+            onClick={handleMouseCapture}
             className="canvas"
             height={window.innerHeight - 132}
             width={window.innerWidth - 207} >

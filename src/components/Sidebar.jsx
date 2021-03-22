@@ -3,7 +3,8 @@ import React from 'react'
 export const Sidebar = () => {
     return (
         <aside className="sidebar">
-            <h1>Aside</h1>
+            <h1>Figuras dibujadas</h1>
+            <p>En construcción</p>
         </aside>
     )
 }

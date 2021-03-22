@@ -1,25 +1,18 @@
 import { types } from "../types/types"
 
-export const changeShape = (shape) => {
+export const changeShape = (shape, maxPoints) => {
     return {
         type: types.changeType,
-        payload: shape
-    }
-}
-
-export const shapeStart = (x, y) => {
-    return {
-        type: types.shapeStart,
         payload: {
-            x,
-            y
+            shape,
+            maxPoints
         }
     }
 }
 
-export const shapeEnd = (x, y) => {
+export const addCoordinate = (x, y) => {
     return {
-        type: types.shapeEnd,
+        type: types.addCoordinate,
         payload: {
             x,
             y
@@ -32,3 +25,4 @@ export const clearShapeDrawing = () => {
         type: types.clearShawDrawing
     }
 }
+

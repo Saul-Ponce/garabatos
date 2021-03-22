@@ -4,7 +4,8 @@ import { changeShape } from '../actions/shape';
 
 export const ShapeButton = ({
     icon,
-    rotate
+    rotate = false,
+    maxPoints
 }) => {
 
 
@@ -24,7 +25,7 @@ export const ShapeButton = ({
     const dispatch = useDispatch()
 
     const handleOnClick = () => {
-        dispatch(changeShape(icon))
+        dispatch(changeShape(icon, maxPoints))
     }
 
     return (

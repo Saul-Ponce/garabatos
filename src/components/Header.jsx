@@ -9,10 +9,10 @@ export const Header = () => {
                     Figuras
                 </p>
                 <div className="header__shapes-container">
-                    <ShapeButton icon="line" />
-                    <ShapeButton icon="square" />
-                    <ShapeButton icon="triangle" rotate={true} />
-                    <ShapeButton icon="circle" />
+                    <ShapeButton icon="line" maxPoints={2} />
+                    <ShapeButton icon="square" maxPoints={2} />
+                    <ShapeButton icon="triangle" maxPoints={3} rotate={true} />
+                    <ShapeButton icon="circle" maxPoints={4} />
                 </div>
             </div>
         </header>
