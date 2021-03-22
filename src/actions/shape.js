@@ -22,7 +22,7 @@ export const addCoordinate = (x, y) => {
 
 export const clearShapeDrawing = () => {
     return {
-        type: types.clearShawDrawing
+        type: types.clearShapeDrawing
     }
 }
 

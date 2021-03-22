@@ -3,21 +3,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addCoordinate } from '../actions/shape'
 import { useShape } from '../hooks/useShape'
 
-export const Canvas = () => {
-
-    const canvas = document.querySelector("canvas")
+export const Canvas = React.memo(() => {
 
     const { maxPoints, countPoints } = useSelector(state => state.shape)
-    const { pintarPunto } = useShape(canvas)
+    const [point, loadCanvas] = useShape()
+
+    useEffect(() => {
+        loadCanvas(document.querySelector("canvas"))
+    });
 
 
     const dispatch = useDispatch()
 
     const handleMouseCapture = (e) => {
-        const { layerX: x, layerY: y } = e.nativeEvent
+        let { layerX: x, layerY: y } = e.nativeEvent
+
+        //* Se invierte el valor de Y para respetar el 0,0 abajo
+        y = Math.abs((window.innerHeight - 132) - y);
 
         if (maxPoints > countPoints) {
             dispatch(addCoordinate(x, y))
+            point(x, y)
         }
 
 
@@ -32,4 +38,4 @@ export const Canvas = () => {
 
         </canvas>
     )
-}
+})

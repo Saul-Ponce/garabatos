@@ -3,5 +3,5 @@ export const types = {
     addShape: "[shape] Add Shape",
     shapeDrawing: "[shape] Shape Drawing",
     addCoordinate: "[coordinate] Add Coordinate",
-    clearShawDrawing: "[shape] Clear Shape Drawing",
+    clearShapeDrawing: "[shape] Clear Shape Drawing",
 }

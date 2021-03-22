@@ -2,24 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeShape } from '../actions/shape';
 
-export const ShapeButton = ({
+export const ShapeButton = React.memo(({
     icon,
     rotate = false,
     maxPoints
 }) => {
 
 
-    const { shape } = useSelector(state => state.shape)
+    const { type } = useSelector(state => state.shape)
     const [active, setActive] = useState(false)
 
 
     useEffect(() => {
-        if (shape === icon) {
+        if (type === icon) {
             setActive(true)
         } else {
             setActive(false)
         }
-    }, [shape, icon])
+    }, [type, icon])
 
 
     const dispatch = useDispatch()
@@ -40,3 +40,4 @@ export const ShapeButton = ({
         </button >
     )
 }
+)
