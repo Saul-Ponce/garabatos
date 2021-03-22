@@ -19,12 +19,6 @@ export const useShape = () => {
 
     canvas && (plano = canvas.getContext("2d"))
 
-
-    if (plano) {
-        plano.translate(0, canvas.height);
-        plano.scale(1, -1);
-    }
-
     useEffect(() => {
         if (plano) {
             plano.translate(0, canvas.height);

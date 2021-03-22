@@ -22,6 +22,7 @@ export const Canvas = React.memo(() => {
         y = Math.abs((window.innerHeight - 132) - y);
 
         if (maxPoints > countPoints) {
+            console.log(x, y);
             dispatch(addCoordinate(x, y))
             point(x, y)
         }
