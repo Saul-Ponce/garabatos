@@ -1,12 +1,13 @@
 .shape-list {
-    background-color: red;
+    background-color: $danger;
 
     &__button {
         height: 1.5rem;
         display: flex;
         align-items: center;
-        justify-content: space;
         width: 100%;
+        background-color: $secondary;
+        border: 2px solid $dark;
     }
 
     &__img {
@@ -16,6 +17,28 @@
 
         &--closed {
             transform: rotate(0deg);
+        }
+    }
+
+    &__options {
+        max-height: 0;
+        background-color: $danger;
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: transform .3s ease, max-height .3s ease;
+        overflow-y: auto;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+
+
+        &--open {
+            max-height: 7rem;
+            padding: .5rem 0;
+            position: relative;
+            transform: scaleY(1);
         }
     }
 }

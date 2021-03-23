@@ -1,0 +1,17 @@
+.action-button {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 2rem);
+    padding: .3rem;
+    background-color: $white;
+    border: 2px solid $dark;
+    border-radius: 5px;
+
+    &__img {
+        margin-right: .5rem;
+    }
+
+    &__text {
+        margin: 0;
+    }
+}

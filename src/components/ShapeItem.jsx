@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setActiveShape } from '../actions/shape'
+import { ActionButton } from './ActionButton'
 
 export const ShapeItem = React.memo(({
     id
@@ -16,7 +17,7 @@ export const ShapeItem = React.memo(({
     }
 
     return (
-        <div className="shape-list__item">
+        <article className="shape-list__item">
             <button
                 onClick={handleClickButton}
                 className="shape-list__button">
@@ -31,6 +32,13 @@ export const ShapeItem = React.memo(({
                         "Seleccionar Figura"
                 }</p>
             </button>
-        </div>
+            <section className={`shape-list__options 
+                    ${activeShape.id && activeShape.id === id ? "shape-list__options--open" : ""}`}>
+
+
+                <ActionButton id={id} text="Rellenar" type="fill" />
+
+            </section>
+        </article>
     )
 })
