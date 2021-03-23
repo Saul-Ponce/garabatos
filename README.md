@@ -14,7 +14,7 @@ Ejecutamos los siguiente comandos en la terminal:
 yarn install
 ```
 
-2. correr el programa
+2. correr la aplicacion web
 
 ```powershell
 yarn start
