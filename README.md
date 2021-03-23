@@ -23,3 +23,7 @@ yarn install
 ```powershell
 yarn start
 ```
+
+## Tutorial
+
+puede acceder al siguien tutorial dando click [aqui](https://youtu.be/dKxKKXEGQzU)
