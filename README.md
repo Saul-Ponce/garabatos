@@ -1,10 +1,14 @@
 # Proyecto Final de algoritmos graficos
 
-## Indicaciones
+## Indicaciones para el proyecto en linea
 
-Antes de probar el proyecto se debe tener instalado [nodejs](https://nodejs.org/es/download/) y [yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable)
+puede acceder al proyecto en linea dando click [aqui](https://garabatos.vercel.app/)
 
-## Comandos
+## Indicaciones para el proyecto de manera local
+
+Antes de probar el proyecto de manera local se debe tener instalado [nodejs](https://nodejs.org/es/download/) y [yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable)
+
+### Comandos
 
 Ejecutamos los siguiente comandos en la terminal:
 
