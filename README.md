@@ -2,7 +2,7 @@
 
 ## Indicaciones para el proyecto en linea
 
-puede acceder al proyecto en linea dando click [aqui](https://garabatos.vercel.app/)
+Se puede acceder al proyecto en linea dando click [aqui](https://garabatos.vercel.app/)
 
 ## Indicaciones para el proyecto de manera local
 
