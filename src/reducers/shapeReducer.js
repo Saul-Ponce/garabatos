@@ -6,7 +6,8 @@ const intitialState = {
     maxPoints: 2,
     coordinates: [],
     countPoints: 0,
-    shapes: []
+    shapes: [],
+    activeShape: {}
 }
 
 export const shapeReducer = (state = intitialState, action) => {
@@ -42,6 +43,12 @@ export const shapeReducer = (state = intitialState, action) => {
                         ]
                     }],
                 coordinates: []
+            }
+        case types.setActiveShape:
+            console.log(action.payload)
+            return {
+                ...state,
+                activeShape: state.shapes.find((shape) => shape.id === action.payload)
             }
         default:
             return state;

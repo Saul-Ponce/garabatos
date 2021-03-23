@@ -4,4 +4,5 @@ export const types = {
     shapeDrawing: "[shape] Shape Drawing",
     addCoordinate: "[coordinate] Add Coordinate",
     clearShapeDrawing: "[shape] Clear Shape Drawing",
+    setActiveShape: "[shape] Set Active Shape"
 }

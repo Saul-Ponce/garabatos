@@ -26,3 +26,9 @@ export const clearShapeDrawing = () => {
     }
 }
 
+export const setActiveShape = (id) => {
+    return {
+        type: types.setActiveShape,
+        payload: id
+    }
+}
