@@ -1,6 +1,6 @@
-import { useDispatch } from 'react-redux';
-import { clearAction, clearShapeDrawing, deleteShape } from '../actions/shape';
-import { EVITAR_DIFUMINADO } from '../const/const';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearAction, clearShapeDrawing, deleteShape, redraw } from '../actions/shape';
+import { DELETE_COLOR, EVITAR_DIFUMINADO } from '../const/const';
 import { usePoint } from './usePoint';
 
 export const useLine = () => {
@@ -8,13 +8,17 @@ export const useLine = () => {
     let dx = 0;
     let dy = 0;
 
+
+    const { color } = useSelector(state => state.shape)
+
     const dispatch = useDispatch()
 
     const [drawPoint] = usePoint()
 
-    const drawLine = (plano, x1, y1, x2, y2, oneTime = false, erase = false) => {
+    const drawLine = (plano, x1, y1, x2, y2, oneTime = false, drawingColor = color) => {
 
         if (plano) {
+            plano.fillStyle = drawingColor
             //Se multiplica por 10 solamente para la escala pintar a escala
             // x1 *= 10;
             // x2 *= 10;
@@ -58,26 +62,28 @@ export const useLine = () => {
         dx = 0
         dy = 0
 
-        if (erase) {
-            dispatch(clearAction())
-            return
-        }
 
         oneTime && dispatch(clearShapeDrawing())
     }
 
     const deleteLine = (plano, x1, y1, x2, y2, id) => {
-        plano.fillStyle = "#fff"
 
         for (let i = 0; i < EVITAR_DIFUMINADO; i++) {
-            drawLine(plano, x1, y1, x2, y2, false, true)
+            drawLine(plano, x1, y1, x2, y2, false, DELETE_COLOR)
         }
 
-        plano.fillStyle = "#000"
+        plano.fillStyle = color
         plano.moveTo(0, 0)
-        console.log(id);
         dispatch(deleteShape(id))
+        dispatch(redraw())
+        // dispatch(clearAction())
     }
 
-    return [drawLine, deleteLine]
+    const redrawLine = (plano, x1, y1, x2, y2, drawingColor = color) => {
+        drawLine(plano, x1, y1, x2, y2, false, drawingColor)
+        plano.moveTo(0, 0)
+        dispatch(clearAction())
+    }
+
+    return [drawLine, deleteLine, redrawLine]
 }

@@ -1,6 +1,11 @@
 export const usePoint = () => {
 
-    const drawPoint = (plano, x, y, multiplicar = false) => {
+    const drawPoint = (plano, x, y, multiplicar = false, drawingColor = null) => {
+
+
+        if (drawingColor) {
+            plano.fillStyle = drawingColor
+        }
 
         let multiplicador = 1;
 

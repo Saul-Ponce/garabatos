@@ -30,6 +30,11 @@
             max-height: 40px;
         }
 
+        &--color {
+            margin-left: 1rem;
+            width: 70px;
+        }
+
     }
 
     &__shape-button {
@@ -59,4 +64,9 @@
             background-color: $warning;
         }
     }
+
+    &__color {
+        height: 40px;
+    }
+
 }

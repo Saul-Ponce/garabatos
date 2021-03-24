@@ -14,7 +14,6 @@ export const ActionButton = React.memo(({
 
     const handleAction = async () => {
         const action = await (getAction(activeShape.id && activeShape.id === id ? activeShape.type.id : ""));
-        console.log(action);
         dispatch(action())
     }
 

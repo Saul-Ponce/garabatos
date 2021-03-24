@@ -65,3 +65,17 @@ export const deleteShape = (id) => {
         payload: id
     }
 }
+
+export const redraw = () => {
+    return {
+        type: types.redraw,
+        payload: types.redraw
+    }
+}
+
+export const changeColor = (color) => {
+    return {
+        type: types.changeColor,
+        payload: color
+    }
+}
