@@ -1,8 +1,9 @@
 import { nanoid } from "nanoid";
+import { shapesList } from "../helpers/shapesList";
 import { types } from "../types/types";
 
 const intitialState = {
-    type: "line",
+    type: shapesList.line,
     maxPoints: 2,
     coordinates: [],
     countPoints: 0,
