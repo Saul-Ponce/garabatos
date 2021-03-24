@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeShape } from '../actions/shape';
 
 export const ShapeButton = React.memo(({
-    icon,
+    shape,
     rotate = false,
     maxPoints
 }) => {
@@ -14,18 +14,18 @@ export const ShapeButton = React.memo(({
 
 
     useEffect(() => {
-        if (type === icon) {
+        if (type === shape) {
             setActive(true)
         } else {
             setActive(false)
         }
-    }, [type, icon])
+    }, [type, shape])
 
 
     const dispatch = useDispatch()
 
     const handleOnClick = () => {
-        dispatch(changeShape(icon, maxPoints))
+        dispatch(changeShape(shape, maxPoints))
     }
 
     return (
@@ -36,7 +36,7 @@ export const ShapeButton = React.memo(({
                         ${rotate && "header__shape-button--rotate"}
                         ${active && "header__shape-button--active"}`} >
             <img
-                src={require(`../assets/img/${icon}.png`).default} alt={icon} />
+                src={require(`../assets/img/${shape.id}.png`).default} alt={shape.text} />
         </button >
     )
 }

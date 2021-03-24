@@ -3,4 +3,18 @@
     grid-area: sidebar;
     background-color: $primary;
     overflow-y: auto;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__title{
+        margin: 0;
+        padding: .4rem 0;
+        font-size: 1.2rem;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        background-color: $primary;
+        z-index: 2;
+    }
 }

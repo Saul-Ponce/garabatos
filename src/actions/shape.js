@@ -26,9 +26,32 @@ export const clearShapeDrawing = () => {
     }
 }
 
+export const clearAction = () => {
+    return {
+        type: types.clearAction
+    }
+}
+
 export const setActiveShape = (id) => {
     return {
         type: types.setActiveShape,
+        payload: id
+    }
+}
+
+export const eraseSquare = (id)=>{
+    return{
+        type: types.eraseShape,
+        payload: {
+            id,
+            erase: types.eraseSquare
+        }
+    }
+}
+
+export const deleteShape = (id)=>{
+    return{
+        type: types.deleteShape,
         payload: id
     }
 }

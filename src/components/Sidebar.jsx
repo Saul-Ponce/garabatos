@@ -4,8 +4,7 @@ import { ShapeList } from './ShapeList'
 export const Sidebar = () => {
     return (
         <aside className="sidebar">
-            <h1>Figuras dibujadas</h1>
-            <p>En construcción</p>
+            <h1 className="sidebar__title">Figuras dibujadas</h1>
             <ShapeList />
         </aside>
     )

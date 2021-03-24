@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { shapesList } from "../helpers/shapesList";
+import { types } from "../types/types";
 import { useLine } from "./useLine";
 import { usePoint } from "./usePoint";
 import { useSquare } from "./useSquare";
@@ -8,12 +10,12 @@ export const useShape = () => {
 
     const [canvas, setCanvas] = useState(undefined);
 
-    const { type, coordinates, countPoints, maxPoints } = useSelector(state => state.shape)
+    const { type, coordinates, activeShape, countPoints, maxPoints, action } = useSelector(state => state.shape)
 
     let plano = undefined;
 
     const [drawLine] = useLine()
-    const [drawSquare] = useSquare()
+    const [drawSquare, deleteSquare] = useSquare()
     const [drawPoint] = usePoint()
 
 
@@ -27,11 +29,29 @@ export const useShape = () => {
     }, [canvas, plano])
 
     useEffect(() => {
+        switch (action) {
+            case types.eraseSquare:
+                deleteSquare(
+                        plano,
+                        activeShape.coordinates[0].x,
+                        activeShape.coordinates[0].y,
+                        activeShape.coordinates[1].x,
+                        activeShape.coordinates[1].y,
+                        activeShape.id
+                    )
+                break;
+        
+            default:
+                break;
+        }
+    }, [action, activeShape, plano, drawSquare])
 
-        if (countPoints === (maxPoints)) {
-            switch (type) {
+    useEffect(() => {
 
-                case "line":
+        if (countPoints === (maxPoints)) {            
+            switch (type.id) {
+
+                case shapesList.line.id:
                     drawLine(
                         plano,
                         coordinates[0].x,
@@ -42,7 +62,7 @@ export const useShape = () => {
                     )
                     break;
 
-                case "square":
+                case shapesList.square.id:
                     drawSquare(
                         plano,
                         coordinates[0].x,
@@ -58,7 +78,7 @@ export const useShape = () => {
         }
 
     }, [
-        coordinates,
+        activeShape.coordinates,
         countPoints,
         maxPoints,
         drawLine,

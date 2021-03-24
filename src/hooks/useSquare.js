@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { clearShapeDrawing } from '../actions/shape';
+import { clearShapeDrawing, clearAction, deleteShape } from '../actions/shape';
 import { useLine } from './useLine';
 
 export const useSquare = () => {
@@ -46,7 +46,7 @@ export const useSquare = () => {
 
     } */
 
-    const drawSquare = (plano, x1, y1, x2, y2) => {
+    const drawSquare = (plano, x1, y1, x2, y2, erase) => {
 
         if (!plano) {
             return;
@@ -72,10 +72,27 @@ export const useSquare = () => {
         drawLine(plano, x2, y2, x2, y1)
 
 
-        dispatch(clearShapeDrawing())
+
+        if(erase){
+            dispatch(clearAction())
+            return
+        }
+
+       dispatch(clearShapeDrawing())
+    }
+
+    const deleteSquare = (plano, x1, y1, x2, y2, id)=>{
+        plano.fillStyle = "#fff"
+
+       drawSquare(plano, x1, y1, x2, y2, true)
+
+        plano.fillStyle = "#000"
+        plano.moveTo(0, 0)
+        dispatch(deleteShape(id))
     }
 
     return [
-        drawSquare
+        drawSquare,
+        deleteSquare
     ]
 }

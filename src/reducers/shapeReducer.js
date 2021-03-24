@@ -7,7 +7,8 @@ const intitialState = {
     coordinates: [],
     countPoints: 0,
     shapes: [],
-    activeShape: {}
+    activeShape: {},
+    action: null
 }
 
 export const shapeReducer = (state = intitialState, action) => {
@@ -50,6 +51,21 @@ export const shapeReducer = (state = intitialState, action) => {
                 ...state,
                 activeShape: state.shapes.find((shape) => shape.id === action.payload)
             }
+        case types.eraseShape:
+            return {
+                ...state,
+                action: action.payload.erase
+            }
+        case types.clearAction:
+            return {
+                ...state,
+                action: null
+            }
+            case types.deleteShape:
+                return {
+                    ...state,
+                    shapes: state.shapes.filter(shape => shape.id !== action.payload.id)
+                }
         default:
             return state;
     }
