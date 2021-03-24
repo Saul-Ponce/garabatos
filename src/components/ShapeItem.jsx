@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setActiveShape } from '../actions/shape'
-import { getAction } from '../helpers/getAction'
 import { ActionButton } from './ActionButton'
 
 export const ShapeItem = React.memo(({
@@ -36,8 +35,8 @@ export const ShapeItem = React.memo(({
                     ${activeShape.id && activeShape.id === id ? "shape-list__options--open" : ""}`}>
 
                 <p className="shape-list__options-title">{activeShape.id && activeShape.id === id ? activeShape.type.text : ""}</p>
-                <ActionButton id={id} text="Rellenar" type="fill"  />
-                <ActionButton id={id} text="Borrar" type="erase"/>
+                <ActionButton id={id} text="Rellenar" type="fill" />
+                <ActionButton id={id} text="Borrar" type="erase" />
 
             </section>
         </article>

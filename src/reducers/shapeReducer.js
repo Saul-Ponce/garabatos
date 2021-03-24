@@ -61,11 +61,12 @@ export const shapeReducer = (state = intitialState, action) => {
                 ...state,
                 action: null
             }
-            case types.deleteShape:
-                return {
-                    ...state,
-                    shapes: state.shapes.filter(shape => shape.id !== action.payload.id)
-                }
+        case types.deleteShape:
+            return {
+                ...state,
+                shapes: state.shapes.filter(shape => shape.id !== action.payload),
+                activeShape: {}
+            }
         default:
             return state;
     }

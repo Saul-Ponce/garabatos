@@ -39,8 +39,8 @@ export const setActiveShape = (id) => {
     }
 }
 
-export const eraseSquare = (id)=>{
-    return{
+export const eraseSquare = (id) => {
+    return {
         type: types.eraseShape,
         payload: {
             id,
@@ -49,8 +49,18 @@ export const eraseSquare = (id)=>{
     }
 }
 
-export const deleteShape = (id)=>{
-    return{
+export const eraseLine = (id) => {
+    return {
+        type: types.eraseShape,
+        payload: {
+            id,
+            erase: types.eraseLine
+        }
+    }
+}
+
+export const deleteShape = (id) => {
+    return {
         type: types.deleteShape,
         payload: id
     }

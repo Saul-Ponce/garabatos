@@ -8,5 +8,6 @@ export const types = {
     eraseShape: "[shape] Erase Shape",
     clearAction: "[shape] Clear Action",
     eraseSquare: "[erase] Square",
+    eraseLine: "[erase] Line",
     deleteShape: "[shape] Delete Shape"
 }

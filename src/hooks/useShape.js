@@ -14,7 +14,7 @@ export const useShape = () => {
 
     let plano = undefined;
 
-    const [drawLine] = useLine()
+    const [drawLine, deleteLine] = useLine()
     const [drawSquare, deleteSquare] = useSquare()
     const [drawPoint] = usePoint()
 
@@ -32,23 +32,32 @@ export const useShape = () => {
         switch (action) {
             case types.eraseSquare:
                 deleteSquare(
-                        plano,
-                        activeShape.coordinates[0].x,
-                        activeShape.coordinates[0].y,
-                        activeShape.coordinates[1].x,
-                        activeShape.coordinates[1].y,
-                        activeShape.id
-                    )
+                    plano,
+                    activeShape.coordinates[0].x,
+                    activeShape.coordinates[0].y,
+                    activeShape.coordinates[1].x,
+                    activeShape.coordinates[1].y,
+                    activeShape.id
+                )
                 break;
-        
+            case types.eraseLine:
+                deleteLine(
+                    plano,
+                    activeShape.coordinates[0].x,
+                    activeShape.coordinates[0].y,
+                    activeShape.coordinates[1].x,
+                    activeShape.coordinates[1].y,
+                    activeShape.id
+                )
+                break;
             default:
                 break;
         }
-    }, [action, activeShape, plano, drawSquare])
+    }, [action, activeShape, plano, drawSquare, deleteLine, deleteSquare])
 
     useEffect(() => {
 
-        if (countPoints === (maxPoints)) {            
+        if (countPoints === (maxPoints)) {
             switch (type.id) {
 
                 case shapesList.line.id:
@@ -85,7 +94,8 @@ export const useShape = () => {
         drawPoint,
         drawSquare,
         plano,
-        type])
+        type,
+        coordinates])
 
 
     const loadCanvas = (ref) => {

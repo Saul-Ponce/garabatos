@@ -60,34 +60,35 @@ export const useSquare = () => {
         plano.moveTo(0, 0)
 
         // x1,y1 -> x2,y1
-        drawLine(plano, x1, y1, x2, y1)
+        drawLine(plano, x1, y1, x2, y1, false)
 
         // x1,y1 -> x1,y2
-        drawLine(plano, x1, y1, x1, y2)
+        drawLine(plano, x1, y1, x1, y2, false)
 
         // x1,y2 -> x2,y2
-        drawLine(plano, x1, y2, x2, y2)
+        drawLine(plano, x1, y2, x2, y2, false)
 
         // x2,y2 -> x2,y1
-        drawLine(plano, x2, y2, x2, y1)
+        drawLine(plano, x2, y2, x2, y1, false)
 
 
 
-        if(erase){
+        if (erase) {
             dispatch(clearAction())
             return
         }
 
-       dispatch(clearShapeDrawing())
+        dispatch(clearShapeDrawing())
     }
 
-    const deleteSquare = (plano, x1, y1, x2, y2, id)=>{
+    const deleteSquare = (plano, x1, y1, x2, y2, id) => {
         plano.fillStyle = "#fff"
 
-       drawSquare(plano, x1, y1, x2, y2, true)
+        drawSquare(plano, x1, y1, x2, y2, true)
 
         plano.fillStyle = "#000"
         plano.moveTo(0, 0)
+        console.log(id);
         dispatch(deleteShape(id))
     }
 

@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { clearShapeDrawing } from '../actions/shape';
+import { clearAction, clearShapeDrawing, deleteShape } from '../actions/shape';
+import { EVITAR_DIFUMINADO } from '../const/const';
 import { usePoint } from './usePoint';
 
 export const useLine = () => {
@@ -11,7 +12,7 @@ export const useLine = () => {
 
     const [drawPoint] = usePoint()
 
-    const drawLine = (plano, x1, y1, x2, y2, oneTime = false) => {
+    const drawLine = (plano, x1, y1, x2, y2, oneTime = false, erase = false) => {
 
         if (plano) {
             //Se multiplica por 10 solamente para la escala pintar a escala
@@ -57,8 +58,26 @@ export const useLine = () => {
         dx = 0
         dy = 0
 
+        if (erase) {
+            dispatch(clearAction())
+            return
+        }
+
         oneTime && dispatch(clearShapeDrawing())
     }
 
-    return [drawLine]
+    const deleteLine = (plano, x1, y1, x2, y2, id) => {
+        plano.fillStyle = "#fff"
+
+        for (let i = 0; i < EVITAR_DIFUMINADO; i++) {
+            drawLine(plano, x1, y1, x2, y2, false, true)
+        }
+
+        plano.fillStyle = "#000"
+        plano.moveTo(0, 0)
+        console.log(id);
+        dispatch(deleteShape(id))
+    }
+
+    return [drawLine, deleteLine]
 }
