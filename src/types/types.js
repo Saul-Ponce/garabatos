@@ -9,5 +9,7 @@ export const types = {
     clearAction: "[shape] Clear Action",
     eraseSquare: "[erase] Square",
     eraseLine: "[erase] Line",
-    deleteShape: "[shape] Delete Shape"
+    deleteShape: "[shape] Delete Shape",
+    redraw: "[shape] Redraw shapes",
+    changeColor: "[color] Change color"
 }

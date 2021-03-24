@@ -4,6 +4,7 @@ import { types } from "../types/types";
 
 const intitialState = {
     type: shapesList.line,
+    color: "#000",
     maxPoints: 2,
     coordinates: [],
     countPoints: 0,
@@ -40,6 +41,7 @@ export const shapeReducer = (state = intitialState, action) => {
                     {
                         id: nanoid(),
                         type: state.type,
+                        color: state.color,
                         coordinates: [
                             ...state.coordinates
                         ]
@@ -47,7 +49,6 @@ export const shapeReducer = (state = intitialState, action) => {
                 coordinates: []
             }
         case types.setActiveShape:
-            console.log(action.payload)
             return {
                 ...state,
                 activeShape: state.shapes.find((shape) => shape.id === action.payload)
@@ -67,6 +68,16 @@ export const shapeReducer = (state = intitialState, action) => {
                 ...state,
                 shapes: state.shapes.filter(shape => shape.id !== action.payload),
                 activeShape: {}
+            }
+        case types.redraw:
+            return {
+                ...state,
+                action: action.payload
+            }
+        case types.changeColor:
+            return {
+                ...state,
+                color: action.payload
             }
         default:
             return state;

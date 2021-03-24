@@ -5,7 +5,7 @@ import { useShape } from '../hooks/useShape'
 
 export const Canvas = React.memo(() => {
 
-    const { maxPoints, countPoints } = useSelector(state => state.shape)
+    const { maxPoints, countPoints, color } = useSelector(state => state.shape)
     const [point, loadCanvas] = useShape()
 
     useEffect(() => {
@@ -22,9 +22,8 @@ export const Canvas = React.memo(() => {
         y = Math.abs((window.innerHeight - 132) - y);
 
         if (maxPoints > countPoints) {
-            console.log(x, y);
             dispatch(addCoordinate(x, y))
-            point(x, y)
+            point(x, y, color)
         }
 
 

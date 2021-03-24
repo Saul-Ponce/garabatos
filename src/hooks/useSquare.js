@@ -1,5 +1,6 @@
-import { useDispatch } from 'react-redux';
-import { clearShapeDrawing, clearAction, deleteShape } from '../actions/shape';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearShapeDrawing, clearAction, deleteShape, redraw } from '../actions/shape';
+import { DELETE_COLOR } from '../const/const';
 import { useLine } from './useLine';
 
 export const useSquare = () => {
@@ -7,9 +8,11 @@ export const useSquare = () => {
 
     const [drawLine] = useLine()
 
+
+    const { color } = useSelector(state => state.shape)
+
     /* const rellenarCuadro = (plano, x1, y1, x2, y2) => {
 
-        console.log("rellenando....");
 
         plano.fillStyle = "#000";
 
@@ -39,14 +42,13 @@ export const useSquare = () => {
 
         for (let i = menorX; i <= (menorX + dx); i++) {
             drawLine(plano, i, mayorY);
-            console.log(i, mayorY);
         }
 
         plano.fillStyle = "#000";
 
     } */
 
-    const drawSquare = (plano, x1, y1, x2, y2, erase) => {
+    const drawSquare = (plano, x1, y1, x2, y2, add = false, drawingColor = color) => {
 
         if (!plano) {
             return;
@@ -60,40 +62,42 @@ export const useSquare = () => {
         plano.moveTo(0, 0)
 
         // x1,y1 -> x2,y1
-        drawLine(plano, x1, y1, x2, y1, false)
+        drawLine(plano, x1, y1, x2, y1, false, drawingColor)
 
         // x1,y1 -> x1,y2
-        drawLine(plano, x1, y1, x1, y2, false)
+        drawLine(plano, x1, y1, x1, y2, false, drawingColor)
 
         // x1,y2 -> x2,y2
-        drawLine(plano, x1, y2, x2, y2, false)
+        drawLine(plano, x1, y2, x2, y2, false, drawingColor)
 
         // x2,y2 -> x2,y1
-        drawLine(plano, x2, y2, x2, y1, false)
+        drawLine(plano, x2, y2, x2, y1, false, drawingColor)
 
 
-
-        if (erase) {
-            dispatch(clearAction())
-            return
-        }
-
-        dispatch(clearShapeDrawing())
+        add && dispatch(clearShapeDrawing())
     }
 
     const deleteSquare = (plano, x1, y1, x2, y2, id) => {
-        plano.fillStyle = "#fff"
 
-        drawSquare(plano, x1, y1, x2, y2, true)
+        drawSquare(plano, x1, y1, x2, y2, false, DELETE_COLOR)
 
         plano.fillStyle = "#000"
         plano.moveTo(0, 0)
-        console.log(id);
+        dispatch(clearAction())
+        dispatch(redraw())
         dispatch(deleteShape(id))
+    }
+
+
+    const redrawSquare = (plano, x1, y1, x2, y2, drawingColor = color) => {
+        drawSquare(plano, x1, y1, x2, y2, false, drawingColor)
+        plano.moveTo(0, 0)
+        dispatch(clearAction())
     }
 
     return [
         drawSquare,
-        deleteSquare
+        deleteSquare,
+        redrawSquare
     ]
 }
