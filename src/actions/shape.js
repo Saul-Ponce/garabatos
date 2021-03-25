@@ -79,3 +79,18 @@ export const changeColor = (color) => {
         payload: color
     }
 }
+
+export const changeBorerColor = (id) => {
+    return {
+        type: types.changeBorderColor,
+        payload: id
+    }
+}
+
+export const changeFillColor = (id) => {
+    return {
+        type: types.changeFillColor,
+        payload: id
+    }
+}
+

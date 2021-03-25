@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeShape } from '../actions/shape';
 
 export const ShapeButton = React.memo(({
+    disabled = false,
     shape,
     rotate = false,
     maxPoints
 }) => {
 
-
+    console.log(disabled);
     const { type } = useSelector(state => state.shape)
     const [active, setActive] = useState(false)
 
@@ -30,6 +31,7 @@ export const ShapeButton = React.memo(({
 
     return (
         <button
+            disabled={disabled}
             onClick={handleOnClick}
             className={`
                         header__shape-button 

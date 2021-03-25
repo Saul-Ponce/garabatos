@@ -35,19 +35,19 @@
         align-items: center;
 
 
-        &-title{
+        &-title {
             font-weight: bold;
-            margin: .3rem 0 ;
+            margin: .3rem 0;
         }
 
         &--open {
-            max-height: 7.5rem;
+            max-height: 10rem;
             padding: 0 0 .5rem 0;
             position: relative;
             transform: scaleY(1);
         }
 
-        &:last-of-type{
+        &:last-of-type {
             background: $white;
             border-bottom: 2px solid $dark;
         }

@@ -10,7 +10,11 @@ const intitialState = {
     countPoints: 0,
     shapes: [],
     activeShape: {},
-    action: null
+    action: null,
+    filling: {
+        state: false,
+        number: 0
+    }
 }
 
 export const shapeReducer = (state = intitialState, action) => {
@@ -41,7 +45,9 @@ export const shapeReducer = (state = intitialState, action) => {
                     {
                         id: nanoid(),
                         type: state.type,
-                        color: state.color,
+                        borderColor: state.color,
+                        fill: false,
+                        fillColor: null,
                         coordinates: [
                             ...state.coordinates
                         ]
@@ -78,6 +84,42 @@ export const shapeReducer = (state = intitialState, action) => {
             return {
                 ...state,
                 color: action.payload
+            }
+        case types.changeBorderColor:
+            return {
+                ...state,
+                activeShape: {
+                    ...state.activeShape,
+                    borderColor: state.color
+                },
+                shapes: state.shapes.map((shape) => {
+                    if (shape.id === action.payload) {
+                        return {
+                            ...shape,
+                            borderColor: state.color
+                        }
+                    }
+                    return shape
+                })
+            }
+        case types.changeFillColor:
+            return {
+                ...state,
+                activeShape: {
+                    ...state.activeShape,
+                    fill: true,
+                    fillColor: state.color
+                },
+                shapes: state.shapes.map((shape) => {
+                    if (shape.id === action.payload) {
+                        return {
+                            ...shape,
+                            fill: true,
+                            fillColor: state.color,
+                        }
+                    }
+                    return shape
+                })
             }
         default:
             return state;

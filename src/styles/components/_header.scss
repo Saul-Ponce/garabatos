@@ -63,6 +63,11 @@
         &--active {
             background-color: $warning;
         }
+
+        &:disabled {
+            cursor: initial;
+            background-color: #aaa;
+        }
     }
 
     &__color {

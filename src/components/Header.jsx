@@ -23,9 +23,9 @@ export const Header = () => {
                 <div className="header__shapes-container">
                     <ShapeButton shape={shapesList.line} maxPoints={2} />
                     <ShapeButton shape={shapesList.square} maxPoints={2} />
-                    <ShapeButton shape={shapesList.right_triangle} maxPoints={2} />
-                    <ShapeButton shape={shapesList.triangle} maxPoints={3} rotate={true} />
-                    <ShapeButton shape={shapesList.circle} maxPoints={4} />
+                    <ShapeButton shape={shapesList.right_triangle} maxPoints={2} disabled={true} />
+                    <ShapeButton shape={shapesList.triangle} maxPoints={3} rotate={true} disabled={true} />
+                    <ShapeButton shape={shapesList.circle} maxPoints={4} disabled={true} />
                 </div>
             </div>
             <div className="header__shapes header__shapes--color">

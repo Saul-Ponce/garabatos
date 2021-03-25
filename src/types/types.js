@@ -11,5 +11,7 @@ export const types = {
     eraseLine: "[erase] Line",
     deleteShape: "[shape] Delete Shape",
     redraw: "[shape] Redraw shapes",
-    changeColor: "[color] Change color"
+    changeColor: "[color] Change color",
+    changeBorderColor: "[color] Change border color",
+    changeFillColor: "[color] Change fill color",
 }

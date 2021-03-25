@@ -18,7 +18,7 @@ export const useShape = () => {
     const [redrawAll, setRedrawAll] = useState(null)
 
     const [drawLine, deleteLine, redrawLine] = useLine()
-    const [drawSquare, deleteSquare, redrawSquare] = useSquare()
+    const [drawSquare, deleteSquare, redrawSquare, fillSquare] = useSquare()
     const [drawPoint] = usePoint()
 
 
@@ -65,9 +65,8 @@ export const useShape = () => {
                 shapes.forEach(async (shape) => {
 
                     //! Switch para redibujar cada figura despues que se haya eliminado una
-
+                    console.log(shape.type.id);
                     switch (shape.type.id) {
-
                         case shapesList.line.id:
                             await redrawLine(
                                 plano,
@@ -75,7 +74,7 @@ export const useShape = () => {
                                 shape.coordinates[0].y,
                                 shape.coordinates[1].x,
                                 shape.coordinates[1].y,
-                                shape.color
+                                shape.borderColor
                             )
                             break;
 
@@ -86,8 +85,18 @@ export const useShape = () => {
                                 shape.coordinates[0].y,
                                 shape.coordinates[1].x,
                                 shape.coordinates[1].y,
-                                shape.color
+                                shape.borderColor
                             )
+                            if (shape.fill) {
+                                await fillSquare(
+                                    plano,
+                                    shape.coordinates[0].x,
+                                    shape.coordinates[0].y,
+                                    shape.coordinates[1].x,
+                                    shape.coordinates[1].y,
+                                    shape.fillColor
+                                )
+                            }
                             break;
 
                         default:
@@ -101,11 +110,11 @@ export const useShape = () => {
                 setRedrawAll(null)
                 break;
         }
-    }, [action, activeShape, plano, drawSquare, deleteLine, deleteSquare, redrawAll, redrawLine, shapes, redrawSquare])
+    }, [action, activeShape, plano, drawSquare, deleteLine, deleteSquare, redrawAll, redrawLine, shapes, redrawSquare, fillSquare])
 
 
 
-    //! Efecto para dibujar una linea cuando se agrega
+    //! Efecto para dibujar la forma cuando se agrega
 
     useEffect(() => {
 

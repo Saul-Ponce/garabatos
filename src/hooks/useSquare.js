@@ -11,13 +11,14 @@ export const useSquare = () => {
 
     const { color } = useSelector(state => state.shape)
 
-    /* const rellenarCuadro = (plano, x1, y1, x2, y2) => {
+    const fillSquare = (plano, x1, y1, x2, y2, fillColor = color) => {
 
+        console.log("filling...", x1, y1, x2, y2)
+        plano.fillStyle = fillColor;
 
-        plano.fillStyle = "#000";
-
-        const menorX = x1 < x2 ? x1 : x2;
-        const mayorY = y1 > y2 ? y1 : y2;
+        const menorX = (x1 < x2 ? x1 : x2) + 3;
+        const menorY = (y1 < y2 ? y1 : y2) + 3;
+        const mayorY = (y1 > y2 ? y1 : y2) - 3;
 
         const dx = Math.abs(x1 - x2);
 
@@ -40,13 +41,12 @@ export const useSquare = () => {
             y2 -= 1;
         }
 
-        for (let i = menorX; i <= (menorX + dx); i++) {
-            drawLine(plano, i, mayorY);
+        for (let i = menorX; i <= (menorX + dx - 6); i++) {
+            drawLine(plano, i, menorY, i, mayorY, false, fillColor);
         }
 
-        plano.fillStyle = "#000";
 
-    } */
+    }
 
     const drawSquare = (plano, x1, y1, x2, y2, add = false, drawingColor = color) => {
 
@@ -77,12 +77,15 @@ export const useSquare = () => {
         add && dispatch(clearShapeDrawing())
     }
 
-    const deleteSquare = (plano, x1, y1, x2, y2, id) => {
+    const deleteSquare = async (plano, x1, y1, x2, y2, id) => {
 
-        drawSquare(plano, x1, y1, x2, y2, false, DELETE_COLOR)
+        await drawSquare(plano, x1, y1, x2, y2, false, DELETE_COLOR)
+        await fillSquare(plano, x1, y1, x2, y2, DELETE_COLOR)
+
 
         plano.fillStyle = "#000"
         plano.moveTo(0, 0)
+
         dispatch(clearAction())
         dispatch(redraw())
         dispatch(deleteShape(id))
@@ -98,6 +101,7 @@ export const useSquare = () => {
     return [
         drawSquare,
         deleteSquare,
-        redrawSquare
+        redrawSquare,
+        fillSquare
     ]
 }
