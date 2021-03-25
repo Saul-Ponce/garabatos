@@ -10,11 +10,7 @@ const intitialState = {
     countPoints: 0,
     shapes: [],
     activeShape: {},
-    action: null,
-    filling: {
-        state: false,
-        number: 0
-    }
+    action: null
 }
 
 export const shapeReducer = (state = intitialState, action) => {

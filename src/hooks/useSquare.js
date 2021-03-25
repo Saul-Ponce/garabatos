@@ -77,10 +77,10 @@ export const useSquare = () => {
         add && dispatch(clearShapeDrawing())
     }
 
-    const deleteSquare = async (plano, x1, y1, x2, y2, id) => {
+    const deleteSquare = (plano, x1, y1, x2, y2, id) => {
 
-        await drawSquare(plano, x1, y1, x2, y2, false, DELETE_COLOR)
-        await fillSquare(plano, x1, y1, x2, y2, DELETE_COLOR)
+        drawSquare(plano, x1, y1, x2, y2, false, DELETE_COLOR)
+        fillSquare(plano, x1, y1, x2, y2, DELETE_COLOR)
 
 
         plano.fillStyle = "#000"

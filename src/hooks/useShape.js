@@ -62,13 +62,13 @@ export const useShape = () => {
                 break;
             case types.redraw:
 
-                shapes.forEach(async (shape) => {
+                shapes.forEach((shape) => {
 
                     //! Switch para redibujar cada figura despues que se haya eliminado una
                     console.log(shape.type.id);
                     switch (shape.type.id) {
                         case shapesList.line.id:
-                            await redrawLine(
+                            redrawLine(
                                 plano,
                                 shape.coordinates[0].x,
                                 shape.coordinates[0].y,
@@ -79,7 +79,7 @@ export const useShape = () => {
                             break;
 
                         case shapesList.square.id:
-                            await redrawSquare(
+                            redrawSquare(
                                 plano,
                                 shape.coordinates[0].x,
                                 shape.coordinates[0].y,
@@ -88,7 +88,7 @@ export const useShape = () => {
                                 shape.borderColor
                             )
                             if (shape.fill) {
-                                await fillSquare(
+                                fillSquare(
                                     plano,
                                     shape.coordinates[0].x,
                                     shape.coordinates[0].y,
