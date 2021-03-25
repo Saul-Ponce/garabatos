@@ -3,7 +3,7 @@ import { ShapeButton } from './ShapeButton'
 import { shapesList } from '../helpers/shapesList'
 import { useDispatch } from 'react-redux'
 import { changeColor } from '../actions/shape'
-export const Header = () => {
+export const Header = React.memo(() => {
 
 
     const dispatch = useDispatch()
@@ -38,4 +38,4 @@ export const Header = () => {
             </div>
         </header>
     )
-}
+})

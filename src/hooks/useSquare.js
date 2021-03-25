@@ -13,7 +13,6 @@ export const useSquare = () => {
 
     const fillSquare = (plano, x1, y1, x2, y2, fillColor = color) => {
 
-        console.log("filling...", x1, y1, x2, y2)
         plano.fillStyle = fillColor;
 
         const menorX = (x1 < x2 ? x1 : x2) + 3;

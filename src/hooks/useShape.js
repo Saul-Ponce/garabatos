@@ -65,7 +65,6 @@ export const useShape = () => {
                 shapes.forEach((shape) => {
 
                     //! Switch para redibujar cada figura despues que se haya eliminado una
-                    console.log(shape.type.id);
                     switch (shape.type.id) {
                         case shapesList.line.id:
                             redrawLine(

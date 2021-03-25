@@ -9,7 +9,6 @@ export const ShapeButton = React.memo(({
     maxPoints
 }) => {
 
-    console.log(disabled);
     const { type } = useSelector(state => state.shape)
     const [active, setActive] = useState(false)
 
