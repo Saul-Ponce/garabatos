@@ -10,6 +10,8 @@ export const ShapeItem = React.memo(({
 
 
     const { activeShape } = useSelector(state => state.shape)
+
+
     const dispatch = useDispatch()
 
     const handleClickButton = () => {

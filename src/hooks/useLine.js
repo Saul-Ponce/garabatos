@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCoordinates, clearAction, clearShapeDrawing, deleteShape, redraw } from '../actions/shape';
+import { changeCoordinates } from '../actions/shape';
 import { DELETE_COLOR, EVITAR_DIFUMINADO } from '../const/const';
 import { usePoint } from './usePoint';
 
@@ -64,13 +64,13 @@ export const useLine = () => {
 
     }
 
-    const deleteLine = (plano, x1, y1, x2, y2, id) => {
+    const deleteLine = (plano, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
 
         for (let i = 0; i < EVITAR_DIFUMINADO; i++) {
-            drawLine(plano, x1, y1, x2, y2, false, DELETE_COLOR)
+            drawLine(plano, x1, y1, x2, y2, false, deleteColor)
         }
 
-        plano.fillStyle = color
+        plano.fillStyle = deleteColor
         plano.moveTo(0, 0)
 
     }
@@ -95,12 +95,15 @@ export const useLine = () => {
         let parteY = dy / 2
 
 
-        if (y1 > y2) {
-            parteY *= -1;
+        if ((y1 > y2 && x1 < x2) || (y2 > y1 && x2 < x1)) {
+            parteY *= -1
         }
+        console.log(parteY);
+
 
         if (movingId === shape.id) {
             deleteLine(plano, x1, y1, x2, y2)
+
         }
 
 
@@ -111,7 +114,8 @@ export const useLine = () => {
                 shape.coordinates[0].y,
                 shape.coordinates[1].x,
                 shape.coordinates[1].y,
-                true
+                true,
+                shape.borderColor
             )
         }
 

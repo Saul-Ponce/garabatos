@@ -116,3 +116,15 @@ export const changeCoordinates = (id, coordinates) => {
         }
     }
 }
+
+export const stopMoving = () => {
+    return {
+        type: types.stopMoving
+    }
+}
+
+export const initMoving = () => {
+    return {
+        type: types.startMoving
+    }
+}

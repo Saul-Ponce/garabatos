@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCoordinates, startMoving } from '../actions/shape';
+import { changeCoordinates } from '../actions/shape';
 import { DELETE_COLOR, EVITAR_DIFUMINADO } from '../const/const';
 import { useLine } from './useLine';
 
@@ -8,7 +8,7 @@ export const useSquare = () => {
 
     const dispatch = useDispatch()
 
-    const { color, movingCoordinates, activeShape, movingId, shapes } = useSelector(state => state.shape)
+    const { color, movingCoordinates, activeShape, movingId } = useSelector(state => state.shape)
 
     const fillSquare = (plano, x1, y1, x2, y2, fillColor = color) => {
 
@@ -72,15 +72,16 @@ export const useSquare = () => {
         drawLine(plano, x2, y2, x2, y1, false, drawingColor)
     }
 
-    const deleteSquare = (plano, x1, y1, x2, y2, id) => {
+    const deleteSquare = (plano, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
         console.log("deleing");
+        console.log(deleteColor);
 
 
         for (let i = 0; i < EVITAR_DIFUMINADO; i++) {
-            drawSquare(plano, x1, y1, x2, y2, false, DELETE_COLOR)
+            drawSquare(plano, x1, y1, x2, y2, false, deleteColor)
         }
 
-        fillSquare(plano, x1, y1, x2, y2, DELETE_COLOR)
+        fillSquare(plano, x1, y1, x2, y2, deleteColor)
 
 
         plano.fillStyle = "#000"
@@ -134,7 +135,8 @@ export const useSquare = () => {
                 shape.coordinates[0].y,
                 shape.coordinates[1].x,
                 shape.coordinates[1].y,
-                true
+                true,
+                shape.borderColor
             )
             if (activeShape.fill) {
                 fillSquare(
@@ -153,16 +155,16 @@ export const useSquare = () => {
             const coordinates = [{ x: x - parteX, y: y - parteY }, { x: x + parteX, y: y + parteY }]
 
 
-            drawSquare(plano, x - parteX, y - parteY, x + parteX, y + parteY, false, drawingColor)
+            drawSquare(plano, x - parteX, y - parteY, x + parteX, y + parteY, false, shape.borderColor)
 
-            if (activeShape.fill) {
+            if (shape.fill) {
                 fillSquare(
                     plano,
                     coordinates[0].x,
                     coordinates[0].y,
                     coordinates[1].x,
                     coordinates[1].y,
-                    activeShape.fillColor
+                    shape.fillColor
                 )
             }
 

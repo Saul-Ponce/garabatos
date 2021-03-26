@@ -1,17 +1,25 @@
-import React from 'react'
-import { ShapeButton } from './ShapeButton'
-import { shapesList } from '../helpers/shapesList'
+import React, { useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { changeColor } from '../actions/shape'
+import { shapesList } from '../helpers/shapesList'
+import { ShapeButton } from './ShapeButton'
 export const Header = React.memo(() => {
 
 
     const dispatch = useDispatch()
 
+    const inputColor = useRef()
+
     const handleChangeColor = (e) => {
         const color = e.target.value
         dispatch(changeColor(color))
 
+    }
+
+    const randomColor = () => {
+        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        inputColor.current.value = "#" + randomColor
+        dispatch(changeColor(inputColor.current.value))
     }
 
     return (
@@ -33,7 +41,8 @@ export const Header = React.memo(() => {
                     Color
                 </p>
                 <div className="header__shapes-container">
-                    <input type="color" className="header__color" onChange={handleChangeColor} />
+                    <input ref={inputColor} type="color" className="header__color" onChange={handleChangeColor} />
+                    <button className="header__shapes-random-color" onClick={randomColor}>Color Aleatorio</button>
                 </div>
             </div>
         </header>

@@ -48,7 +48,7 @@ export const useShape = () => {
                     activeShape.coordinates[0].y,
                     activeShape.coordinates[1].x,
                     activeShape.coordinates[1].y,
-                    activeShape.id
+                    "#fff"
                 )
                 dispatch(clearAction())
                 dispatch(redraw())
@@ -61,7 +61,7 @@ export const useShape = () => {
                     activeShape.coordinates[0].y,
                     activeShape.coordinates[1].x,
                     activeShape.coordinates[1].y,
-                    activeShape.id
+                    "#fff"
                 )
                 dispatch(deleteShape(activeShape.id))
                 dispatch(redraw())
@@ -156,7 +156,7 @@ export const useShape = () => {
                 setRedrawAll(null)
                 break;
         }
-    }, [action, activeShape, plano, drawSquare, deleteLine, deleteSquare, redrawAll, redrawLine, shapes, redrawSquare, fillSquare])
+    }, [action, activeShape, plano, drawSquare, deleteLine, deleteSquare, redrawAll, redrawLine, shapes, redrawSquare, fillSquare, canvas, dispatch, moveLine, moveSquare])
 
 
 
@@ -205,7 +205,8 @@ export const useShape = () => {
         drawSquare,
         plano,
         type,
-        coordinates])
+        coordinates,
+        dispatch])
 
 
     const loadCanvas = (ref) => {

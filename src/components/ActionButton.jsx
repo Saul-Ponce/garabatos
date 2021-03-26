@@ -6,10 +6,12 @@ import { getAction } from '../helpers/getAction'
 export const ActionButton = React.memo(({
     type,
     text,
-    id
+    id,
+    active = false,
+    onClick
 }) => {
 
-    const { activeShape } = useSelector(state => state.shape)
+    const { activeShape, color } = useSelector(state => state.shape)
 
     const dispatch = useDispatch()
 
@@ -34,8 +36,16 @@ export const ActionButton = React.memo(({
     }
 
     return (
-        <button className="action-button" onClick={handleAction}>
-            <img src={require(`../assets/img/${type}.png`).default} alt={type} className="action-button__img" />
+        <button
+            className={`action-button ${active ? "action-button--active" : ""}`} onClick={handleAction}>
+            <img
+                style={{
+                    backgroundColor: type === "fill" || type === "border" ? color : "",
+                    padding: ".2rem",
+                    borderRadius: ".2rem",
+                    backgroundBlendMode: "lighten"
+                }}
+                src={require(`../assets/img/${type}.png`).default} alt={type} className="action-button__img" />
             <p className="action-button__text">{text}</p>
         </button>
     )

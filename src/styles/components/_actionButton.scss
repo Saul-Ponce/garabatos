@@ -20,4 +20,8 @@
     &:hover {
         background-color: darken($white, $amount: 10%);
     }
+
+    &--active {
+        background-color: $warning;
+    }
 }

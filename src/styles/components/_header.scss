@@ -32,7 +32,19 @@
 
         &--color {
             margin-left: 1rem;
-            width: 70px;
+            width: 12rem;
+        }
+
+        &-random-color {
+            width: 7rem;
+            background-color: $white;
+            border: 2px solid $dark;
+            border-radius: 5px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: darken($white, $amount: 10%);
+            }
         }
 
     }

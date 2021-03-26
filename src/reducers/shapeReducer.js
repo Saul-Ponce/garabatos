@@ -8,11 +8,23 @@ const intitialState = {
     maxPoints: 2,
     coordinates: [],
     countPoints: 0,
-    shapes: [],
+    shapes: [
+        {
+            id: nanoid(),
+            type: shapesList.line,
+            borderColor: "#000",
+            fill: false,
+            fillColor: null,
+            coordinates: [
+                { x: 500, y: 300 },
+                { x: 0, y: 300 },
+            ]
+        }],
     activeShape: {},
     action: null,
     movingCoordinates: {},
-    movingId: ""
+    movingId: "",
+    startMoving: false,
 }
 
 export const shapeReducer = (state = intitialState, action) => {
@@ -148,6 +160,20 @@ export const shapeReducer = (state = intitialState, action) => {
                     }
                     return shape
                 })
+            }
+        case types.stopMoving:
+            return {
+                ...state,
+                action: null,
+                movingCoordinates: {},
+                movingId: "",
+                startMoving: false,
+                type: {}
+            }
+        case types.startMoving:
+            return {
+                ...state,
+                startMoving: true
             }
         default:
             return state;
