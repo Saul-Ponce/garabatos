@@ -14,4 +14,7 @@ export const types = {
     changeColor: "[color] Change color",
     changeBorderColor: "[color] Change border color",
     changeFillColor: "[color] Change fill color",
+    changeCoordinates: "[coordinates] Change Coordinates",
+    movingShape: "[shape] Moving Shape",
+    moveShape: "[shape] Move Shape",
 }

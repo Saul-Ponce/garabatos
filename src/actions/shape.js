@@ -94,3 +94,25 @@ export const changeFillColor = (id) => {
     }
 }
 
+export const startMoving = () => {
+    return {
+        type: types.moveShape
+    }
+}
+
+export const movingShape = (x, y) => {
+    return {
+        type: types.movingShape,
+        payload: { x, y }
+    }
+}
+
+export const changeCoordinates = (id, coordinates) => {
+    return {
+        type: types.changeCoordinates,
+        payload: {
+            id,
+            coordinates
+        }
+    }
+}

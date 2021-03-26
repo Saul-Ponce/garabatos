@@ -41,6 +41,7 @@ export const ShapeItem = React.memo(({
                     activeShape.id &&
                     activeShape.type.id !== shapesList.line.id &&
                     < ActionButton id={id} text="Rellenar" type="fill" />}
+                <ActionButton id={id} text="Mover" type="move" />
                 <ActionButton id={id} text="Borrar" type="erase" />
 
             </section>

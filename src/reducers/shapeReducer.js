@@ -10,7 +10,9 @@ const intitialState = {
     countPoints: 0,
     shapes: [],
     activeShape: {},
-    action: null
+    action: null,
+    movingCoordinates: {},
+    movingId: ""
 }
 
 export const shapeReducer = (state = intitialState, action) => {
@@ -112,6 +114,36 @@ export const shapeReducer = (state = intitialState, action) => {
                             ...shape,
                             fill: true,
                             fillColor: state.color,
+                        }
+                    }
+                    return shape
+                })
+            }
+        case types.movingShape:
+            return {
+                ...state,
+                action: types.movingShape,
+                movingCoordinates: action.payload
+            }
+        case types.moveShape:
+            return {
+                ...state,
+                action: types.moveShape,
+                movingCoordinates: {},
+                movingId: state.activeShape.id
+            }
+        case types.changeCoordinates:
+            return {
+                ...state,
+                activeShape: {
+                    ...state.activeShape,
+                    coordinates: action.payload.coordinates
+                },
+                shapes: state.shapes.map((shape) => {
+                    if (shape.id === action.payload.id) {
+                        return {
+                            ...shape,
+                            coordinates: action.payload.coordinates
                         }
                     }
                     return shape
