@@ -26,7 +26,7 @@ export const ShapeItem = React.memo(({
                     ${activeShape.id && activeShape.id === id ? "shape-list__img--closed" : ""}`}
                     src={require("../assets/img/arrow.png").default}
                     alt="open" />
-                <p>{
+                <p className="shape-list__text">{
                     activeShape.id && activeShape.id === id ?
                         "Figura Seleccionada" :
                         "Seleccionar Figura"

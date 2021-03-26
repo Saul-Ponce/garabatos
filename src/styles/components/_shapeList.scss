@@ -4,7 +4,7 @@
 
     &__button {
         width: 100%;
-        height: 1.5rem;
+        max-height: 2.5rem;
         display: flex;
         align-items: center;
         background-color: $secondary;
@@ -19,6 +19,11 @@
         &--closed {
             transform: rotate(0deg);
         }
+    }
+
+    &__text {
+        padding: .2rem;
+        margin: 0;
     }
 
     &__options {
