@@ -8,18 +8,7 @@ const intitialState = {
     maxPoints: 2,
     coordinates: [],
     countPoints: 0,
-    shapes: [
-        {
-            id: nanoid(),
-            type: shapesList.line,
-            borderColor: "#000",
-            fill: false,
-            fillColor: null,
-            coordinates: [
-                { x: 500, y: 300 },
-                { x: 0, y: 300 },
-            ]
-        }],
+    shapes: [],
     activeShape: {},
     action: null,
     movingCoordinates: {},
