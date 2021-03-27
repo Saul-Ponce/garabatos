@@ -79,3 +79,52 @@ export const changeColor = (color) => {
         payload: color
     }
 }
+
+export const changeBorerColor = (id) => {
+    return {
+        type: types.changeBorderColor,
+        payload: id
+    }
+}
+
+export const changeFillColor = (id) => {
+    return {
+        type: types.changeFillColor,
+        payload: id
+    }
+}
+
+export const startMoving = () => {
+    return {
+        type: types.moveShape
+    }
+}
+
+export const movingShape = (x, y) => {
+    return {
+        type: types.movingShape,
+        payload: { x, y }
+    }
+}
+
+export const changeCoordinates = (id, coordinates) => {
+    return {
+        type: types.changeCoordinates,
+        payload: {
+            id,
+            coordinates
+        }
+    }
+}
+
+export const stopMoving = () => {
+    return {
+        type: types.stopMoving
+    }
+}
+
+export const initMoving = () => {
+    return {
+        type: types.startMoving
+    }
+}

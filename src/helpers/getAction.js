@@ -1,4 +1,4 @@
-import { eraseSquare, eraseLine } from '../actions/shape';
+import { eraseLine, eraseSquare } from '../actions/shape';
 import { shapesList } from "./shapesList";
 export const getAction = (type) => {
 

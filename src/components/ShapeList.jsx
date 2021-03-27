@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { ShapeItem } from './ShapeItem'
 
-export const ShapeList = () => {
+export const ShapeList = React.memo(() => {
 
 
     const { shapes } = useSelector(state => state.shape)
@@ -19,4 +19,4 @@ export const ShapeList = () => {
             }
         </div>
     )
-}
+})
