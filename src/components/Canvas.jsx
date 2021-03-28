@@ -29,7 +29,6 @@ export const Canvas = React.memo(() => {
         }
 
         if (action === types.moveShape) {
-            console.log("Moviendome en: ", x, y);
             dispatch(movingShape(x, y))
         }
 
@@ -43,12 +42,11 @@ export const Canvas = React.memo(() => {
         y = Math.abs((window.innerHeight - 132) - y);
 
         if (action === types.moveShape && startMoving) {
-            console.log("Moviendome en: ", x, y);
             dispatch(movingShape(x, y))
         }
     }
 
-    const handleInitMoving = () => {
+    const handleInitMoving = (e) => {
         if (!startMoving && (action === types.moveShape || action === types.movingShape)) {
             dispatch(initMoving())
         }

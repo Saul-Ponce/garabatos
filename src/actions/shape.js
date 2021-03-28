@@ -128,3 +128,9 @@ export const initMoving = () => {
         type: types.startMoving
     }
 }
+
+export const removeActiveShape = () => {
+    return {
+        type: types.removeActiveShape
+    }
+}

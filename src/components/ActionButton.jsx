@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { changeBorerColor, changeFillColor, redraw, startMoving } from '../actions/shape'
 import { getAction } from '../helpers/getAction'
 import tinycolor from 'tinycolor2'
+import { types } from '../types/types'
 
 export const ActionButton = React.memo(({
     type,
@@ -14,7 +15,7 @@ export const ActionButton = React.memo(({
 
 
 
-    const { activeShape, color } = useSelector(state => state.shape)
+    const { activeShape, color, action } = useSelector(state => state.shape)
 
     const isColorDark = tinycolor(color).isDark()
 
@@ -46,7 +47,8 @@ export const ActionButton = React.memo(({
                 backgroundColor: type === "fill" || type === "border" ? color : "",
                 color: ((type === "fill" || type === "border") && isColorDark) ? "white" : "initial"
             }}
-            className={`action-button ${active ? "action-button--active" : ""}`} onClick={handleAction}>
+            className={`action-button ${(action === types.moveShape || action === types.movingShape) && type === "move" && id === activeShape.id ? "action-button--active" : ""
+                }`} onClick={handleAction}>
             <img
                 style={{
                     padding: ".2rem",

@@ -57,4 +57,16 @@
             border-bottom: 2px solid $dark;
         }
     }
+
+    &__colors {
+        border: 2px solid $dark;
+        margin-bottom: .3rem;
+        width: calc(100% - 2rem);
+        border-radius: 5px;
+        display: flex;
+
+        span {
+            width: 100%;
+        }
+    }
 }
