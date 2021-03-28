@@ -18,5 +18,6 @@ export const types = {
     movingShape: "[shape] Moving Shape",
     moveShape: "[shape] Move Shape",
     stopMoving: "[shape] Stop Moving",
-    startMoving: "[shape] Start Moving"
+    startMoving: "[shape] Start Moving",
+    removeActiveShape: "[shape] Remove Active Shape",
 }

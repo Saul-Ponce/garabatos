@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setActiveShape } from '../actions/shape'
+import { removeActiveShape, setActiveShape, stopMoving } from '../actions/shape'
 import { shapesList } from '../helpers/shapesList'
 import { ActionButton } from './ActionButton'
 
@@ -15,7 +15,14 @@ export const ShapeItem = React.memo(({
     const dispatch = useDispatch()
 
     const handleClickButton = () => {
+
+        if (id === activeShape?.id) {
+            dispatch(removeActiveShape())
+            return
+        }
+
         dispatch(setActiveShape(id))
+        dispatch(stopMoving())
     }
 
     return (
@@ -38,6 +45,17 @@ export const ShapeItem = React.memo(({
                     ${activeShape.id && activeShape.id === id ? "shape-list__options--open" : ""}`}>
 
                 <p className="shape-list__options-title">{activeShape.id && activeShape.id === id ? activeShape.type.text : ""}</p>
+
+
+                {activeShape.id && <div className="shape-list__colors">
+                    <span style={{
+                        backgroundColor: activeShape.borderColor
+                    }}>&nbsp;</span>
+                    <span style={{
+                        backgroundColor: activeShape.type.id === shapesList.line.id ? activeShape.borderColor : activeShape.fillColor,
+                    }}>&nbsp;</span>
+                </div>}
+
                 <ActionButton id={id} text="Borde" type="border" />
                 {
                     activeShape.id &&

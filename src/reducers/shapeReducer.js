@@ -164,6 +164,17 @@ export const shapeReducer = (state = intitialState, action) => {
                 ...state,
                 startMoving: true
             }
+        case types.removeActiveShape:
+            return {
+                ...state,
+                countPoints: 0,
+                coordinates: [],
+                activeShape: {},
+                action: null,
+                movingCoordinates: {},
+                movingId: "",
+                startMoving: false,
+            }
         default:
             return state;
     }

@@ -83,7 +83,6 @@ export const useLine = () => {
 
     const moveLine = (plano, x1, y1, x2, y2, drawingColor = color, shape) => {
 
-        console.log("dentro de movesquare");
 
         const { x, y } = movingCoordinates
 
@@ -98,7 +97,6 @@ export const useLine = () => {
         if ((y1 > y2 && x1 < x2) || (y2 > y1 && x2 < x1)) {
             parteY *= -1
         }
-        console.log(parteY);
 
 
         if (movingId === shape.id) {

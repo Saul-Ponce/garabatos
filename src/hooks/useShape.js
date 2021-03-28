@@ -132,7 +132,6 @@ export const useShape = () => {
                             break;
 
                         case shapesList.square.id:
-                            console.log("moviendo cuadrado");
                             moveSquare(
                                 plano,
                                 shape.coordinates[0].x,
@@ -156,7 +155,23 @@ export const useShape = () => {
                 setRedrawAll(null)
                 break;
         }
-    }, [action, activeShape, plano, drawSquare, deleteLine, deleteSquare, redrawAll, redrawLine, shapes, redrawSquare, fillSquare, canvas, dispatch, moveLine, moveSquare])
+    }, [
+        action,
+        activeShape,
+        plano,
+        drawSquare,
+        deleteLine,
+        deleteSquare,
+        redrawAll,
+        redrawLine,
+        shapes,
+        redrawSquare,
+        fillSquare,
+        canvas,
+        dispatch,
+        moveLine,
+        moveSquare
+    ])
 
 
 
@@ -206,7 +221,8 @@ export const useShape = () => {
         plano,
         type,
         coordinates,
-        dispatch])
+        dispatch
+    ])
 
 
     const loadCanvas = (ref) => {

@@ -73,8 +73,6 @@ export const useSquare = () => {
     }
 
     const deleteSquare = (plano, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
-        console.log("deleing");
-        console.log(deleteColor);
 
 
         for (let i = 0; i < EVITAR_DIFUMINADO; i++) {
@@ -99,9 +97,6 @@ export const useSquare = () => {
 
     const moveSquare = (plano, x1, y1, x2, y2, drawingColor = color, shape) => {
 
-
-
-        console.log("dentro de movesquare");
 
         const { x, y } = movingCoordinates
 
@@ -139,6 +134,7 @@ export const useSquare = () => {
                 shape.borderColor
             )
             if (shape.fill) {
+                console.log("filling");
                 fillSquare(
                     plano,
                     shape.coordinates[0].x,
