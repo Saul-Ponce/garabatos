@@ -138,7 +138,7 @@ export const useSquare = () => {
                 true,
                 shape.borderColor
             )
-            if (activeShape.fill) {
+            if (shape.fill) {
                 fillSquare(
                     plano,
                     shape.coordinates[0].x,

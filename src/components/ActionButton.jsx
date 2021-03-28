@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeBorerColor, changeFillColor, redraw, startMoving } from '../actions/shape'
 import { getAction } from '../helpers/getAction'
+import tinycolor from 'tinycolor2'
 
 export const ActionButton = React.memo(({
     type,
@@ -11,7 +12,11 @@ export const ActionButton = React.memo(({
     onClick
 }) => {
 
+
+
     const { activeShape, color } = useSelector(state => state.shape)
+
+    const isColorDark = tinycolor(color).isDark()
 
     const dispatch = useDispatch()
 
@@ -37,13 +42,16 @@ export const ActionButton = React.memo(({
 
     return (
         <button
+            style={{
+                backgroundColor: type === "fill" || type === "border" ? color : "",
+                color: ((type === "fill" || type === "border") && isColorDark) ? "white" : "initial"
+            }}
             className={`action-button ${active ? "action-button--active" : ""}`} onClick={handleAction}>
             <img
                 style={{
-                    backgroundColor: type === "fill" || type === "border" ? color : "",
                     padding: ".2rem",
                     borderRadius: ".2rem",
-                    backgroundBlendMode: "lighten"
+                    filter: ((type === "fill" || type === "border") && isColorDark) ? "invert(100%)" : "initial"
                 }}
                 src={require(`../assets/img/${type}.png`).default} alt={type} className="action-button__img" />
             <p className="action-button__text">{text}</p>
