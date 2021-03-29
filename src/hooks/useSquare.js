@@ -82,7 +82,7 @@ export const useSquare = () => {
         fillSquare(plano, x1, y1, x2, y2, deleteColor)
 
 
-        plano.fillStyle = "#000"
+        plano.fillStyle = color
         plano.moveTo(0, 0)
 
 
@@ -134,7 +134,6 @@ export const useSquare = () => {
                 shape.borderColor
             )
             if (shape.fill) {
-                console.log("filling");
                 fillSquare(
                     plano,
                     shape.coordinates[0].x,

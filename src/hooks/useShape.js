@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAction, clearShapeDrawing, deleteShape, redraw, startMoving } from "../actions/shape";
+import { WHITE } from "../const/const";
 import { shapesList } from "../helpers/shapesList";
 import { types } from "../types/types";
 import { useLine } from "./useLine";
 import { usePoint } from "./usePoint";
+import { useRightTriangle } from "./useRightTriangle";
 import { useSquare } from "./useSquare";
 
 export const useShape = () => {
@@ -20,6 +22,7 @@ export const useShape = () => {
 
     const [drawLine, deleteLine, redrawLine, moveLine] = useLine()
     const [drawSquare, deleteSquare, redrawSquare, fillSquare, moveSquare] = useSquare()
+    const [drawRightTriangle, deleteRightTriangle, redrawRightTriangle, fillRightTriangle, moveRightTriangle] = useRightTriangle()
     const [drawPoint] = usePoint()
 
 
@@ -48,7 +51,7 @@ export const useShape = () => {
                     activeShape.coordinates[0].y,
                     activeShape.coordinates[1].x,
                     activeShape.coordinates[1].y,
-                    "#fff"
+                    WHITE
                 )
                 dispatch(clearAction())
                 dispatch(redraw())
@@ -61,7 +64,19 @@ export const useShape = () => {
                     activeShape.coordinates[0].y,
                     activeShape.coordinates[1].x,
                     activeShape.coordinates[1].y,
-                    "#fff"
+                    WHITE
+                )
+                dispatch(deleteShape(activeShape.id))
+                dispatch(redraw())
+                break
+            case types.eraseRightTriangle:
+                deleteRightTriangle(
+                    plano,
+                    activeShape.coordinates[0].x,
+                    activeShape.coordinates[0].y,
+                    activeShape.coordinates[1].x,
+                    activeShape.coordinates[1].y,
+                    WHITE
                 )
                 dispatch(deleteShape(activeShape.id))
                 dispatch(redraw())
@@ -69,7 +84,6 @@ export const useShape = () => {
                 break;
             case types.redraw:
                 shapes.forEach((shape) => {
-
                     //! Switch para redibujar cada figura despues que se haya eliminado una
                     switch (shape.type.id) {
                         case shapesList.line.id:
@@ -104,7 +118,13 @@ export const useShape = () => {
                             }
                             dispatch(clearAction())
                             break;
-
+                        case shapesList.right_triangle.id:
+                            redrawRightTriangle(
+                                plano,
+                                shape
+                            )
+                            // dispatch(clearAction())
+                            break
                         default:
                             break;
 
@@ -144,7 +164,17 @@ export const useShape = () => {
 
                             dispatch(startMoving())
                             break;
-
+                        case shapesList.right_triangle.id:
+                            moveRightTriangle(
+                                plano,
+                                shape.coordinates[0].x,
+                                shape.coordinates[0].y,
+                                shape.coordinates[1].x,
+                                shape.coordinates[1].y,
+                                shape
+                            )
+                            dispatch(startMoving())
+                            break;
                         default:
                             break;
 
@@ -170,7 +200,10 @@ export const useShape = () => {
         canvas,
         dispatch,
         moveLine,
-        moveSquare
+        moveSquare,
+        moveRightTriangle,
+        deleteRightTriangle,
+        redrawRightTriangle,
     ])
 
 
@@ -205,6 +238,16 @@ export const useShape = () => {
                     )
                     dispatch(clearShapeDrawing())
                     break;
+                case shapesList.right_triangle.id:
+                    drawRightTriangle(
+                        plano,
+                        coordinates[0].x,
+                        coordinates[0].y,
+                        coordinates[1].x,
+                        coordinates[1].y
+                    )
+                    dispatch(clearShapeDrawing())
+                    break;
 
                 default:
                     break;
@@ -221,7 +264,8 @@ export const useShape = () => {
         plano,
         type,
         coordinates,
-        dispatch
+        dispatch,
+        drawRightTriangle
     ])
 
 

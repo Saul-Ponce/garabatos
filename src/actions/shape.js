@@ -59,6 +59,16 @@ export const eraseLine = (id) => {
     }
 }
 
+export const eraseRightTriangle = (id) => {
+    return {
+        type: types.eraseShape,
+        payload: {
+            id,
+            erase: types.eraseRightTriangle
+        }
+    }
+}
+
 export const deleteShape = (id) => {
     return {
         type: types.deleteShape,
