@@ -22,7 +22,7 @@ export const useShape = () => {
 
     const [drawLine, deleteLine, redrawLine, moveLine] = useLine()
     const [drawSquare, deleteSquare, redrawSquare, fillSquare, moveSquare] = useSquare()
-    const [drawRightTriangle, deleteRightTriangle, redrawRightTriangle, fillRightTriangle, moveRightTriangle] = useRightTriangle()
+    const [drawRightTriangle, deleteRightTriangle, redrawRightTriangle, moveRightTriangle] = useRightTriangle()
     const [drawPoint] = usePoint()
 
 
