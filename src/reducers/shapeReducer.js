@@ -50,7 +50,8 @@ export const shapeReducer = (state = intitialState, action) => {
                         coordinates: [
                             ...state.coordinates
                         ]
-                    }],
+                    }
+                ],
                 coordinates: []
             }
         case types.setActiveShape:
@@ -174,6 +175,11 @@ export const shapeReducer = (state = intitialState, action) => {
                 movingCoordinates: {},
                 movingId: "",
                 startMoving: false,
+            }
+        case types.setACtiveShapeAfterInsert:
+            return {
+                ...state,
+                activeShape: state.shapes.slice(-1).pop()
             }
         default:
             return state;

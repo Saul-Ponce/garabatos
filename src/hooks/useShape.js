@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearAction, clearShapeDrawing, deleteShape, redraw, startMoving } from "../actions/shape";
+import { clearAction, clearShapeDrawing, deleteShape, redraw, setACtiveShapeAfterInsert, startMoving } from "../actions/shape";
 import { WHITE } from "../const/const";
 import { shapesList } from "../helpers/shapesList";
 import { types } from "../types/types";
@@ -226,6 +226,7 @@ export const useShape = () => {
                         true
                     )
                     dispatch(clearShapeDrawing())
+                    dispatch(setACtiveShapeAfterInsert())
                     break;
 
                 case shapesList.square.id:
@@ -238,6 +239,7 @@ export const useShape = () => {
                         true
                     )
                     dispatch(clearShapeDrawing())
+                    dispatch(setACtiveShapeAfterInsert())
                     break;
                 case shapesList.right_triangle.id:
                     drawRightTriangle(
@@ -248,6 +250,7 @@ export const useShape = () => {
                         coordinates[1].y
                     )
                     dispatch(clearShapeDrawing())
+                    dispatch(setACtiveShapeAfterInsert())
                     break;
 
                 default:

@@ -144,3 +144,9 @@ export const removeActiveShape = () => {
         type: types.removeActiveShape
     }
 }
+
+export const setACtiveShapeAfterInsert = () => {
+    return {
+        type: types.setACtiveShapeAfterInsert
+    }
+}
