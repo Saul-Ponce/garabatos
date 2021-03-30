@@ -124,7 +124,6 @@ export const useRightTriangle = () => {
 
     const moveRightTriangle = (plano, x1, y1, x2, y2, shape) => {
 
-
         const { x, y } = movingCoordinates
 
         let dx = Math.abs(x1 - x2)
@@ -209,7 +208,6 @@ export const useRightTriangle = () => {
         drawRightTriangle,
         deleteRightTriangle,
         redrawRightTriangle,
-        fillRightTriangle,
         moveRightTriangle
     ]
 }

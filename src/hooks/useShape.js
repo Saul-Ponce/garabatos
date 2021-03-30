@@ -80,7 +80,7 @@ export const useShape = () => {
                 )
                 dispatch(deleteShape(activeShape.id))
                 dispatch(redraw())
-                // dispatch(clearAction())
+                dispatch(clearAction())
                 break;
             case types.redraw:
                 shapes.forEach((shape) => {
@@ -152,6 +152,7 @@ export const useShape = () => {
                             break;
 
                         case shapesList.square.id:
+
                             moveSquare(
                                 plano,
                                 shape.coordinates[0].x,
