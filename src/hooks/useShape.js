@@ -35,6 +35,7 @@ export const useShape = () => {
         if (plano) {
             plano.translate(0, canvas.height);
             plano.scale(1, -1);
+            console.log(plano);
         }
     }, [canvas, plano])
 

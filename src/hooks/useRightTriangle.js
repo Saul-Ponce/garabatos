@@ -172,7 +172,6 @@ export const useRightTriangle = () => {
                     shape.coordinates[0].y,
                     shape.coordinates[1].x,
                     shape.coordinates[1].y,
-                    true,
                     shape.borderColor
                 )
             }
@@ -193,7 +192,7 @@ export const useRightTriangle = () => {
                     shape.borderColor
                 )
             } else {
-                drawRightTriangle(plano, x - parteX, y - parteY, x + parteX, y + parteY, false, shape.borderColor)
+                drawRightTriangle(plano, x - parteX, y - parteY, x + parteX, y + parteY, shape.borderColor)
             }
 
             dispatch(changeCoordinates(activeShape.id, coordinates))
