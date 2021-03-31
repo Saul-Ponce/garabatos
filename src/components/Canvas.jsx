@@ -68,6 +68,7 @@ export const Canvas = React.memo(() => {
             onClick={handleMouseCapture}
             onMouseDown={handleInitMoving}
             onMouseUpCapture={stopMouseMoving}
+            onContextMenu={(e) => e.preventDefault()}
             className="canvas"
             height={window.innerHeight - 132}
             width={window.innerWidth - 207} >
