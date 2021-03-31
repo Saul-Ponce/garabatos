@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import { shapesList } from "../helpers/shapesList";
+import { swapPosition } from "../helpers/swapPosition";
 import { types } from "../types/types";
 
 const intitialState = {
@@ -180,6 +181,20 @@ export const shapeReducer = (state = intitialState, action) => {
             return {
                 ...state,
                 activeShape: state.shapes.slice(-1).pop()
+            }
+        case types.deletePositionShapes:
+            return {
+                ...state,
+                shapes: state.shapes.filter((shape, index) => index !== action.payload)
+            }
+        case types.movePosition:
+
+
+            const copy = JSON.parse(JSON.stringify(state.shapes))
+
+            return {
+                ...state,
+                shapes: swapPosition(copy, action.payload.oldPosition, action.payload.newPosition)
             }
         default:
             return state;

@@ -4,14 +4,14 @@ import { removeActiveShape, setActiveShape, stopMoving } from '../actions/shape'
 import { shapesList } from '../helpers/shapesList'
 import { ActionButton } from './ActionButton'
 
-export const ShapeItem = React.memo(({
-    id
+export const ShapeItem = (({
+    id,
+    position
 }) => {
 
+    const { activeShape, shapes } = useSelector(state => state.shape)
 
-    const { activeShape } = useSelector(state => state.shape)
-
-
+    const shapesLength = shapes.length
     const dispatch = useDispatch()
 
     const handleClickButton = () => {
@@ -61,7 +61,18 @@ export const ShapeItem = React.memo(({
                     activeShape.id &&
                     activeShape.type.id !== shapesList.line.id &&
                     < ActionButton id={id} text="Rellenar" type="fill" />}
+
                 <ActionButton id={id} text="Mover" type="move" />
+
+                {
+                    position > 0 &&
+                    < ActionButton id={id} text="Subir" type="up" position={position} />}
+
+                {
+                    position < (shapesLength - 1) &&
+
+                    < ActionButton id={id} text="Bajar" type="down" position={position} />}
+
                 <ActionButton id={id} text="Borrar" type="erase" />
 
             </section>

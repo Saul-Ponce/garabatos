@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeBorerColor, changeFillColor, redraw, startMoving } from '../actions/shape'
-import { getAction } from '../helpers/getAction'
 import tinycolor from 'tinycolor2'
+import { changeBorerColor, changeFillColor, movePosition, redraw, startMoving } from '../actions/shape'
+import { getAction } from '../helpers/getAction'
 import { types } from '../types/types'
 
 export const ActionButton = React.memo(({
@@ -10,12 +10,15 @@ export const ActionButton = React.memo(({
     text,
     id,
     active = false,
-    onClick
+    onClick,
+    position = undefined
 }) => {
 
 
 
-    const { activeShape, color, action } = useSelector(state => state.shape)
+    const { activeShape, color, action, shapes } = useSelector(state => state.shape)
+
+    const shapesLength = shapes.length - 1
 
     const isColorDark = tinycolor(color).isDark()
 
@@ -34,6 +37,22 @@ export const ActionButton = React.memo(({
         }
         else if (type === "move") {
             await dispatch(startMoving())
+            return
+        }
+        else if (type === "down") {
+            const pos = shapesLength - position
+
+            // dispatch(deleteShapeInArray(position))
+            dispatch(movePosition(pos, pos - 1))
+            dispatch(redraw())
+            return
+        }
+        else if (type === "up") {
+            const pos = shapesLength - position
+
+            // dispatch(deleteShapeInArray(position))
+            dispatch(movePosition(pos, pos + 1))
+            dispatch(redraw())
             return
         }
 

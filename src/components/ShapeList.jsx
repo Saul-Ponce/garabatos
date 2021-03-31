@@ -11,8 +11,9 @@ export const ShapeList = React.memo(() => {
         <div className="shape-list">
             {
                 shapes &&
-                shapes.map((shape) => (
+                [...shapes].reverse().map((shape, position) => (
                     <ShapeItem
+                        position={position}
                         id={shape.id}
                         key={shape.id} />
                 ))

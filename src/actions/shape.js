@@ -150,3 +150,20 @@ export const setACtiveShapeAfterInsert = () => {
         type: types.setACtiveShapeAfterInsert
     }
 }
+
+export const deleteShapeInArray = (position) => {
+    return {
+        type: types.deletePositionShapes,
+        payload: position
+    }
+}
+
+export const movePosition = (oldPosition, newPosition) => {
+    return {
+        type: types.movePosition,
+        payload: {
+            oldPosition,
+            newPosition
+        }
+    }
+}

@@ -21,5 +21,7 @@ export const types = {
     stopMoving: "[shape] Stop Moving",
     startMoving: "[shape] Start Moving",
     removeActiveShape: "[shape] Remove Active Shape",
-    setACtiveShapeAfterInsert: "[shape] Set Active Shape After Insert"
+    setACtiveShapeAfterInsert: "[shape] Set Active Shape After Insert",
+    deletePositionShapes: "[shape] Dele Shape in array",
+    movePosition: "[shape] Move Position"
 }
