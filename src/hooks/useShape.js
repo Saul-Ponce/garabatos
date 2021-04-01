@@ -80,7 +80,6 @@ export const useShape = () => {
                 )
                 dispatch(deleteShape(activeShape.id))
                 dispatch(redraw())
-                dispatch(clearAction())
                 break;
             case types.redraw:
                 shapes.forEach((shape) => {
