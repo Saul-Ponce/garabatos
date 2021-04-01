@@ -26,4 +26,4 @@ yarn start
 
 ## Tutorial
 
-puede acceder al siguiente tutorial dando click [aqui](https://youtu.be/Haf6CDCZJbE)
+puede acceder al siguiente tutorial dando click [aqui](https://youtu.be/Pe8RVE21nO8)
