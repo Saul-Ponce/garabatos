@@ -1,25 +1,32 @@
-import React, { useRef } from 'react'
+import React, { useState } from 'react'
+import InputColor from 'react-input-color'
 import { useDispatch } from 'react-redux'
-import { changeColor } from '../actions/shape'
+import { changeColor, clearAction, eraseAll, redraw } from '../actions/shape'
 import { shapesList } from '../helpers/shapesList'
 import { ShapeButton } from './ShapeButton'
+
 export const Header = React.memo(() => {
 
 
     const dispatch = useDispatch()
 
-    const inputColor = useRef()
+    const [color, setColor] = useState("#000");
 
     const handleChangeColor = (e) => {
-        const color = e.target.value
+        const color = e.hex
         dispatch(changeColor(color))
 
     }
 
-    const randomColor = () => {
+    const handleRandomColor = () => {
+
         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-        inputColor.current.value = "#" + randomColor
-        dispatch(changeColor(inputColor.current.value))
+        setColor("#" + randomColor)
+        dispatch(changeColor(color))
+    }
+
+    const handleEraseAll = () => {
+        dispatch(eraseAll())
     }
 
     return (
@@ -41,15 +48,34 @@ export const Header = React.memo(() => {
                     <ShapeButton shape={shapesList.circle} maxPoints={4} disabled={true} />
                 </div>
             </div>
-            <div className="header__shapes header__shapes--color">
+            <div className="header__shapes header__shapes--color" style={{
+                overflowX: "auto"
+            }}>
                 <p className="header__shapes-title">
-                    Color
+                    Acciones globales
                 </p>
-                <div className="header__shapes-container">
-                    <input ref={inputColor} type="color" className="header__color" onChange={handleChangeColor} />
-                    <button className="header__shapes-random-color" onClick={randomColor}>Color Aleatorio</button>
+                <div className="header__shapes-container header__shapes-container--color">
+                    <InputColor
+                        initialValue={color}
+                        onChange={handleChangeColor}
+                    />
+                    {/* <input ref={inputColor} type="color" className="header__color" onChange={handleChangeColor} /> */}
+                    <button
+                        className="header__shapes-random-color" onClick={handleRandomColor}
+                        style={{
+                            width: "8rem",
+                            textAlign: "left"
+                        }} >
+                        <img src={require("../assets/img/fill.png").default} alt="color" /> <span>Color Aleatorio</span>
+                    </button>
+
+                    <button
+                        className="header__shapes-random-color"
+                        onClick={handleEraseAll}>
+                        <img src={require("../assets/img/erase.png").default} alt="fill" /> <span>Borrar Todo</span>
+                    </button>
                 </div>
             </div>
-        </header>
+        </header >
     )
 })

@@ -9,7 +9,7 @@ const intitialState = {
     maxPoints: 2,
     coordinates: [],
     countPoints: 0,
-    shapes: [],
+    shapes: JSON.parse(localStorage.getItem("shapes")) || [],
     activeShape: {},
     action: null,
     movingCoordinates: {},
@@ -195,6 +195,19 @@ export const shapeReducer = (state = intitialState, action) => {
             return {
                 ...state,
                 shapes: swapPosition(copy, action.payload.oldPosition, action.payload.newPosition)
+            }
+        case types.setSahpes:
+            return {
+                ...state,
+                shapes: action.payload,
+                activeShape: action.payload && action.payload.length > 0 ? action.payload.slice(-1).pop() : {}
+            }
+        case types.eraseAll:
+            return {
+                ...state,
+                shapes: [],
+                activeShape: {},
+                action: types.eraseAll
             }
         default:
             return state;

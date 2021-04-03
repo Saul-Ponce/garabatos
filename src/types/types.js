@@ -23,5 +23,7 @@ export const types = {
     removeActiveShape: "[shape] Remove Active Shape",
     setACtiveShapeAfterInsert: "[shape] Set Active Shape After Insert",
     deletePositionShapes: "[shape] Dele Shape in array",
-    movePosition: "[shape] Move Position"
+    movePosition: "[shape] Move Position",
+    setSahpes: "[shape] Set Shapes",
+    eraseAll: "[shape] Erase All"
 }
