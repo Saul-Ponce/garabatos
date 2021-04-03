@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import InputColor from 'react-input-color'
 import { useDispatch } from 'react-redux'
-import { changeColor, clearAction, eraseAll, redraw } from '../actions/shape'
+import { changeColor, eraseAll } from '../actions/shape'
 import { shapesList } from '../helpers/shapesList'
 import { ShapeButton } from './ShapeButton'
 
