@@ -6,6 +6,7 @@ import { Sidebar } from './components/Sidebar'
 import { store } from './store/store'
 
 export const Garabatos = () => {
+
     return (
 
         <Provider store={store}>

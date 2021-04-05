@@ -167,3 +167,16 @@ export const movePosition = (oldPosition, newPosition) => {
         }
     }
 }
+
+export const setShapes = (shapes) => {
+    return {
+        type: types.setSahpes,
+        payload: shapes
+    }
+}
+
+export const eraseAll = () => {
+    return {
+        type: types.eraseAll
+    }
+}

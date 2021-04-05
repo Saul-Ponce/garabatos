@@ -28,11 +28,18 @@
             width: 100%;
             overflow-y: auto;
             max-height: 40px;
+
+            &--color {
+                display: flex;
+                align-items: center;
+            }
         }
 
         &--color {
             margin-left: 1rem;
-            width: 12rem;
+            max-width: 50rem;
+            display: flex;
+            flex-direction: column;
         }
 
         &-random-color {
@@ -41,6 +48,13 @@
             border: 2px solid $dark;
             border-radius: 5px;
             cursor: pointer;
+            height: 40px;
+            display: flex;
+            align-items: center;
+
+            span {
+                margin-left: .3rem;
+            }
 
             &:hover {
                 background-color: darken($white, $amount: 10%);

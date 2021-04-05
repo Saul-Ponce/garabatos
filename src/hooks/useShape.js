@@ -39,6 +39,12 @@ export const useShape = () => {
     }, [canvas, plano])
 
 
+    //! Guardar figuras en localstorage
+
+    useEffect(() => {
+        localStorage.setItem("shapes", JSON.stringify(shapes))
+    }, [shapes])
+
 
     //! Efecto para eliminar las figuras
 
@@ -80,6 +86,10 @@ export const useShape = () => {
                 )
                 dispatch(deleteShape(activeShape.id))
                 dispatch(redraw())
+                break;
+            case types.eraseAll:
+                plano.clearRect(0, 0, canvas.width, canvas.height);
+                dispatch(clearAction())
                 break;
             case types.redraw:
                 shapes.forEach((shape) => {
