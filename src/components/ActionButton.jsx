@@ -2,15 +2,13 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import tinycolor from 'tinycolor2'
 import { changeBorerColor, changeFillColor, movePosition, redraw, startMoving } from '../actions/shape'
-import { getAction } from '../helpers/getAction'
+import { getAction } from '../helpers/getEraseShapeType'
 import { types } from '../types/types'
 
 export const ActionButton = React.memo(({
     type,
     text,
     id,
-    active = false,
-    onClick,
     position = undefined
 }) => {
 

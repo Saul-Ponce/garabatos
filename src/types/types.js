@@ -10,6 +10,7 @@ export const types = {
     eraseSquare: "[erase] Square",
     eraseLine: "[erase] Line",
     eraseRightTriangle: "[erase] Right Triangle",
+    eraseCircle: "[erase] Erase Circle",
     deleteShape: "[shape] Delete Shape",
     redraw: "[shape] Redraw shapes",
     changeColor: "[color] Change color",

@@ -89,6 +89,18 @@ export const useShape = () => {
                 dispatch(deleteShape(activeShape.id))
                 dispatch(redraw())
                 break;
+            case types.eraseCircle:
+                deleteCircle(
+                    plano,
+                    activeShape.coordinates[0].x,
+                    activeShape.coordinates[0].y,
+                    activeShape.coordinates[1].x,
+                    activeShape.coordinates[1].y,
+                    WHITE
+                )
+                dispatch(deleteShape(activeShape.id))
+                dispatch(redraw())
+                break;
             case types.eraseAll:
                 plano.clearRect(0, 0, canvas.width, canvas.height);
                 dispatch(clearAction())
@@ -137,6 +149,7 @@ export const useShape = () => {
                             dispatch(clearAction())
                             break
                         case shapesList.circle.id:
+                            console.log("redraw circle");
                             redrawCircle(
                                 plano,
                                 shape
@@ -185,6 +198,17 @@ export const useShape = () => {
                             break;
                         case shapesList.right_triangle.id:
                             moveRightTriangle(
+                                plano,
+                                shape.coordinates[0].x,
+                                shape.coordinates[0].y,
+                                shape.coordinates[1].x,
+                                shape.coordinates[1].y,
+                                shape
+                            )
+                            dispatch(startMoving())
+                            break;
+                        case shapesList.circle.id:
+                            moveCircle(
                                 plano,
                                 shape.coordinates[0].x,
                                 shape.coordinates[0].y,

@@ -15,10 +15,10 @@ export const useLine = () => {
 
     const [drawPoint] = usePoint()
 
-    const drawLine = (plano, x1, y1, x2, y2, oneTime = false, drawingColor = color) => {
+    const drawLine = (canvas, x1, y1, x2, y2, oneTime = false, drawingColor = color) => {
 
-        if (plano) {
-            plano.fillStyle = drawingColor
+        if (canvas) {
+            canvas.fillStyle = drawingColor
             //Se multiplica por 10 solamente para la escala pintar a escala
             // x1 *= 10;
             // x2 *= 10;
@@ -47,14 +47,14 @@ export const useLine = () => {
 
                 //* Para que pinte el primer pixel
                 if (i === 0) {
-                    drawPoint(plano, x, y);
+                    drawPoint(canvas, x, y);
                     continue;
                 }
 
                 x += siguienteX;
                 y += siguienteY;
 
-                drawPoint(plano, x, y);
+                drawPoint(canvas, x, y);
             }
 
         }
@@ -64,24 +64,24 @@ export const useLine = () => {
 
     }
 
-    const deleteLine = (plano, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
+    const deleteLine = (canvas, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
 
         for (let i = 0; i < EVITAR_DIFUMINADO; i++) {
-            drawLine(plano, x1, y1, x2, y2, false, deleteColor)
+            drawLine(canvas, x1, y1, x2, y2, false, deleteColor)
         }
 
-        plano.fillStyle = deleteColor
-        plano.moveTo(0, 0)
+        canvas.fillStyle = deleteColor
+        canvas.moveTo(0, 0)
 
     }
 
-    const redrawLine = (plano, x1, y1, x2, y2, drawingColor = color) => {
-        drawLine(plano, x1, y1, x2, y2, false, drawingColor)
-        plano.moveTo(0, 0)
+    const redrawLine = (canvas, x1, y1, x2, y2, drawingColor = color) => {
+        drawLine(canvas, x1, y1, x2, y2, false, drawingColor)
+        canvas.moveTo(0, 0)
 
     }
 
-    const moveLine = (plano, x1, y1, x2, y2, drawingColor = color, shape) => {
+    const moveLine = (canvas, x1, y1, x2, y2, drawingColor = color, shape) => {
 
 
         const { x, y } = movingCoordinates
@@ -100,14 +100,14 @@ export const useLine = () => {
 
 
         if (movingId === shape.id) {
-            deleteLine(plano, x1, y1, x2, y2)
+            deleteLine(canvas, x1, y1, x2, y2)
 
         }
 
 
         if (movingId !== shape.id) {
             drawLine(
-                plano,
+                canvas,
                 shape.coordinates[0].x,
                 shape.coordinates[0].y,
                 shape.coordinates[1].x,
@@ -122,14 +122,14 @@ export const useLine = () => {
             const coordinates = [{ x: x - parteX, y: y - parteY }, { x: x + parteX, y: y + parteY }]
 
 
-            drawLine(plano, x - parteX, y - parteY, x + parteX, y + parteY, false, drawingColor)
+            drawLine(canvas, x - parteX, y - parteY, x + parteX, y + parteY, false, drawingColor)
 
 
             dispatch(changeCoordinates(activeShape.id, coordinates))
         }
 
 
-        plano.moveTo(0, 0)
+        canvas.moveTo(0, 0)
 
     }
 

@@ -30,6 +30,7 @@ export const Header = React.memo(() => {
     }
 
     const handleRedraw = () => {
+        // dispatch(eraseAll())
         dispatch(redraw())
     }
 
