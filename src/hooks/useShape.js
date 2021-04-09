@@ -247,6 +247,10 @@ export const useShape = () => {
         moveRightTriangle,
         deleteRightTriangle,
         redrawRightTriangle,
+        deleteCircle,
+        moveCircle,
+        drawCircle,
+        redrawCircle
     ])
 
 
@@ -323,7 +327,11 @@ export const useShape = () => {
         type,
         coordinates,
         dispatch,
-        drawRightTriangle
+        drawRightTriangle,
+        deleteCircle,
+        moveCircle,
+        drawCircle,
+        redrawCircle
     ])
 
 
