@@ -1,17 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCoordinates, redraw } from '../actions/shape';
-import { DELETE_COLOR, EVITAR_DIFUMINADO, WHITE } from '../const/const';
-import { useLine } from './useLine';
+import { changeCoordinates } from '../actions/shape';
+import { DELETE_COLOR, EVITAR_DIFUMINADO } from '../const/const';
 import { usePoint } from './usePoint';
 
 export const useCircle = () => {
-    const [drawLine] = useLine()
-
     const [drawPoint] = usePoint()
 
     const dispatch = useDispatch()
 
-    const { color, movingCoordinates, activeShape, movingId, shapes } = useSelector(state => state.shape)
+    const { color, movingCoordinates, activeShape, movingId } = useSelector(state => state.shape)
 
     const drawCircle = (canvas, x1, y1, x2, y2, drawingColor = color) => {
 
@@ -26,12 +23,14 @@ export const useCircle = () => {
         }
 
         let y, x;
-        let h = x1,
-            k = y1
+        let h = (x1 + x2) / 2,
+            k = (y1 + y2) / 2
 
         const r = Math.sqrt(
             (Math.pow((x2 - h), 2) + Math.pow((y2 - k), 2))
         )
+
+        // const r = Math.abs(x1 - x2) / 2
 
 
         // drawLine(plano, x1, y1, x2, y2, color)
@@ -68,12 +67,6 @@ export const useCircle = () => {
             drawPoint(canvas, x + h, -y + k)
         }
 
-
-
-        dispatch(redraw())
-
-        // drawLine(canvas, x1, y1, x2, y2, false, "#ff0000")
-
         canvas.fillStyle = color
 
     }
@@ -96,7 +89,6 @@ export const useCircle = () => {
     }
 
     const fillCircle = (canvas, x1, y1, x2, y2, fillColor = color, borderColor = color) => {
-        console.log("fill: ", fillColor, " border: ", borderColor);
         canvas.fillStyle = fillColor;
 
         if (!canvas) {
@@ -111,27 +103,34 @@ export const useCircle = () => {
 
         let x = x2, y = y2
 
+        const r = Math.sqrt(
+            (Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2))
+        )
+
         let h = x1,
             k = y1
 
-        const r = Math.sqrt(
-            (Math.pow((x2 - h), 2) + Math.pow((y2 - k), 2))
-        )
-
         for (let newRadius = r; newRadius > 0; newRadius--) {
-            if (x2 > x1) {
-                x2 -= 3;
+
+            if (x1 < x2) {
+                x1++
+                x2--
             } else {
-                x2 += 3;
+                x2++
+                x1--
             }
 
-            if (y2 > y1) {
-                y2 -= 3;
+            if (y1 < y2) {
+                y1++
+                y2--
             } else {
-                y2 += 3;
+                y1--
+                y2++
             }
-            drawCircle(canvas, h, k, h + newRadius - 1, k, fillColor)
+
+            drawCircle(canvas, x1, y1, x2, y2, fillColor)
         }
+
 
         canvas.fillStyle = borderColor
 
@@ -170,7 +169,6 @@ export const useCircle = () => {
         let parteY = dy / 2
 
         if (movingId === shape.id) {
-            console.log("aqui");
             fillCircle(
                 canvas,
                 x1,
@@ -181,7 +179,6 @@ export const useCircle = () => {
                 DELETE_COLOR
             )
             // if (activeShape.fill) {
-            //     console.log("aqui llenando");
             //     fillCircle(
             //         canvas,
             //         x1,

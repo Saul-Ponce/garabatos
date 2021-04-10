@@ -38,9 +38,8 @@ export const useShape = () => {
             plano.translate(0, canvas.height);
             plano.scale(1, -1);
         }
+
     }, [canvas, plano])
-
-
     //! Guardar figuras en localstorage
 
     useEffect(() => {
@@ -149,7 +148,6 @@ export const useShape = () => {
                             dispatch(clearAction())
                             break
                         case shapesList.circle.id:
-                            console.log("redraw circle");
                             redrawCircle(
                                 plano,
                                 shape
