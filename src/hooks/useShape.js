@@ -8,6 +8,7 @@ import { useLine } from "./useLine";
 import { usePoint } from "./usePoint";
 import { useRightTriangle } from "./useRightTriangle";
 import { useSquare } from "./useSquare";
+import { useCircle } from "./useCircle";
 
 export const useShape = () => {
 
@@ -23,6 +24,7 @@ export const useShape = () => {
     const [drawLine, deleteLine, redrawLine, moveLine] = useLine()
     const [drawSquare, deleteSquare, redrawSquare, fillSquare, moveSquare] = useSquare()
     const [drawRightTriangle, deleteRightTriangle, redrawRightTriangle, moveRightTriangle] = useRightTriangle()
+    const [drawCircle, deleteCircle, redrawCircle, moveCircle] = useCircle()
     const [drawPoint] = usePoint()
 
 
@@ -36,9 +38,8 @@ export const useShape = () => {
             plano.translate(0, canvas.height);
             plano.scale(1, -1);
         }
+
     }, [canvas, plano])
-
-
     //! Guardar figuras en localstorage
 
     useEffect(() => {
@@ -77,6 +78,18 @@ export const useShape = () => {
                 break
             case types.eraseRightTriangle:
                 deleteRightTriangle(
+                    plano,
+                    activeShape.coordinates[0].x,
+                    activeShape.coordinates[0].y,
+                    activeShape.coordinates[1].x,
+                    activeShape.coordinates[1].y,
+                    WHITE
+                )
+                dispatch(deleteShape(activeShape.id))
+                dispatch(redraw())
+                break;
+            case types.eraseCircle:
+                deleteCircle(
                     plano,
                     activeShape.coordinates[0].x,
                     activeShape.coordinates[0].y,
@@ -132,7 +145,14 @@ export const useShape = () => {
                                 plano,
                                 shape
                             )
-                            // dispatch(clearAction())
+                            dispatch(clearAction())
+                            break
+                        case shapesList.circle.id:
+                            redrawCircle(
+                                plano,
+                                shape
+                            )
+                            dispatch(clearAction())
                             break
                         default:
                             break;
@@ -185,6 +205,17 @@ export const useShape = () => {
                             )
                             dispatch(startMoving())
                             break;
+                        case shapesList.circle.id:
+                            moveCircle(
+                                plano,
+                                shape.coordinates[0].x,
+                                shape.coordinates[0].y,
+                                shape.coordinates[1].x,
+                                shape.coordinates[1].y,
+                                shape
+                            )
+                            dispatch(startMoving())
+                            break;
                         default:
                             break;
 
@@ -214,6 +245,10 @@ export const useShape = () => {
         moveRightTriangle,
         deleteRightTriangle,
         redrawRightTriangle,
+        deleteCircle,
+        moveCircle,
+        drawCircle,
+        redrawCircle
     ])
 
 
@@ -250,6 +285,7 @@ export const useShape = () => {
                     dispatch(clearShapeDrawing())
                     dispatch(setACtiveShapeAfterInsert())
                     break;
+
                 case shapesList.right_triangle.id:
                     drawRightTriangle(
                         plano,
@@ -262,6 +298,17 @@ export const useShape = () => {
                     dispatch(setACtiveShapeAfterInsert())
                     break;
 
+                case shapesList.circle.id:
+                    drawCircle(
+                        plano,
+                        coordinates[0].x,
+                        coordinates[0].y,
+                        coordinates[1].x,
+                        coordinates[1].y
+                    )
+                    dispatch(clearShapeDrawing())
+                    dispatch(setACtiveShapeAfterInsert())
+                    break;
                 default:
                     break;
             }
@@ -278,7 +325,11 @@ export const useShape = () => {
         type,
         coordinates,
         dispatch,
-        drawRightTriangle
+        drawRightTriangle,
+        deleteCircle,
+        moveCircle,
+        drawCircle,
+        redrawCircle
     ])
 
 

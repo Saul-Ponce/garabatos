@@ -68,6 +68,15 @@ export const eraseRightTriangle = (id) => {
         }
     }
 }
+export const eraseCircle = (id) => {
+    return {
+        type: types.eraseShape,
+        payload: {
+            id,
+            erase: types.eraseCircle
+        }
+    }
+}
 
 export const deleteShape = (id) => {
     return {

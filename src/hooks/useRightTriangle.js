@@ -10,9 +10,9 @@ export const useRightTriangle = () => {
 
     const { color, movingCoordinates, activeShape, movingId } = useSelector(state => state.shape)
 
-    const drawRightTriangle = (plano, x1, y1, x2, y2, drawingColor = color) => {
+    const drawRightTriangle = (canvas, x1, y1, x2, y2, drawingColor = color) => {
 
-        if (!plano) {
+        if (!canvas) {
             return;
         }
 
@@ -33,37 +33,37 @@ export const useRightTriangle = () => {
             y3 = y2
         }
 
-        plano.moveTo(0, 0)
+        canvas.moveTo(0, 0)
 
         // x1,y1 -> x2,y2
-        drawLine(plano, x1, y1, x2, y2, false, drawingColor)
+        drawLine(canvas, x1, y1, x2, y2, false, drawingColor)
 
         // x2,y2 -> x3,y3
-        drawLine(plano, x2, y2, x3, y3, false, drawingColor)
+        drawLine(canvas, x2, y2, x3, y3, false, drawingColor)
 
         // x3,y3 -> x1,y1
-        drawLine(plano, x3, y3, x1, y1, false, drawingColor)
+        drawLine(canvas, x3, y3, x1, y1, false, drawingColor)
     }
 
-    const deleteRightTriangle = (plano, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
+    const deleteRightTriangle = (canvas, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
 
         for (let i = 0; i < EVITAR_DIFUMINADO; i++) {
-            drawRightTriangle(plano, x1, y1, x2, y2, deleteColor)
+            drawRightTriangle(canvas, x1, y1, x2, y2, deleteColor)
         }
 
         if (activeShape.fill) {
-            fillRightTriangle(plano, x1, y1, x2, y2, deleteColor, deleteColor)
+            fillRightTriangle(canvas, x1, y1, x2, y2, deleteColor, deleteColor)
         }
 
-        plano.fillStyle = color
-        plano.moveTo(0, 0)
+        canvas.fillStyle = color
+        canvas.moveTo(0, 0)
 
 
     }
 
-    const fillRightTriangle = (plano, x1, y1, x2, y2, fillColor = color, borderColor = color) => {
+    const fillRightTriangle = (canvas, x1, y1, x2, y2, fillColor = color, borderColor = color) => {
 
-        plano.fillStyle = fillColor;
+        canvas.fillStyle = fillColor;
 
         //* Para disminuir 1 coordenada
 
@@ -97,32 +97,32 @@ export const useRightTriangle = () => {
         }
 
         for (let x = inicioX; x < (inicioX + DX); x++) {
-            drawLine(plano, x, menorY, x, inicioY, false, fillColor)
+            drawLine(canvas, x, menorY, x, inicioY, false, fillColor)
             inicioY += incremento
         }
 
-        drawRightTriangle(plano, x1, y1, x2, y2, borderColor)
+        drawRightTriangle(canvas, x1, y1, x2, y2, borderColor)
 
 
     }
 
 
-    const redrawRightTriangle = (plano, shape) => {
+    const redrawRightTriangle = (canvas, shape) => {
         const x1 = shape.coordinates[0].x
         const y1 = shape.coordinates[0].y
         const x2 = shape.coordinates[1].x
         const y2 = shape.coordinates[1].y
         if (shape.fill) {
-            fillRightTriangle(plano, x1, y1, x2, y2, shape.fillColor, shape.borderColor)
+            fillRightTriangle(canvas, x1, y1, x2, y2, shape.fillColor, shape.borderColor)
         } else {
-            drawRightTriangle(plano, x1, y1, x2, y2, shape.borderColor)
+            drawRightTriangle(canvas, x1, y1, x2, y2, shape.borderColor)
         }
 
-        plano.moveTo(0, 0)
+        canvas.moveTo(0, 0)
 
     }
 
-    const moveRightTriangle = (plano, x1, y1, x2, y2, shape) => {
+    const moveRightTriangle = (canvas, x1, y1, x2, y2, shape) => {
 
         const { x, y } = movingCoordinates
 
@@ -138,10 +138,10 @@ export const useRightTriangle = () => {
         }
 
         if (movingId === shape.id) {
-            deleteRightTriangle(plano, x1, y1, x2, y2)
+            deleteRightTriangle(canvas, x1, y1, x2, y2)
             if (activeShape.fill) {
                 fillRightTriangle(
-                    plano,
+                    canvas,
                     x1,
                     y1,
                     x2,
@@ -157,7 +157,7 @@ export const useRightTriangle = () => {
         if (movingId !== shape.id) {
             if (shape.fill) {
                 fillRightTriangle(
-                    plano,
+                    canvas,
                     shape.coordinates[0].x,
                     shape.coordinates[0].y,
                     shape.coordinates[1].x,
@@ -167,7 +167,7 @@ export const useRightTriangle = () => {
                 )
             } else {
                 drawRightTriangle(
-                    plano,
+                    canvas,
                     shape.coordinates[0].x,
                     shape.coordinates[0].y,
                     shape.coordinates[1].x,
@@ -183,7 +183,7 @@ export const useRightTriangle = () => {
             const coordinates = [{ x: x - parteX, y: y - parteY }, { x: x + parteX, y: y + parteY }]
             if (shape.fill) {
                 fillRightTriangle(
-                    plano,
+                    canvas,
                     coordinates[0].x,
                     coordinates[0].y,
                     coordinates[1].x,
@@ -192,14 +192,14 @@ export const useRightTriangle = () => {
                     shape.borderColor
                 )
             } else {
-                drawRightTriangle(plano, x - parteX, y - parteY, x + parteX, y + parteY, shape.borderColor)
+                drawRightTriangle(canvas, x - parteX, y - parteY, x + parteX, y + parteY, shape.borderColor)
             }
 
             dispatch(changeCoordinates(activeShape.id, coordinates))
         }
 
 
-        plano.moveTo(0, 0)
+        canvas.moveTo(0, 0)
 
     }
 
