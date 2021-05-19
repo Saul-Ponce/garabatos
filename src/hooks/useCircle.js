@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { changeCoordinates } from '../actions/shape';
 import { DELETE_COLOR, EVITAR_DIFUMINADO } from '../const/const';
+import { formulaGeneral, raiz } from '../helpers/formulaGeneral';
 import { usePoint } from './usePoint';
 
 export const useCircle = () => {
@@ -21,50 +22,39 @@ export const useCircle = () => {
         if (!x1 || !y1 || !x2 || !y2) {
             return;
         }
+        const m = 2, n = 2
 
-        let y, x;
         let h = (x1 + x2) / 2,
             k = (y1 + y2) / 2
 
-        const r = Math.sqrt(
+
+        const a = Math.sqrt(
             (Math.pow((x2 - h), 2) + Math.pow((y2 - k), 2))
         )
+        const b = a
 
-        // const r = Math.abs(x1 - x2) / 2
+        const r = raiz(a, 1 / 2)
 
-
-        // drawLine(plano, x1, y1, x2, y2, color)
-
-
-
-        for (let a = 0; a <= 45; a++) {
-
-            x = r * Math.sin(a * Math.PI / 180)
-            y = r * Math.cos(a * Math.PI / 180)
-
-            // x,y
+        for (let x = -h; x < h; x++) {
+            const y = formulaGeneral({
+                x, a, b, r, m, n
+            })
             drawPoint(canvas, x + h, y + k)
-
-            // y,x
-            drawPoint(canvas, y + h, x + k)
-
-            // (-y, x)
-            drawPoint(canvas, -y + h, x + k)
-
-            // (-x,y)
-            drawPoint(canvas, -x + h, y + k)
-
-            // (-x, -y)
-            drawPoint(canvas, -x + h, -y + k)
-
-            // (-y,-x)
-            drawPoint(canvas, -y + h, -x + k)
-
-            // y, -x
-            drawPoint(canvas, y + h, -x + k)
-
-            // (x,-y)
             drawPoint(canvas, x + h, -y + k)
+
+        }
+
+        for (let y = -k; y < k; y++) {
+            const x = formulaGeneral({
+                x: y,
+                a,
+                b,
+                m: n,
+                n: m,
+                r
+            })
+            drawPoint(canvas, x + h, y + k)
+            drawPoint(canvas, -x + h, y + k)
         }
 
         canvas.fillStyle = color
