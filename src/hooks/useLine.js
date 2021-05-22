@@ -41,7 +41,6 @@ export const useLine = () => {
                 let k = x1 === h ? y1 : y2
 
                 const END = Math.abs(b) > Math.abs(a) ? Math.abs(b) + k : Math.abs(a) + h
-                console.log('b es mayor que a');
                 for (let x = h; x <= END; x++) {
                     let y = formulaGeneral({
                         x, h, k, a, b, r, m, n
@@ -54,8 +53,6 @@ export const useLine = () => {
                 let h = y1 === k ? x1 : x2
 
                 const END = Math.abs(b) > Math.abs(a) ? Math.abs(b) + k : Math.abs(a) + h
-                console.log('a es mayor que b', END);
-
                 for (let y = k; y <= END; y++) {
                     let x = formulaGeneral({
                         x: y,
