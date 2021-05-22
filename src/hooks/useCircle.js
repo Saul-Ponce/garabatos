@@ -35,27 +35,43 @@ export const useCircle = () => {
 
         const r = raiz(a, 1 / 2)
 
-        for (let x = -h; x < h; x++) {
-            const y = formulaGeneral({
-                x, a, b, r, m, n
+        for (let x = -b + h; x <= Math.abs(b) + h; x++) {
+
+            let y = formulaGeneral({
+                x, h, k, a, b, r, m, n
             })
-            drawPoint(canvas, x + h, y + k)
-            drawPoint(canvas, x + h, -y + k)
+            drawPoint(canvas, x, y)
+            /* y = formulaGeneral({
+                x, h, k: -k, a, b, r, m, n
+            }) */
+            drawPoint(canvas, x, -(y - k) + b * 7)
 
         }
 
-        for (let y = -k; y < k; y++) {
-            const x = formulaGeneral({
+        /* for (let y = -a + k; y < Math.abs(a) + k; y++) {
+            let x = formulaGeneral({
                 x: y,
-                a,
-                b,
+                h: k,
+                k: h,
+                a: b,
+                b: a,
                 m: n,
                 n: m,
                 r
             })
-            drawPoint(canvas, x + h, y + k)
-            drawPoint(canvas, -x + h, y + k)
-        }
+            drawPoint(canvas, x, y)
+            x = formulaGeneral({
+                x: y,
+                h: k,
+                k: -h,
+                a: b,
+                b: a,
+                m: n,
+                n: m,
+                r
+            })
+            drawPoint(canvas, Math.abs(x - k), y)
+        } */
 
         canvas.fillStyle = color
 

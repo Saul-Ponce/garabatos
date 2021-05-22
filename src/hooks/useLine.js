@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { changeCoordinates } from '../actions/shape';
 import { DELETE_COLOR, EVITAR_DIFUMINADO } from '../const/const';
+import { formulaGeneral } from '../helpers/formulaGeneral';
 import { usePoint } from './usePoint';
 
 export const useLine = () => {
 
-    let dx = 0;
-    let dy = 0;
+    /* let dx = 0;
+    let dy = 0; */
 
 
     const { color, activeShape, movingCoordinates, movingId } = useSelector(state => state.shape)
@@ -25,24 +26,45 @@ export const useLine = () => {
             // y1 *= 10;
             // y2 *= 10;
 
-            dx = (x2 - x1);
-            dy = (y2 - y1);
+            const m = 1, n = 1, r = 0
+            let a = -(x2 - x1)
+            let b = y2 - y1
+            let h
+            let k
 
-            let pasos = 0;
-
-            if (Math.abs(dx) > Math.abs(dy)) {
-                pasos = Math.abs(dx);
+            if (a === 0) {
+                let inicioY = y1 < y2 ? y1 : y2
+                let finY = y1 > y2 ? y1 : y2
+                for (let y = inicioY; y <= finY; y++) {
+                    drawPoint(canvas, x1, y);
+                }
+            } else if (Math.abs(b) > Math.abs(a)) {
+                h = x1 < x2 ? x1 : x2
+                k = x1 === h ? y1 : y2
+                const END = Math.abs(b) + k
+                for (let x = h; x <= END; x++) {
+                    let y = formulaGeneral({
+                        x, h, k, a, b, r, m, n
+                    })
+                    y = Math.round(y)
+                    drawPoint(canvas, x, y);
+                }
             } else {
-                pasos = Math.abs(dy);
+                k = y1 < y2 ? y1 : y2
+                h = x1 === k ? x1 : x2
+                const END = Math.abs(a) + h
+                for (let y = k; y <= END; y++) {
+                    let x = (Math.pow((r ** 2 - (((y - k) ** m) / b)) * a, 1 / n)) + h
+                    x = Math.round(x)
+                    drawPoint(canvas, x, y);
+                }
             }
 
-            const siguienteX = dx / pasos;
-            const siguienteY = dy / pasos;
 
-            let x = x1;
-            let y = y1;
 
-            for (let i = 0; i <= pasos; i++) {
+
+
+            /* for (let i = 0; i <= pasos; i++) {
 
 
                 //* Para que pinte el primer pixel
@@ -55,12 +77,12 @@ export const useLine = () => {
                 y += siguienteY;
 
                 drawPoint(canvas, x, y);
-            }
+            }*/
 
         }
 
-        dx = 0
-        dy = 0
+        /* dx = 0
+        dy = 0 */
 
     }
 
