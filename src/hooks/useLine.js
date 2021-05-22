@@ -29,8 +29,6 @@ export const useLine = () => {
             const m = 1, n = 1, r = 0
             let a = -(x2 - x1)
             let b = y2 - y1
-            let h
-            let k
 
             if (a === 0) {
                 let inicioY = y1 < y2 ? y1 : y2
@@ -38,10 +36,12 @@ export const useLine = () => {
                 for (let y = inicioY; y <= finY; y++) {
                     drawPoint(canvas, x1, y);
                 }
-            } else if (Math.abs(b) > Math.abs(a)) {
-                h = x1 < x2 ? x1 : x2
-                k = x1 === h ? y1 : y2
-                const END = Math.abs(b) + k
+            } else if (Math.abs(a) > Math.abs(b)) {
+                let h = x1 < x2 ? x1 : x2
+                let k = x1 === h ? y1 : y2
+
+                const END = Math.abs(b) > Math.abs(a) ? Math.abs(b) + k : Math.abs(a) + h
+                console.log('b es mayor que a');
                 for (let x = h; x <= END; x++) {
                     let y = formulaGeneral({
                         x, h, k, a, b, r, m, n
@@ -50,11 +50,23 @@ export const useLine = () => {
                     drawPoint(canvas, x, y);
                 }
             } else {
-                k = y1 < y2 ? y1 : y2
-                h = x1 === k ? x1 : x2
-                const END = Math.abs(a) + h
+                let k = y1 < y2 ? y1 : y2
+                let h = y1 === k ? x1 : x2
+
+                const END = Math.abs(b) > Math.abs(a) ? Math.abs(b) + k : Math.abs(a) + h
+                console.log('a es mayor que b', END);
+
                 for (let y = k; y <= END; y++) {
-                    let x = (Math.pow((r ** 2 - (((y - k) ** m) / b)) * a, 1 / n)) + h
+                    let x = formulaGeneral({
+                        x: y,
+                        h: k,
+                        k: h,
+                        a: b,
+                        b: a,
+                        m: n,
+                        n: m,
+                        r
+                    })
                     x = Math.round(x)
                     drawPoint(canvas, x, y);
                 }
@@ -65,17 +77,17 @@ export const useLine = () => {
 
 
             /* for (let i = 0; i <= pasos; i++) {
-
-
+    
+    
                 //* Para que pinte el primer pixel
                 if (i === 0) {
                     drawPoint(canvas, x, y);
                     continue;
                 }
-
+    
                 x += siguienteX;
                 y += siguienteY;
-
+    
                 drawPoint(canvas, x, y);
             }*/
 
