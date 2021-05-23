@@ -78,6 +78,16 @@ export const eraseCircle = (id) => {
     }
 }
 
+export const eraseEllipse = (id) => {
+    return {
+        type: types.eraseShape,
+        payload: {
+            id,
+            erase: types.eraseEllipse
+        }
+    }
+}
+
 export const deleteShape = (id) => {
     return {
         type: types.deleteShape,

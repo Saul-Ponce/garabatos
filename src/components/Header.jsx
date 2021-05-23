@@ -53,6 +53,9 @@ export const Header = React.memo(() => {
 
                     {/* Circulo */}
                     <ShapeButton shape={shapesList.circle} maxPoints={2} disabled={false} />
+
+                    {/* Elipse */}
+                    <ShapeButton shape={shapesList.ellipse} maxPoints={2} disabled={false} />
                 </div>
             </div>
             <div className="header__shapes header__shapes--color" style={{

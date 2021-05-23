@@ -9,6 +9,7 @@ import { usePoint } from "./usePoint";
 import { useRightTriangle } from "./useRightTriangle";
 import { useSquare } from "./useSquare";
 import { useCircle } from "./useCircle";
+import { useEllipse } from "./useEllipse";
 
 export const useShape = () => {
 
@@ -25,6 +26,7 @@ export const useShape = () => {
     const [drawSquare, deleteSquare, redrawSquare, fillSquare, moveSquare] = useSquare()
     const [drawRightTriangle, deleteRightTriangle, redrawRightTriangle, moveRightTriangle] = useRightTriangle()
     const [drawCircle, deleteCircle, redrawCircle, moveCircle] = useCircle()
+    const [drawEllipse, deleteEllipse, redrawEllipse, moveEllipse] = useEllipse()
     const [drawPoint] = usePoint()
 
 
@@ -100,6 +102,19 @@ export const useShape = () => {
                 dispatch(deleteShape(activeShape.id))
                 dispatch(redraw())
                 break;
+            case types.eraseEllipse:
+                deleteEllipse(
+                    plano,
+                    activeShape.coordinates[0].x,
+                    activeShape.coordinates[0].y,
+                    activeShape.coordinates[1].x,
+                    activeShape.coordinates[1].y,
+                    WHITE
+                )
+                dispatch(deleteShape(activeShape.id))
+                dispatch(redraw())
+                break;
+
             case types.eraseAll:
                 plano.clearRect(0, 0, canvas.width, canvas.height);
                 dispatch(clearAction())
@@ -149,6 +164,13 @@ export const useShape = () => {
                             break
                         case shapesList.circle.id:
                             redrawCircle(
+                                plano,
+                                shape
+                            )
+                            dispatch(clearAction())
+                            break
+                        case shapesList.ellipse.id:
+                            redrawEllipse(
                                 plano,
                                 shape
                             )
@@ -216,6 +238,17 @@ export const useShape = () => {
                             )
                             dispatch(startMoving())
                             break;
+                        case shapesList.ellipse.id:
+                            moveEllipse(
+                                plano,
+                                shape.coordinates[0].x,
+                                shape.coordinates[0].y,
+                                shape.coordinates[1].x,
+                                shape.coordinates[1].y,
+                                shape
+                            )
+                            dispatch(startMoving())
+                            break;
                         default:
                             break;
 
@@ -248,7 +281,10 @@ export const useShape = () => {
         deleteCircle,
         moveCircle,
         drawCircle,
-        redrawCircle
+        redrawCircle,
+        redrawEllipse,
+        deleteEllipse,
+        moveEllipse
     ])
 
 
@@ -309,6 +345,17 @@ export const useShape = () => {
                     dispatch(clearShapeDrawing())
                     dispatch(setACtiveShapeAfterInsert())
                     break;
+                case shapesList.ellipse.id:
+                    drawEllipse(
+                        plano,
+                        coordinates[0].x,
+                        coordinates[0].y,
+                        coordinates[1].x,
+                        coordinates[1].y
+                    )
+                    dispatch(clearShapeDrawing())
+                    dispatch(setACtiveShapeAfterInsert())
+                    break;
                 default:
                     break;
             }
@@ -329,7 +376,9 @@ export const useShape = () => {
         deleteCircle,
         moveCircle,
         drawCircle,
-        redrawCircle
+        redrawCircle,
+        redrawEllipse,
+        drawEllipse
     ])
 
 
