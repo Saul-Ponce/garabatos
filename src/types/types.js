@@ -20,6 +20,8 @@ export const types = {
     changeCoordinates: "[coordinates] Change Coordinates",
     movingShape: "[shape] Moving Shape",
     moveShape: "[shape] Move Shape",
+    movingShapeSize: "[shape] Moving Shape Size",
+    moveShapeSize: "[shape] Move Shape Size",
     stopMoving: "[shape] Stop Moving",
     startMoving: "[shape] Start Moving",
     removeActiveShape: "[shape] Remove Active Shape",

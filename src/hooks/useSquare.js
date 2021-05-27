@@ -171,11 +171,65 @@ export const useSquare = () => {
 
     }
 
+    const changeSizeSquare = (plano, x1, y1, x2, y2, drawingColor = color, shape) => {
+
+
+        const { x, y } = movingCoordinates
+
+        if (movingId !== shape.id) {
+            drawSquare(
+                plano,
+                shape.coordinates[0].x,
+                shape.coordinates[0].y,
+                shape.coordinates[1].x,
+                shape.coordinates[1].y,
+                true,
+                shape.borderColor
+            )
+            if (shape.fill) {
+                fillSquare(
+                    plano,
+                    shape.coordinates[0].x,
+                    shape.coordinates[0].y,
+                    shape.coordinates[1].x,
+                    shape.coordinates[1].y,
+                    shape.fillColor
+                )
+            }
+        }
+
+
+        if (movingId === shape.id) {
+            const coordinates = [{ x: x1, y: y1 }, { x, y }]
+
+
+            drawSquare(plano, x1, y1, x, y, false, shape.borderColor)
+
+            if (shape.fill) {
+                fillSquare(
+                    plano,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y,
+                    shape.fillColor
+                )
+            }
+
+            dispatch(changeCoordinates(activeShape.id, coordinates))
+        }
+
+
+        plano.moveTo(0, 0)
+
+    }
+
     return [
         drawSquare,
         deleteSquare,
         redrawSquare,
         fillSquare,
-        moveSquare
+        moveSquare,
+        changeSizeSquare
     ]
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addCoordinate, initMoving, movingShape, stopMoving } from '../actions/shape'
+import { addCoordinate, initMoving, movingShape, stopMoving, movingShapeSize } from '../actions/shape'
 import { useShape } from '../hooks/useShape'
 import { types } from '../types/types'
 
@@ -34,6 +34,10 @@ export const Canvas = React.memo(() => {
             dispatch(movingShape(x, y))
         }
 
+        if (action === types.moveShapeSize) {
+            dispatch(movingShapeSize(x, y))
+        }
+
 
     }
 
@@ -49,17 +53,23 @@ export const Canvas = React.memo(() => {
         if (action === types.moveShape && startMoving) {
             dispatch(movingShape(x, y))
         }
+
+        if (action === types.moveShapeSize && startMoving) {
+            dispatch(movingShapeSize(x, y))
+        }
     }
 
     const handleInitMoving = (e) => {
-        if (!startMoving && (action === types.moveShape || action === types.movingShape)) {
+        if (!startMoving && (action === types.moveShape || action === types.movingShape ||
+            action === types.moveShapeSize || action === types.movingShapeSize)) {
             dispatch(initMoving())
         }
     }
 
 
     const stopMouseMoving = () => {
-        if (startMoving && (action === types.moveShape || action === types.movingShape)) {
+        if (startMoving && (action === types.moveShape || action === types.movingShape ||
+            action === types.moveShapeSize || action === types.movingShapeSize)) {
             dispatch(stopMoving())
         }
     }
@@ -68,7 +78,7 @@ export const Canvas = React.memo(() => {
         <canvas
             ref={canvas}
             style={{
-                cursor: (action === types.moveShape || action === types.movingShape) ? "move" : "initial"
+                cursor: (action === types.moveShape || action === types.movingShape) ? "move" : (action === types.moveShapeSize || action === types.movingShapeSize ? "ne-resize" : "initial")
             }}
             onMouseMove={handleMoveMouse}
             onClick={handleMouseCapture}

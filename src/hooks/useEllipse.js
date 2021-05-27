@@ -256,10 +256,91 @@ export const useEllipse = () => {
 
     }
 
+    const changeSizeEllipse = (canvas, x1, y1, x2, y2, shape) => {
+
+        const { x, y } = movingCoordinates
+
+        if (movingId === shape.id) {
+            fillEllipse(
+                canvas,
+                x1,
+                y1,
+                x2,
+                y2,
+                DELETE_COLOR,
+                DELETE_COLOR
+            )
+            // if (activeShape.fill) {
+            //     fillEllipse(
+            //         canvas,
+            //         x1,
+            //         y1,
+            //         x2,
+            //         y2,
+            //         DELETE_COLOR,
+            //         DELETE_COLOR
+            //     )
+            // }
+        }
+
+
+
+        if (movingId !== shape.id) {
+            if (shape.fill) {
+                fillEllipse(
+                    canvas,
+                    shape.coordinates[0].x,
+                    shape.coordinates[0].y,
+                    shape.coordinates[1].x,
+                    shape.coordinates[1].y,
+                    shape.fillColor,
+                    shape.borderColor
+                )
+            } else {
+
+                drawEllipse(
+                    canvas,
+                    shape.coordinates[0].x,
+                    shape.coordinates[0].y,
+                    shape.coordinates[1].x,
+                    shape.coordinates[1].y,
+                    shape.borderColor
+                )
+            }
+
+        }
+
+
+        if (movingId === shape.id) {
+
+            const coordinates = [{ x: x1, y: y1 }, { x, y }]
+            if (shape.fill) {
+                fillEllipse(
+                    canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y,
+                    shape.fillColor,
+                    shape.borderColor
+                )
+            } else {
+                drawEllipse(canvas, x1, y1, x, y, shape.borderColor)
+            }
+
+            dispatch(changeCoordinates(activeShape.id, coordinates))
+        }
+
+
+        canvas.moveTo(0, 0)
+
+    }
+
     return [
         drawEllipse,
         deleteEllipse,
         redrawEllipse,
-        moveEllipse
+        moveEllipse,
+        changeSizeEllipse
     ]
 }

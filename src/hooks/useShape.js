@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearAction, clearShapeDrawing, deleteShape, redraw, setACtiveShapeAfterInsert, startMoving } from "../actions/shape";
+import { clearAction, clearShapeDrawing, deleteShape, redraw, setACtiveShapeAfterInsert, startMoving, startMovingSize } from "../actions/shape";
 import { WHITE } from "../const/const";
 import { shapesList } from "../helpers/shapesList";
 import { types } from "../types/types";
@@ -22,11 +22,11 @@ export const useShape = () => {
 
     const [redrawAll, setRedrawAll] = useState(null)
 
-    const [drawLine, deleteLine, redrawLine, moveLine] = useLine()
-    const [drawSquare, deleteSquare, redrawSquare, fillSquare, moveSquare] = useSquare()
-    const [drawRightTriangle, deleteRightTriangle, redrawRightTriangle, moveRightTriangle] = useRightTriangle()
-    const [drawCircle, deleteCircle, redrawCircle, moveCircle] = useCircle()
-    const [drawEllipse, deleteEllipse, redrawEllipse, moveEllipse] = useEllipse()
+    const [drawLine, deleteLine, redrawLine, moveLine, changeSizeLine] = useLine()
+    const [drawSquare, deleteSquare, redrawSquare, fillSquare, moveSquare, changeSizeSquare] = useSquare()
+    const [drawRightTriangle, deleteRightTriangle, redrawRightTriangle, moveRightTriangle, changeSizeRightTriangle] = useRightTriangle()
+    const [drawCircle, deleteCircle, redrawCircle, moveCircle, changeSizeCircle] = useCircle()
+    const [drawEllipse, deleteEllipse, redrawEllipse, moveEllipse, changeSizeEllipse] = useEllipse()
     const [drawPoint] = usePoint()
 
 
@@ -255,6 +255,78 @@ export const useShape = () => {
                     }
                 })
                 break;
+            case types.movingShapeSize:
+                plano.clearRect(0, 0, canvas.width, canvas.height);
+                shapes.forEach((shape) => {
+
+                    //! Switch para redibujar cada figura despues que se haya eliminado una
+                    switch (shape.type.id) {
+                        case shapesList.line.id:
+                            changeSizeLine(
+                                plano,
+                                shape.coordinates[0].x,
+                                shape.coordinates[0].y,
+                                shape.coordinates[1].x,
+                                shape.coordinates[1].y,
+                                shape.borderColor,
+                                shape
+                            )
+                            dispatch(startMovingSize())
+                            break;
+
+                        case shapesList.square.id:
+
+                            changeSizeSquare(
+                                plano,
+                                shape.coordinates[0].x,
+                                shape.coordinates[0].y,
+                                shape.coordinates[1].x,
+                                shape.coordinates[1].y,
+                                shape.borderColor,
+                                shape
+                            )
+
+                            dispatch(startMovingSize())
+                            break;
+                        case shapesList.right_triangle.id:
+                            changeSizeRightTriangle(
+                                plano,
+                                shape.coordinates[0].x,
+                                shape.coordinates[0].y,
+                                shape.coordinates[1].x,
+                                shape.coordinates[1].y,
+                                shape
+                            )
+                            dispatch(startMovingSize())
+                            break;
+                        case shapesList.circle.id:
+                            changeSizeCircle(
+                                plano,
+                                shape.coordinates[0].x,
+                                shape.coordinates[0].y,
+                                shape.coordinates[1].x,
+                                shape.coordinates[1].y,
+                                shape
+                            )
+                            dispatch(startMovingSize())
+                            break;
+                        case shapesList.ellipse.id:
+                            changeSizeEllipse(
+                                plano,
+                                shape.coordinates[0].x,
+                                shape.coordinates[0].y,
+                                shape.coordinates[1].x,
+                                shape.coordinates[1].y,
+                                shape
+                            )
+                            dispatch(startMovingSize())
+                            break;
+                        default:
+                            break;
+
+                    }
+                })
+                break;
             default:
                 setRedrawAll(null)
                 break;
@@ -284,7 +356,12 @@ export const useShape = () => {
         redrawCircle,
         redrawEllipse,
         deleteEllipse,
-        moveEllipse
+        moveEllipse,
+        changeSizeCircle,
+        changeSizeEllipse,
+        changeSizeLine,
+        changeSizeRightTriangle,
+        changeSizeSquare
     ])
 
 

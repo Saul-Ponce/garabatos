@@ -203,10 +203,81 @@ export const useRightTriangle = () => {
 
     }
 
+    const changeSizeRightTriangle = (canvas, x1, y1, x2, y2, shape) => {
+
+        const { x, y } = movingCoordinates
+
+        if (movingId === shape.id) {
+            deleteRightTriangle(canvas, x1, y1, x2, y2)
+            if (activeShape.fill) {
+                fillRightTriangle(
+                    canvas,
+                    x1,
+                    y1,
+                    x2,
+                    y2,
+                    DELETE_COLOR,
+                    DELETE_COLOR
+                )
+            }
+        }
+
+
+
+        if (movingId !== shape.id) {
+            if (shape.fill) {
+                fillRightTriangle(
+                    canvas,
+                    shape.coordinates[0].x,
+                    shape.coordinates[0].y,
+                    shape.coordinates[1].x,
+                    shape.coordinates[1].y,
+                    shape.fillColor,
+                    shape.borderColor
+                )
+            } else {
+                drawRightTriangle(
+                    canvas,
+                    shape.coordinates[0].x,
+                    shape.coordinates[0].y,
+                    shape.coordinates[1].x,
+                    shape.coordinates[1].y,
+                    shape.borderColor
+                )
+            }
+        }
+
+
+        if (movingId === shape.id) {
+
+            const coordinates = [{ x: x1, y: y1 }, { x, y }]
+            if (shape.fill) {
+                fillRightTriangle(
+                    canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y,
+                    shape.fillColor,
+                    shape.borderColor
+                )
+            } else {
+                drawRightTriangle(canvas, x1, y1, x, y, shape.borderColor)
+            }
+
+            dispatch(changeCoordinates(activeShape.id, coordinates))
+        }
+
+
+        canvas.moveTo(0, 0)
+
+    }
+
     return [
         drawRightTriangle,
         deleteRightTriangle,
         redrawRightTriangle,
-        moveRightTriangle
+        moveRightTriangle,
+        changeSizeRightTriangle
     ]
 }

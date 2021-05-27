@@ -129,9 +129,22 @@ export const startMoving = () => {
     }
 }
 
+export const startMovingSize = () => {
+    return {
+        type: types.moveShapeSize
+    }
+}
+
 export const movingShape = (x, y) => {
     return {
         type: types.movingShape,
+        payload: { x, y }
+    }
+}
+
+export const movingShapeSize = (x, y) => {
+    return {
+        type: types.movingShapeSize,
         payload: { x, y }
     }
 }

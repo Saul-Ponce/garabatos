@@ -164,5 +164,57 @@ export const useLine = () => {
 
     }
 
-    return [drawLine, deleteLine, redrawLine, moveLine]
+    const changeSizeLine = (canvas, x1, y1, x2, y2, drawingColor = color, shape) => {
+
+
+        const { x, y } = movingCoordinates
+
+        // let dx = Math.abs(x1 - x2)
+        // let dy = Math.abs(y1 - y2)
+
+
+        // let parteX = dx / 2
+        // let parteY = dy / 2
+
+
+        // if ((y1 > y2 && x1 < x2) || (y2 > y1 && x2 < x1)) {
+        //     parteY *= -1
+        // }
+
+
+        if (movingId === shape.id) {
+            deleteLine(canvas, x1, y1, x2, y2)
+
+        }
+
+
+        if (movingId !== shape.id) {
+            drawLine(
+                canvas,
+                shape.coordinates[0].x,
+                shape.coordinates[0].y,
+                shape.coordinates[1].x,
+                shape.coordinates[1].y,
+                true,
+                shape.borderColor
+            )
+        }
+
+
+        if (movingId === shape.id) {
+            const coordinates = [{ x: x1, y: y1 }, { x, y }]
+
+
+            drawLine(canvas, x1, y1, x, y, false, drawingColor)
+
+
+            dispatch(changeCoordinates(activeShape.id, coordinates))
+        }
+
+
+        canvas.moveTo(0, 0)
+
+    }
+
+    return [drawLine, deleteLine, redrawLine, moveLine, changeSizeLine]
 }

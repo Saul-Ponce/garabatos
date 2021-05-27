@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import tinycolor from 'tinycolor2'
-import { changeBorerColor, changeFillColor, movePosition, redraw, startMoving } from '../actions/shape'
+import { changeBorerColor, changeFillColor, movePosition, redraw, startMoving, startMovingSize } from '../actions/shape'
 import { getAction } from '../helpers/getEraseShapeType'
 import { types } from '../types/types'
 
@@ -35,6 +35,10 @@ export const ActionButton = React.memo(({
         }
         else if (type === "move") {
             await dispatch(startMoving())
+            return
+        }
+        else if (type === "size") {
+            await dispatch(startMovingSize())
             return
         }
         else if (type === "down") {

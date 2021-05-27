@@ -6,7 +6,7 @@ import { ActionButton } from './ActionButton'
 
 export const ShapeItem = (({
     id,
-    position
+    position,
 }) => {
 
     const { activeShape, shapes } = useSelector(state => state.shape)
@@ -74,6 +74,7 @@ export const ShapeItem = (({
                     < ActionButton id={id} text="Bajar" type="down" position={position} />}
 
                 <ActionButton id={id} text="Borrar" type="erase" />
+                <ActionButton id={id} text="Tamaño" type="size" />
 
             </section>
         </article>
