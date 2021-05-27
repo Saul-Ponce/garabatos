@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearAction, clearShapeDrawing, deleteShape, redraw, setACtiveShapeAfterInsert, startMoving, startMovingSize } from "../actions/shape";
+import { clearAction, clearShapeDrawing, deleteShape, redraw, setACtiveShapeAfterInsert, startMoving, startMovingSize, stopMoving } from "../actions/shape";
 import { WHITE } from "../const/const";
 import { shapesList } from "../helpers/shapesList";
 import { types } from "../types/types";
@@ -436,6 +436,7 @@ export const useShape = () => {
                 default:
                     break;
             }
+            dispatch(stopMoving())
         }
 
     }, [
