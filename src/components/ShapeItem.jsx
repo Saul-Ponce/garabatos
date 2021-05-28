@@ -1,12 +1,12 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeActiveShape, setActiveShape, stopMoving } from '../actions/shape'
+import { redraw, removeActiveShape, setActiveShape, stopMoving } from '../actions/shape'
 import { shapesList } from '../helpers/shapesList'
 import { ActionButton } from './ActionButton'
 
 export const ShapeItem = (({
     id,
-    position
+    position,
 }) => {
 
     const { activeShape, shapes } = useSelector(state => state.shape)
@@ -20,9 +20,9 @@ export const ShapeItem = (({
             dispatch(removeActiveShape())
             return
         }
-
         dispatch(setActiveShape(id))
         dispatch(stopMoving())
+        dispatch(redraw())
     }
 
     return (
@@ -74,6 +74,7 @@ export const ShapeItem = (({
                     < ActionButton id={id} text="Bajar" type="down" position={position} />}
 
                 <ActionButton id={id} text="Borrar" type="erase" />
+                <ActionButton id={id} text="Tamaño" type="size" />
 
             </section>
         </article>

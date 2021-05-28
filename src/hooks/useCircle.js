@@ -12,7 +12,7 @@ export const useCircle = () => {
     const { color, movingCoordinates, activeShape, movingId } = useSelector(state => state.shape)
 
     const drawCircle = (canvas, x1, y1, x2, y2, drawingColor = color) => {
-
+        console.log(drawingColor);
         if (!canvas) {
             return;
         }
@@ -161,6 +161,10 @@ export const useCircle = () => {
             drawCircle(canvas, x1, y1, x2, y2, shape.borderColor)
         }
 
+        if (shape.id === activeShape.id) {
+            selectCircle(canvas, x1, y1, x2, y2)
+        }
+
         canvas.moveTo(0, 0)
 
     }
@@ -244,6 +248,14 @@ export const useCircle = () => {
                 drawCircle(canvas, x - parteX, y - parteY, x + parteX, y + parteY, shape.borderColor)
             }
 
+            if (activeShape.id === shape.id) {
+                selectCircle(canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y)
+            }
+
             dispatch(changeCoordinates(activeShape.id, coordinates))
         }
 
@@ -252,10 +264,119 @@ export const useCircle = () => {
 
     }
 
+    const changeSizeCircle = (canvas, x1, y1, x2, y2, shape) => {
+
+        const { x, y } = movingCoordinates
+
+        if (movingId === shape.id) {
+            fillCircle(
+                canvas,
+                x1,
+                y1,
+                x2,
+                y2,
+                DELETE_COLOR,
+                DELETE_COLOR
+            )
+            // if (activeShape.fill) {
+            //     fillCircle(
+            //         canvas,
+            //         x1,
+            //         y1,
+            //         x2,
+            //         y2,
+            //         DELETE_COLOR,
+            //         DELETE_COLOR
+            //     )
+            // }
+        }
+
+
+
+        if (movingId !== shape.id) {
+            if (shape.fill) {
+                fillCircle(
+                    canvas,
+                    shape.coordinates[0].x,
+                    shape.coordinates[0].y,
+                    shape.coordinates[1].x,
+                    shape.coordinates[1].y,
+                    shape.fillColor,
+                    shape.borderColor
+                )
+            } else {
+
+                drawCircle(
+                    canvas,
+                    shape.coordinates[0].x,
+                    shape.coordinates[0].y,
+                    shape.coordinates[1].x,
+                    shape.coordinates[1].y,
+                    shape.borderColor
+                )
+            }
+
+        }
+
+
+        if (movingId === shape.id) {
+
+            const coordinates = [{ x: x1, y: y1 }, { x, y }]
+            if (shape.fill) {
+                fillCircle(
+                    canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y,
+                    shape.fillColor,
+                    shape.borderColor
+                )
+            } else {
+                drawCircle(canvas, x1, y1, x, y, shape.borderColor)
+            }
+
+            if (activeShape.id === shape.id) {
+                selectCircle(canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y)
+            }
+
+            dispatch(changeCoordinates(activeShape.id, coordinates))
+        }
+
+
+        canvas.moveTo(0, 0)
+
+    }
+
+    const selectCircle = (plano, x1, y1, x2, y2) => {
+        console.log(x1, y1, x2, y2)
+        if (x1 > x2) {
+            x1 += 3
+            x2 -= 3
+        } else {
+            x1 -= 3
+            x2 += 3
+        }
+        if (y1 > y2) {
+            y1 += 3
+            y2 -= 3
+        } else {
+            y1 -= 3
+            y2 += 3
+        }
+        drawCircle(plano, x1, y1, x2, y2, "yellow")
+        // plano.moveTo(0, 0)
+    }
+
     return [
         drawCircle,
         deleteCircle,
         redrawCircle,
-        moveCircle
+        moveCircle,
+        changeSizeCircle
     ]
 }

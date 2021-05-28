@@ -128,10 +128,23 @@ export const shapeReducer = (state = intitialState, action) => {
                 action: types.movingShape,
                 movingCoordinates: action.payload
             }
+        case types.movingShapeSize:
+            return {
+                ...state,
+                action: types.movingShapeSize,
+                movingCoordinates: action.payload
+            }
         case types.moveShape:
             return {
                 ...state,
                 action: types.moveShape,
+                movingCoordinates: {},
+                movingId: state.activeShape.id
+            }
+        case types.moveShapeSize:
+            return {
+                ...state,
+                action: types.moveShapeSize,
                 movingCoordinates: {},
                 movingId: state.activeShape.id
             }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import tinycolor from 'tinycolor2'
-import { changeBorerColor, changeFillColor, movePosition, redraw, startMoving } from '../actions/shape'
+import { changeBorerColor, changeFillColor, movePosition, redraw, startMoving, startMovingSize } from '../actions/shape'
 import { getAction } from '../helpers/getEraseShapeType'
 import { types } from '../types/types'
 
@@ -37,6 +37,10 @@ export const ActionButton = React.memo(({
             await dispatch(startMoving())
             return
         }
+        else if (type === "size") {
+            await dispatch(startMovingSize())
+            return
+        }
         else if (type === "down") {
             const pos = shapesLength - position
 
@@ -64,7 +68,7 @@ export const ActionButton = React.memo(({
                 backgroundColor: type === "fill" || type === "border" ? color : "",
                 color: ((type === "fill" || type === "border") && isColorDark) ? "white" : "initial"
             }}
-            className={`action-button ${(action === types.moveShape || action === types.movingShape) && type === "move" && id === activeShape.id ? "action-button--active" : ""
+            className={`action-button ${(action === types.moveShape || action === types.movingShape) && type === "move" && id === activeShape.id ? "action-button--active" : (action === types.moveShapeSize || action === types.movingShapeSize) && type === "size" && id === activeShape.id ? "action-button--active" : ""
                 }`} onClick={handleAction}>
             <img
                 style={{

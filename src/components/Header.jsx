@@ -49,7 +49,7 @@ export const Header = React.memo(() => {
 
                     {/* Triangulo Rectangulo */}
                     <ShapeButton shape={shapesList.right_triangle} maxPoints={2} disabled={false} />
-                    <ShapeButton shape={shapesList.triangle} maxPoints={3} rotate={true} disabled={true} />
+                    {/* <ShapeButton shape={shapesList.triangle} maxPoints={3} rotate={true} disabled={true} /> */}
 
                     {/* Circulo */}
                     <ShapeButton shape={shapesList.circle} maxPoints={2} disabled={false} />

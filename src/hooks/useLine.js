@@ -106,8 +106,21 @@ export const useLine = () => {
 
     }
 
-    const redrawLine = (canvas, x1, y1, x2, y2, drawingColor = color) => {
-        drawLine(canvas, x1, y1, x2, y2, false, drawingColor)
+    const redrawLine = (canvas, shape) => {
+
+        const x1 = shape.coordinates[0].x
+        const y1 = shape.coordinates[0].y
+        const x2 = shape.coordinates[1].x
+        const y2 = shape.coordinates[1].y
+
+        if (activeShape.id === shape.id) {
+            selectLine(canvas,
+                x1, y1, x2, y2)
+        }
+
+        drawLine(canvas, x1, y1, x2, y2, false, shape.drawingColor)
+
+
         canvas.moveTo(0, 0)
 
     }
@@ -151,7 +164,13 @@ export const useLine = () => {
 
         if (movingId === shape.id) {
             const coordinates = [{ x: x - parteX, y: y - parteY }, { x: x + parteX, y: y + parteY }]
-
+            if (activeShape.id === shape.id) {
+                selectLine(canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y)
+            }
 
             drawLine(canvas, x - parteX, y - parteY, x + parteX, y + parteY, false, drawingColor)
 
@@ -164,5 +183,80 @@ export const useLine = () => {
 
     }
 
-    return [drawLine, deleteLine, redrawLine, moveLine]
+    const changeSizeLine = (canvas, x1, y1, x2, y2, drawingColor = color, shape) => {
+
+
+        const { x, y } = movingCoordinates
+
+        // let dx = Math.abs(x1 - x2)
+        // let dy = Math.abs(y1 - y2)
+
+
+        // let parteX = dx / 2
+        // let parteY = dy / 2
+
+
+        // if ((y1 > y2 && x1 < x2) || (y2 > y1 && x2 < x1)) {
+        //     parteY *= -1
+        // }
+
+
+        if (movingId === shape.id) {
+            deleteLine(canvas, x1, y1, x2, y2)
+
+        }
+
+
+        if (movingId !== shape.id) {
+            drawLine(
+                canvas,
+                shape.coordinates[0].x,
+                shape.coordinates[0].y,
+                shape.coordinates[1].x,
+                shape.coordinates[1].y,
+                true,
+                shape.borderColor
+            )
+        }
+
+
+        if (movingId === shape.id) {
+            const coordinates = [{ x: x1, y: y1 }, { x, y }]
+
+
+            if (activeShape.id === shape.id) {
+                selectLine(canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y)
+            }
+
+            drawLine(canvas, x1, y1, x, y, false, drawingColor)
+
+
+            dispatch(changeCoordinates(activeShape.id, coordinates))
+        }
+
+
+        canvas.moveTo(0, 0)
+
+    }
+
+    const selectLine = (plano, x1, y1, x2, y2) => {
+        console.log(x1, y1, x2, y2)
+        y1 += 3
+        y2 += 3
+        x1 += 3
+        x2 += 3
+        drawLine(plano, x1, y1, x2, y2, true, "yellow")
+        y1 += -6
+        y2 += -6
+        x1 += -6
+        x2 += -6
+        drawLine(plano, x1, y1, x2, y2, true, "yellow")
+        // plano.moveTo(0, 0)
+    }
+
+    return [drawLine, deleteLine, redrawLine, moveLine, changeSizeLine]
 }

@@ -118,6 +118,11 @@ export const useRightTriangle = () => {
             drawRightTriangle(canvas, x1, y1, x2, y2, shape.borderColor)
         }
 
+        if (shape.id === activeShape.id) {
+            selectRightTriangle(canvas, x1, y1, x2, y2)
+        }
+
+
         canvas.moveTo(0, 0)
 
     }
@@ -195,6 +200,13 @@ export const useRightTriangle = () => {
                 drawRightTriangle(canvas, x - parteX, y - parteY, x + parteX, y + parteY, shape.borderColor)
             }
 
+            if (activeShape.id === shape.id) {
+                selectRightTriangle(canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y)
+            }
             dispatch(changeCoordinates(activeShape.id, coordinates))
         }
 
@@ -203,10 +215,109 @@ export const useRightTriangle = () => {
 
     }
 
+    const changeSizeRightTriangle = (canvas, x1, y1, x2, y2, shape) => {
+
+        const { x, y } = movingCoordinates
+
+        if (movingId === shape.id) {
+            deleteRightTriangle(canvas, x1, y1, x2, y2)
+            if (activeShape.fill) {
+                fillRightTriangle(
+                    canvas,
+                    x1,
+                    y1,
+                    x2,
+                    y2,
+                    DELETE_COLOR,
+                    DELETE_COLOR
+                )
+            }
+        }
+
+
+
+        if (movingId !== shape.id) {
+            if (shape.fill) {
+                fillRightTriangle(
+                    canvas,
+                    shape.coordinates[0].x,
+                    shape.coordinates[0].y,
+                    shape.coordinates[1].x,
+                    shape.coordinates[1].y,
+                    shape.fillColor,
+                    shape.borderColor
+                )
+            } else {
+                drawRightTriangle(
+                    canvas,
+                    shape.coordinates[0].x,
+                    shape.coordinates[0].y,
+                    shape.coordinates[1].x,
+                    shape.coordinates[1].y,
+                    shape.borderColor
+                )
+            }
+        }
+
+
+        if (movingId === shape.id) {
+
+            const coordinates = [{ x: x1, y: y1 }, { x, y }]
+            if (shape.fill) {
+                fillRightTriangle(
+                    canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y,
+                    shape.fillColor,
+                    shape.borderColor
+                )
+            } else {
+                drawRightTriangle(canvas, x1, y1, x, y, shape.borderColor)
+            }
+            if (activeShape.id === shape.id) {
+                selectRightTriangle(canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y)
+            }
+
+
+            dispatch(changeCoordinates(activeShape.id, coordinates))
+        }
+
+
+        canvas.moveTo(0, 0)
+
+    }
+
+    const selectRightTriangle = (plano, x1, y1, x2, y2) => {
+
+        if (x1 > x2) {
+            x1 += 3
+            x2 -= 3
+        } else {
+            x1 -= 3
+            x2 += 9
+        }
+        if (y1 > y2) {
+            y1 += 3
+            y2 -= 3
+        } else {
+            y1 -= 3
+            y2 += 3
+        }
+        drawRightTriangle(plano, x1, y1, x2, y2, "yellow")
+        // plano.moveTo(0, 0)
+    }
+
     return [
         drawRightTriangle,
         deleteRightTriangle,
         redrawRightTriangle,
-        moveRightTriangle
+        moveRightTriangle,
+        changeSizeRightTriangle
     ]
 }

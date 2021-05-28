@@ -58,7 +58,7 @@
             }
 
             &:hover {
-                background-color: darken($white, $amount: 10%);
+                background-color: $focus;
             }
         }
 
@@ -80,7 +80,7 @@
 
 
         &:hover {
-            background-color: darken($white, $amount: 30%);
+            background-color: $focus;
         }
 
         &--rotate {
