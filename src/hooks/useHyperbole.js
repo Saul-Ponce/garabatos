@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { changeCoordinates } from '../actions/shape';
 import { DELETE_COLOR, EVITAR_DIFUMINADO } from '../const/const';
-import { formulaGeneral, formulaGeneralRadio, formulaGeneralRadioHiperbole } from '../helpers/formulaGeneral';
+import { formulaGeneral, formulaGeneralRadioHiperbole } from '../helpers/formulaGeneral';
 import { usePoint } from './usePoint';
 
 export const useHyperbole = () => {
