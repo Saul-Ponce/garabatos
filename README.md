@@ -24,6 +24,8 @@ yarn install
 yarn start
 ```
 
-## Tutorial
+## Tutoriales
 
-puede acceder al siguiente tutorial dando click [aqui](https://youtu.be/Pe8RVE21nO8)
+[tutorial 1](https://youtu.be/Pe8RVE21nO8)
+
+[tutorial 2](https://youtu.be/bkcrtAH7P-Y)
