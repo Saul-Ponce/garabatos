@@ -89,8 +89,38 @@ export const useSquare = () => {
     }
 
 
-    const redrawSquare = (plano, x1, y1, x2, y2, drawingColor = color) => {
-        drawSquare(plano, x1, y1, x2, y2, false, drawingColor)
+    const redrawSquare = (plano, shape) => {
+
+        const x1 = shape.coordinates[0].x,
+            y1 = shape.coordinates[0].y,
+            x2 = shape.coordinates[1].x,
+            y2 = shape.coordinates[1].y
+
+        drawSquare(
+            plano,
+            shape.coordinates[0].x,
+            shape.coordinates[0].y,
+            shape.coordinates[1].x,
+            shape.coordinates[1].y,
+            true,
+            shape.borderColor
+        )
+        if (shape.fill) {
+            fillSquare(
+                plano,
+                shape.coordinates[0].x,
+                shape.coordinates[0].y,
+                shape.coordinates[1].x,
+                shape.coordinates[1].y,
+                shape.fillColor
+            )
+        }
+
+        if (activeShape.id === shape.id) {
+            selectSquare(plano,
+                x1, y1, x2, y2)
+        }
+
         plano.moveTo(0, 0)
 
     }
@@ -163,6 +193,14 @@ export const useSquare = () => {
                 )
             }
 
+            if (activeShape.id === shape.id) {
+                selectSquare(plano,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y)
+            }
+
             dispatch(changeCoordinates(activeShape.id, coordinates))
         }
 
@@ -216,12 +254,39 @@ export const useSquare = () => {
                 )
             }
 
+            if (activeShape.id === shape.id) {
+                selectSquare(plano,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y)
+            }
+
             dispatch(changeCoordinates(activeShape.id, coordinates))
         }
 
 
         plano.moveTo(0, 0)
 
+    }
+
+    const selectSquare = (plano, x1, y1, x2, y2) => {
+        if (x1 > x2) {
+            x1 += 3
+            x2 -= 3
+        } else {
+            x1 -= 3
+            x2 += 3
+        }
+        if (y1 > y2) {
+            y1 += 3
+            y2 -= 3
+        } else {
+            y1 -= 3
+            y2 += 3
+        }
+        drawSquare(plano, x1, y1, x2, y2, false, "yellow")
+        // plano.moveTo(0, 0)
     }
 
     return [

@@ -165,6 +165,11 @@ export const useEllipse = () => {
             drawEllipse(canvas, x1, y1, x2, y2, shape.borderColor)
         }
 
+
+        if (activeShape.id === shape.id) {
+            selectEllipse(canvas,
+                x1, y1, x2, y2)
+        }
         canvas.moveTo(0, 0)
 
     }
@@ -248,6 +253,15 @@ export const useEllipse = () => {
                 drawEllipse(canvas, x - parteX, y - parteY, x + parteX, y + parteY, shape.borderColor)
             }
 
+
+            if (activeShape.id === shape.id) {
+                selectEllipse(canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y)
+            }
+
             dispatch(changeCoordinates(activeShape.id, coordinates))
         }
 
@@ -328,12 +342,42 @@ export const useEllipse = () => {
                 drawEllipse(canvas, x1, y1, x, y, shape.borderColor)
             }
 
+            if (activeShape.id === shape.id) {
+                selectEllipse(canvas,
+                    coordinates[0].x,
+                    coordinates[0].y,
+                    coordinates[1].x,
+                    coordinates[1].y)
+            }
+
+
             dispatch(changeCoordinates(activeShape.id, coordinates))
         }
 
 
         canvas.moveTo(0, 0)
 
+    }
+
+
+    const selectEllipse = (plano, x1, y1, x2, y2) => {
+        console.log(x1, y1, x2, y2)
+        if (x1 > x2) {
+            x1 += 3
+            x2 -= 3
+        } else {
+            x1 -= 3
+            x2 += 3
+        }
+        if (y1 > y2) {
+            y1 += 3
+            y2 -= 3
+        } else {
+            y1 -= 3
+            y2 += 3
+        }
+        drawEllipse(plano, x1, y1, x2, y2, "yellow")
+        // plano.moveTo(0, 0)
     }
 
     return [

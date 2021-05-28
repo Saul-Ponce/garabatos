@@ -4,12 +4,12 @@ import { clearAction, clearShapeDrawing, deleteShape, redraw, setACtiveShapeAfte
 import { WHITE } from "../const/const";
 import { shapesList } from "../helpers/shapesList";
 import { types } from "../types/types";
+import { useCircle } from "./useCircle";
+import { useEllipse } from "./useEllipse";
 import { useLine } from "./useLine";
 import { usePoint } from "./usePoint";
 import { useRightTriangle } from "./useRightTriangle";
 import { useSquare } from "./useSquare";
-import { useCircle } from "./useCircle";
-import { useEllipse } from "./useEllipse";
 
 export const useShape = () => {
 
@@ -120,39 +120,22 @@ export const useShape = () => {
                 dispatch(clearAction())
                 break;
             case types.redraw:
+                plano.clearRect(0, 0, canvas.width, canvas.height);
                 shapes.forEach((shape) => {
                     //! Switch para redibujar cada figura despues que se haya eliminado una
                     switch (shape.type.id) {
                         case shapesList.line.id:
                             redrawLine(
                                 plano,
-                                shape.coordinates[0].x,
-                                shape.coordinates[0].y,
-                                shape.coordinates[1].x,
-                                shape.coordinates[1].y,
-                                shape.borderColor
+                                shape
                             )
                             break;
 
                         case shapesList.square.id:
                             redrawSquare(
                                 plano,
-                                shape.coordinates[0].x,
-                                shape.coordinates[0].y,
-                                shape.coordinates[1].x,
-                                shape.coordinates[1].y,
-                                shape.borderColor
+                                shape
                             )
-                            if (shape.fill) {
-                                fillSquare(
-                                    plano,
-                                    shape.coordinates[0].x,
-                                    shape.coordinates[0].y,
-                                    shape.coordinates[1].x,
-                                    shape.coordinates[1].y,
-                                    shape.fillColor
-                                )
-                            }
                             dispatch(clearAction())
                             break;
                         case shapesList.right_triangle.id:
@@ -181,7 +164,7 @@ export const useShape = () => {
 
                     }
                 })
-
+                dispatch(clearAction())
                 break
             case types.movingShape:
                 plano.clearRect(0, 0, canvas.width, canvas.height);
@@ -331,6 +314,7 @@ export const useShape = () => {
                 setRedrawAll(null)
                 break;
         }
+
     }, [
         action,
         activeShape,
@@ -395,6 +379,7 @@ export const useShape = () => {
                         coordinates[1].y,
                         true
                     )
+
                     dispatch(clearShapeDrawing())
                     dispatch(setACtiveShapeAfterInsert())
                     break;
@@ -437,6 +422,7 @@ export const useShape = () => {
                     break;
             }
             dispatch(stopMoving())
+            dispatch(redraw())
         }
 
     }, [

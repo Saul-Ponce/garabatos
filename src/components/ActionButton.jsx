@@ -68,7 +68,7 @@ export const ActionButton = React.memo(({
                 backgroundColor: type === "fill" || type === "border" ? color : "",
                 color: ((type === "fill" || type === "border") && isColorDark) ? "white" : "initial"
             }}
-            className={`action-button ${(action === types.moveShape || action === types.movingShape) && type === "move" && id === activeShape.id ? "action-button--active" : ""
+            className={`action-button ${(action === types.moveShape || action === types.movingShape) && type === "move" && id === activeShape.id ? "action-button--active" : (action === types.moveShapeSize || action === types.movingShapeSize) && type === "size" && id === activeShape.id ? "action-button--active" : ""
                 }`} onClick={handleAction}>
             <img
                 style={{
