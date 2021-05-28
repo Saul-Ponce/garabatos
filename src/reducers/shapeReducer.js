@@ -9,7 +9,7 @@ const intitialState = {
     maxPoints: 2,
     coordinates: [],
     countPoints: 0,
-    shapes: JSON.parse(localStorage.getItem("shapes")) || [],
+    shapes: [], //JSON.parse(localStorage.getItem("shapes")) ||
     activeShape: {},
     action: null,
     movingCoordinates: {},

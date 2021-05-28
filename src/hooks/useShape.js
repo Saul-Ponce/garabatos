@@ -44,9 +44,9 @@ export const useShape = () => {
     }, [canvas, plano])
     //! Guardar figuras en localstorage
 
-    useEffect(() => {
-        localStorage.setItem("shapes", JSON.stringify(shapes))
-    }, [shapes])
+    // useEffect(() => {
+    //     localStorage.setItem("shapes", JSON.stringify(shapes))
+    // }, [shapes])
 
 
     //! Efecto para eliminar las figuras
