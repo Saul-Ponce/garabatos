@@ -122,6 +122,25 @@ export const shapeReducer = (state = intitialState, action) => {
                     return shape
                 })
             }
+        case types.removeFillColor:
+            return {
+                ...state,
+                activeShape: {
+                    ...state.activeShape,
+                    fill: false,
+                    fillColor: null
+                },
+                shapes: state.shapes.map((shape) => {
+                    if (shape.id === action.payload) {
+                        return {
+                            ...shape,
+                            fill: false,
+                            fillColor: null
+                        }
+                    }
+                    return shape
+                })
+            }
         case types.movingShape:
             return {
                 ...state,

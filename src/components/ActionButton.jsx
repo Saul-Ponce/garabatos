@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import tinycolor from 'tinycolor2'
-import { changeBorerColor, changeFillColor, movePosition, redraw, startMoving, startMovingSize } from '../actions/shape'
+import { changeBorerColor, changeFillColor, movePosition, redraw, removeFillColor, startMoving, startMovingSize } from '../actions/shape'
 import { getAction } from '../helpers/getEraseShapeType'
 import { types } from '../types/types'
 
@@ -30,6 +30,10 @@ export const ActionButton = React.memo(({
             return
         } else if (type === "fill") {
             await dispatch(changeFillColor(id))
+            dispatch(redraw())
+            return
+        } else if (type === "erase_background") {
+            dispatch(removeFillColor(id))
             dispatch(redraw())
             return
         }

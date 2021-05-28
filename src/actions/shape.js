@@ -123,6 +123,13 @@ export const changeFillColor = (id) => {
     }
 }
 
+export const removeFillColor = (id) => {
+    return {
+        type: types.removeFillColor,
+        payload: id
+    }
+}
+
 export const startMoving = () => {
     return {
         type: types.moveShape

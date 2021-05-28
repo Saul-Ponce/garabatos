@@ -36,9 +36,7 @@ export const ShapeItem = (({
                     src={require("../assets/img/arrow.png").default}
                     alt="open" />
                 <p className="shape-list__text">{
-                    activeShape.id && activeShape.id === id ?
-                        "Figura Seleccionada" :
-                        "Seleccionar Figura"
+                    `Figura ${position + 1}`
                 }</p>
             </button>
             <section className={`shape-list__options 
@@ -60,7 +58,12 @@ export const ShapeItem = (({
                 {
                     activeShape.id &&
                     activeShape.type.id !== shapesList.line.id &&
-                    < ActionButton id={id} text="Rellenar" type="fill" />}
+                    < ActionButton id={id} text="Fondo" type="fill" />}
+
+                {
+                    activeShape.id &&
+                    activeShape.type.id !== shapesList.line.id && activeShape.fill &&
+                    < ActionButton id={id} text="Eliminar fondo" type="erase_background" />}
 
                 <ActionButton id={id} text="Mover" type="move" />
 
