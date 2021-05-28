@@ -88,6 +88,16 @@ export const eraseEllipse = (id) => {
     }
 }
 
+export const eraseHyperbole = (id) => {
+    return {
+        type: types.eraseShape,
+        payload: {
+            id,
+            erase: types.eraseHyperbole
+        }
+    }
+}
+
 export const deleteShape = (id) => {
     return {
         type: types.deleteShape,
@@ -217,5 +227,12 @@ export const setShapes = (shapes) => {
 export const eraseAll = () => {
     return {
         type: types.eraseAll
+    }
+}
+
+export const openHyperbole = (xy) => {
+    return {
+        type: types.openHyperbole,
+        payload: xy
     }
 }

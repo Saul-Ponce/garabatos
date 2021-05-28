@@ -50,7 +50,8 @@ export const shapeReducer = (state = intitialState, action) => {
                         fillColor: null,
                         coordinates: [
                             ...state.coordinates
-                        ]
+                        ],
+                        hyperbole: 1
                     }
                 ],
                 coordinates: []
@@ -240,6 +241,23 @@ export const shapeReducer = (state = intitialState, action) => {
                 shapes: [],
                 activeShape: {},
                 action: types.eraseAll
+            }
+        case types.openHyperbole:
+            return {
+                ...state,
+                activeShape: {
+                    ...state.activeShape,
+                    hyperbole: action.payload.xy
+                },
+                shapes: state.shapes.map((shape) => {
+                    if (shape.id === action.payload.id) {
+                        return {
+                            ...shape,
+                            hyperbole: action.payload.xy
+                        }
+                    }
+                    return shape
+                })
             }
         default:
             return state;

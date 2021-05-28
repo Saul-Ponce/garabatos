@@ -29,5 +29,19 @@ export const formulaGeneralRadio = ({
     return raiz((raiz(x - h, m) / a + raiz(y - k, n) / b), 1 / 2)
 }
 
+export const formulaGeneralRadioHiperbole = ({
+    x,
+    y,
+    h,
+    k,
+    a,
+    b,
+    m,
+    n,
+    r
+}) => {
+    return raiz(Math.abs((raiz(x - h, m) / a + raiz(y - k, n) / b)), 1 / 2)
+}
+
 //(Math.pow((r ** 2 - (((x) ** n) / a)) * b, 1 / m))
 //(Math.pow((r ** 2 - (((x - h) ** n) / a)) * b, 1 / m)) + k

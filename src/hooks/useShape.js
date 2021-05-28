@@ -6,6 +6,7 @@ import { shapesList } from "../helpers/shapesList";
 import { types } from "../types/types";
 import { useCircle } from "./useCircle";
 import { useEllipse } from "./useEllipse";
+import { useHyperbole } from "./useHyperbole";
 import { useLine } from "./useLine";
 import { usePoint } from "./usePoint";
 import { useRightTriangle } from "./useRightTriangle";
@@ -27,6 +28,7 @@ export const useShape = () => {
     const [drawRightTriangle, deleteRightTriangle, redrawRightTriangle, moveRightTriangle, changeSizeRightTriangle] = useRightTriangle()
     const [drawCircle, deleteCircle, redrawCircle, moveCircle, changeSizeCircle] = useCircle()
     const [drawEllipse, deleteEllipse, redrawEllipse, moveEllipse, changeSizeEllipse] = useEllipse()
+    const [drawHyperbole, deleteHyperbole, redrawHyperbole, moveHyperbole, changeSizeHyperbole] = useHyperbole()
     const [drawPoint] = usePoint()
 
 
@@ -115,6 +117,19 @@ export const useShape = () => {
                 dispatch(redraw())
                 break;
 
+            case types.eraseHyperbole:
+                deleteHyperbole(
+                    plano,
+                    activeShape.coordinates[0].x,
+                    activeShape.coordinates[0].y,
+                    activeShape.coordinates[1].x,
+                    activeShape.coordinates[1].y,
+                    WHITE
+                )
+                dispatch(deleteShape(activeShape.id))
+                dispatch(redraw())
+                break;
+
             case types.eraseAll:
                 plano.clearRect(0, 0, canvas.width, canvas.height);
                 dispatch(clearAction())
@@ -154,6 +169,13 @@ export const useShape = () => {
                             break
                         case shapesList.ellipse.id:
                             redrawEllipse(
+                                plano,
+                                shape
+                            )
+                            dispatch(clearAction())
+                            break
+                        case shapesList.hyperbole.id:
+                            redrawHyperbole(
                                 plano,
                                 shape
                             )
@@ -223,6 +245,17 @@ export const useShape = () => {
                             break;
                         case shapesList.ellipse.id:
                             moveEllipse(
+                                plano,
+                                shape.coordinates[0].x,
+                                shape.coordinates[0].y,
+                                shape.coordinates[1].x,
+                                shape.coordinates[1].y,
+                                shape
+                            )
+                            dispatch(startMoving())
+                            break;
+                        case shapesList.hyperbole.id:
+                            moveHyperbole(
                                 plano,
                                 shape.coordinates[0].x,
                                 shape.coordinates[0].y,
@@ -304,6 +337,17 @@ export const useShape = () => {
                             )
                             dispatch(startMovingSize())
                             break;
+                        case shapesList.hyperbole.id:
+                            changeSizeHyperbole(
+                                plano,
+                                shape.coordinates[0].x,
+                                shape.coordinates[0].y,
+                                shape.coordinates[1].x,
+                                shape.coordinates[1].y,
+                                shape
+                            )
+                            dispatch(startMovingSize())
+                            break;
                         default:
                             break;
 
@@ -345,7 +389,11 @@ export const useShape = () => {
         changeSizeEllipse,
         changeSizeLine,
         changeSizeRightTriangle,
-        changeSizeSquare
+        changeSizeSquare,
+        changeSizeHyperbole,
+        redrawHyperbole,
+        deleteHyperbole,
+        moveHyperbole
     ])
 
 
@@ -418,6 +466,17 @@ export const useShape = () => {
                     dispatch(clearShapeDrawing())
                     dispatch(setACtiveShapeAfterInsert())
                     break;
+                case shapesList.hyperbole.id:
+                    drawHyperbole(
+                        plano,
+                        coordinates[0].x,
+                        coordinates[0].y,
+                        coordinates[1].x,
+                        coordinates[1].y
+                    )
+                    dispatch(clearShapeDrawing())
+                    dispatch(setACtiveShapeAfterInsert())
+                    break;
                 default:
                     break;
             }
@@ -442,7 +501,8 @@ export const useShape = () => {
         drawCircle,
         redrawCircle,
         redrawEllipse,
-        drawEllipse
+        drawEllipse,
+        drawHyperbole,
     ])
 
 

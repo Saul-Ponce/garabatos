@@ -57,7 +57,7 @@ export const ShapeItem = (({
                 <ActionButton id={id} text="Borde" type="border" />
                 {
                     activeShape.id &&
-                    activeShape.type.id !== shapesList.line.id &&
+                    activeShape.type.id !== shapesList.line.id && activeShape.type.id !== shapesList.hyperbole.id &&
                     < ActionButton id={id} text="Fondo" type="fill" />}
 
                 {
@@ -75,6 +75,9 @@ export const ShapeItem = (({
                     position < (shapesLength - 1) &&
 
                     < ActionButton id={id} text="Bajar" type="down" position={position} />}
+                {/* open_hyperbole */}
+
+                <ActionButton id={id} text={`Abrir en ${activeShape.hyperbole === 1 ? "Y" : "X"}`} type="open_hyperbole" />
 
                 <ActionButton id={id} text="Borrar" type="erase" />
                 <ActionButton id={id} text="Tamaño" type="size" />
