@@ -251,10 +251,8 @@ export const shapeReducer = (state = intitialState, action) => {
                 },
                 shapes: state.shapes.map((shape) => {
                     if (shape.id === action.payload.id) {
-                        return {
-                            ...shape,
-                            hyperbole: action.payload.xy
-                        }
+                        console.log("aqui");
+                        shape.hyperbole = action.payload.xy
                     }
                     return shape
                 })

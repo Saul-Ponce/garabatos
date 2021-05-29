@@ -124,6 +124,7 @@ export const useShape = () => {
                     activeShape.coordinates[0].y,
                     activeShape.coordinates[1].x,
                     activeShape.coordinates[1].y,
+                    activeShape.hyperbole,
                     WHITE
                 )
                 dispatch(deleteShape(activeShape.id))
@@ -472,7 +473,8 @@ export const useShape = () => {
                         coordinates[0].x,
                         coordinates[0].y,
                         coordinates[1].x,
-                        coordinates[1].y
+                        coordinates[1].y,
+                        1
                     )
                     dispatch(clearShapeDrawing())
                     dispatch(setACtiveShapeAfterInsert())
