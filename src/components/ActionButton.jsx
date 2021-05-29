@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import tinycolor from 'tinycolor2'
-import { changeBorerColor, changeFillColor, movePosition, redraw, removeFillColor, startMoving, startMovingSize } from '../actions/shape'
+import { changeBorerColor, changeFillColor, movePosition, openHyperbole, redraw, removeFillColor, startMoving, startMovingSize } from '../actions/shape'
 import { getAction } from '../helpers/getEraseShapeType'
 import { types } from '../types/types'
 
@@ -43,6 +43,14 @@ export const ActionButton = React.memo(({
         }
         else if (type === "size") {
             await dispatch(startMovingSize())
+            return
+        }
+        else if (type === "open_hyperbole") {
+            dispatch(openHyperbole({
+                id,
+                xy: activeShape.hyperbole === 1 ? -1 : 1
+            }))
+            dispatch(redraw())
             return
         }
         else if (type === "down") {

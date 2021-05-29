@@ -1,4 +1,4 @@
-import { eraseLine, eraseSquare, eraseRightTriangle, eraseCircle, eraseEllipse } from '../actions/shape';
+import { eraseLine, eraseSquare, eraseRightTriangle, eraseCircle, eraseEllipse, eraseHyperbole } from '../actions/shape';
 import { shapesList } from "./shapesList";
 export const getAction = (type) => {
 
@@ -13,6 +13,8 @@ export const getAction = (type) => {
             return eraseCircle
         case shapesList.ellipse.id:
             return eraseEllipse
+        case shapesList.hyperbole.id:
+            return eraseHyperbole
         default:
             break;
     }

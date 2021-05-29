@@ -12,6 +12,7 @@ export const types = {
     eraseRightTriangle: "[erase] Right Triangle",
     eraseCircle: "[erase] Erase Circle",
     eraseEllipse: "[erase] Erase Ellipse",
+    eraseHyperbole: "[erase] Erase Hyperbole",
     deleteShape: "[shape] Delete Shape",
     redraw: "[shape] Redraw shapes",
     changeColor: "[color] Change color",
@@ -30,5 +31,6 @@ export const types = {
     deletePositionShapes: "[shape] Dele Shape in array",
     movePosition: "[shape] Move Position",
     setSahpes: "[shape] Set Shapes",
-    eraseAll: "[shape] Erase All"
+    eraseAll: "[shape] Erase All",
+    openHyperbole: "[shape] Open Hyperbole",
 }
