@@ -426,7 +426,7 @@ export const useShape = () => {
                         coordinates[0].y,
                         coordinates[1].x,
                         coordinates[1].y,
-                        true
+                        0
                     )
 
                     dispatch(clearShapeDrawing())

@@ -51,6 +51,7 @@ export const shapeReducer = (state = intitialState, action) => {
                         coordinates: [
                             ...state.coordinates
                         ],
+                        angle: 0,
                         hyperbole: 1
                     }
                 ],
