@@ -47,7 +47,7 @@ export const useRightTriangle = () => {
         nX2 = rotateX({ angle: angl, centerX, centerY, x: x2, y: y2, });
         nY2 = rotateY({ angle: angl, centerX, centerY, x: x2, y: y2, });
 
-        drawLine(canvas, nX1, nY1, nX2, nY2, false, drawingColor);
+        drawLine(canvas, nX1, nY1, nX2, nY2, false, drawingColor, 0);
 
         // x2,y2 -> x3,y3
         nX1 = rotateX({ angle: angl, centerX, centerY, x: x2, y: y2, });
@@ -55,7 +55,7 @@ export const useRightTriangle = () => {
         nX2 = rotateX({ angle: angl, centerX, centerY, x: x3, y: y3, });
         nY2 = rotateY({ angle: angl, centerX, centerY, x: x3, y: y3, });
 
-        drawLine(canvas, nX1, nY1, nX2, nY2, false, drawingColor);
+        drawLine(canvas, nX1, nY1, nX2, nY2, false, drawingColor, 0);
 
         // x3,y3 -> x1,y1
         nX1 = rotateX({ angle: angl, centerX, centerY, x: x3, y: y3, });
@@ -63,7 +63,7 @@ export const useRightTriangle = () => {
         nX2 = rotateX({ angle: angl, centerX, centerY, x: x1, y: y1, });
         nY2 = rotateY({ angle: angl, centerX, centerY, x: x1, y: y1, });
 
-        drawLine(canvas, nX1, nY1, nX2, nY2, false, drawingColor);
+        drawLine(canvas, nX1, nY1, nX2, nY2, false, drawingColor, 0);
     }
 
     const deleteRightTriangle = (canvas, x1, y1, x2, y2, angle, deleteColor = DELETE_COLOR) => {

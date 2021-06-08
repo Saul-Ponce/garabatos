@@ -93,12 +93,12 @@ export const ShapeItem = (({
 
                 {
                     position > 0 &&
-                    < ActionButton id={id} text="Subir" type="up" position={position} />}
+                    < ActionButton id={id} text="Enviar adelante" type="up" position={position} />}
 
                 {
                     position < (shapesLength - 1) &&
 
-                    <ActionButton id={id} text="Bajar" type="down" position={position} />}
+                    <ActionButton id={id} text="Enviar atras" type="down" position={position} />}
                 {/* open_hyperbole */}
 
                 {
@@ -108,18 +108,27 @@ export const ShapeItem = (({
                     <ActionButton id={id} text={`Abrir en ${activeShape.hyperbole === 1 ? "Y" : "X"}`} type="open_hyperbole" />
                 }
 
-                <label htmlFor="angle" className="action-button__label">Angulo</label>
+                {
+                    activeShape &&
+                    activeShape.id &&
+                    activeShape.type.id !== shapesList.right_triangle.id &&
+                    activeShape.type.id !== shapesList.circle.id && (
+                        <>
+                            <label htmlFor="angle" className="action-button__label">Angulo</label>
 
-                <input
-                    id="angle"
-                    min={-360}
-                    max={360}
-                    step={1}
-                    type="number"
-                    onChange={handleChangeAngle}
-                    className="action-button__angle"
-                    value={angle}
-                />
+                            <input
+                                id="angle"
+                                min={-360}
+                                max={360}
+                                step={1}
+                                type="number"
+                                onChange={handleChangeAngle}
+                                className="action-button__angle"
+                                value={angle}
+                            />
+                        </>
+                    )
+                }
 
                 <ActionButton id={id} text="Borrar" type="erase" />
                 <ActionButton id={id} text="Tamaño" type="size" />

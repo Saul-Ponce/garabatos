@@ -414,7 +414,9 @@ export const useShape = () => {
                         coordinates[0].y,
                         coordinates[1].x,
                         coordinates[1].y,
-                        true
+                        true,
+                        undefined,
+                        0
                     )
                     dispatch(clearShapeDrawing())
                     dispatch(setACtiveShapeAfterInsert())

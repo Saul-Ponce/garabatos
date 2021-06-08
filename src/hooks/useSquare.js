@@ -81,14 +81,14 @@ export const useSquare = () => {
 		nX2 = rotateX({ angle: angl, centerX, centerY, x: x2, y: y1, });
 		nY2 = rotateY({ angle: angl, centerX, centerY, x: x2, y: y1, });
 
-		drawLine(plano, nX1, nY1, nX2, nY2, false, drawingColor);
+		drawLine(plano, nX1, nY1, nX2, nY2, false, drawingColor, 0);
 
 		// x1,y1 -> x1,y2
 		nX1 = rotateX({ angle: angl, centerX, centerY, x: x1, y: y1, });
 		nY1 = rotateY({ angle: angl, centerX, centerY, x: x1, y: y1, });
 		nX2 = rotateX({ angle: angl, centerX, centerY, x: x1, y: y2, });
 		nY2 = rotateY({ angle: angl, centerX, centerY, x: x1, y: y2, });
-		drawLine(plano, nX1, nY1, nX2, nY2, false, drawingColor);
+		drawLine(plano, nX1, nY1, nX2, nY2, false, drawingColor, 0);
 
 		// x1,y2 -> x2,y2
 		nX1 = rotateX({ angle: angl, centerX, centerY, x: x1, y: y2, });
@@ -96,14 +96,14 @@ export const useSquare = () => {
 		nX2 = rotateX({ angle: angl, centerX, centerY, x: x2, y: y2, });
 		nY2 = rotateY({ angle: angl, centerX, centerY, x: x2, y: y2, });
 
-		drawLine(plano, nX1, nY1, nX2, nY2, false, drawingColor);
+		drawLine(plano, nX1, nY1, nX2, nY2, false, drawingColor, 0);
 
 		// x2,y2 -> x2,y1
 		nX1 = rotateX({ angle: angl, centerX, centerY, x: x2, y: y2, });
 		nY1 = rotateY({ angle: angl, centerX, centerY, x: x2, y: y2, });
 		nX2 = rotateX({ angle: angl, centerX, centerY, x: x2, y: y1, });
 		nY2 = rotateY({ angle: angl, centerX, centerY, x: x2, y: y1, });
-		drawLine(plano, nX1, nY1, nX2, nY2, false, drawingColor);
+		drawLine(plano, nX1, nY1, nX2, nY2, false, drawingColor, 0);
 	};
 
 	const deleteSquare = (plano, x1, y1, x2, y2, angle, deleteColor = DELETE_COLOR) => {

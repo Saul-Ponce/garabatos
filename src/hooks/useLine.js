@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeCoordinates } from '../actions/shape';
 import { DELETE_COLOR, EVITAR_DIFUMINADO } from '../const/const';
 import { formulaGeneral } from '../helpers/formulaGeneral';
+import { rotateX, rotateY } from '../helpers/rotatePoint';
 import { usePoint } from './usePoint';
 
 export const useLine = () => {
@@ -16,8 +17,9 @@ export const useLine = () => {
 
     const [drawPoint] = usePoint()
 
-    const drawLine = (canvas, x1, y1, x2, y2, oneTime = false, drawingColor = color) => {
-
+    const drawLine = (canvas, x1, y1, x2, y2, oneTime = false, drawingColor = color, angle) => {
+        let nX, nY
+        let angl = angle
         if (canvas) {
             canvas.fillStyle = drawingColor
             //Se multiplica por 10 solamente para la escala pintar a escala
@@ -30,11 +32,16 @@ export const useLine = () => {
             let a = -(x2 - x1)
             let b = y2 - y1
 
+            let h = (x1 + x2) / 2,
+                k = (y1 + y2) / 2
+
             if (a === 0) {
                 let inicioY = y1 < y2 ? y1 : y2
                 let finY = y1 > y2 ? y1 : y2
                 for (let y = inicioY; y <= finY; y++) {
-                    drawPoint(canvas, x1, y);
+                    nX = rotateX({ angle: angl, centerX: h, centerY: k, x: x1, y });
+                    nY = rotateY({ angle: angl, centerX: h, centerY: k, x: x1, y });
+                    drawPoint(canvas, nX, nY);
                 }
             } else if (Math.abs(a) > Math.abs(b)) {
                 let h = x1 < x2 ? x1 : x2
@@ -45,8 +52,10 @@ export const useLine = () => {
                     let y = formulaGeneral({
                         x, h, k, a, b, r, m, n
                     })
-                    y = Math.round(y)
-                    drawPoint(canvas, x, y);
+                    // y = Math.round(y)
+                    nX = rotateX({ angle: angl, centerX: h, centerY: k, x, y });
+                    nY = rotateY({ angle: angl, centerX: h, centerY: k, x, y });
+                    drawPoint(canvas, nX, nY);
                 }
             } else {
                 let k = y1 < y2 ? y1 : y2
@@ -64,8 +73,10 @@ export const useLine = () => {
                         n: m,
                         r
                     })
-                    x = Math.round(x)
-                    drawPoint(canvas, x, y);
+                    // x = Math.round(x)
+                    nX = rotateX({ angle: angl, centerX: h, centerY: k, x, y });
+                    nY = rotateY({ angle: angl, centerX: h, centerY: k, x, y });
+                    drawPoint(canvas, nX, nY);
                 }
             }
 
@@ -95,10 +106,10 @@ export const useLine = () => {
 
     }
 
-    const deleteLine = (canvas, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
+    const deleteLine = (canvas, x1, y1, x2, y2, angle, deleteColor = DELETE_COLOR) => {
 
         for (let i = 0; i < EVITAR_DIFUMINADO; i++) {
-            drawLine(canvas, x1, y1, x2, y2, false, deleteColor)
+            drawLine(canvas, x1, y1, x2, y2, false, deleteColor, angle)
         }
 
         canvas.fillStyle = deleteColor
@@ -115,10 +126,10 @@ export const useLine = () => {
 
         if (activeShape.id === shape.id) {
             selectLine(canvas,
-                x1, y1, x2, y2)
+                x1, y1, x2, y2, shape.angle)
         }
 
-        drawLine(canvas, x1, y1, x2, y2, false, shape.drawingColor)
+        drawLine(canvas, x1, y1, x2, y2, false, shape.drawingColor, shape.angle)
 
 
         canvas.moveTo(0, 0)
@@ -144,7 +155,7 @@ export const useLine = () => {
 
 
         if (movingId === shape.id) {
-            deleteLine(canvas, x1, y1, x2, y2)
+            deleteLine(canvas, x1, y1, x2, y2, shape.angle)
 
         }
 
@@ -157,7 +168,8 @@ export const useLine = () => {
                 shape.coordinates[1].x,
                 shape.coordinates[1].y,
                 true,
-                shape.borderColor
+                shape.borderColor,
+                shape.angle
             )
         }
 
@@ -169,10 +181,10 @@ export const useLine = () => {
                     coordinates[0].x,
                     coordinates[0].y,
                     coordinates[1].x,
-                    coordinates[1].y)
+                    coordinates[1].y, shape.angle)
             }
 
-            drawLine(canvas, x - parteX, y - parteY, x + parteX, y + parteY, false, drawingColor)
+            drawLine(canvas, x - parteX, y - parteY, x + parteX, y + parteY, false, drawingColor, shape.angle)
 
 
             dispatch(changeCoordinates(activeShape.id, coordinates))
@@ -202,7 +214,7 @@ export const useLine = () => {
 
 
         if (movingId === shape.id) {
-            deleteLine(canvas, x1, y1, x2, y2)
+            deleteLine(canvas, x1, y1, x2, y2, shape.angle)
 
         }
 
@@ -215,7 +227,8 @@ export const useLine = () => {
                 shape.coordinates[1].x,
                 shape.coordinates[1].y,
                 true,
-                shape.borderColor
+                shape.borderColor,
+                shape.angle
             )
         }
 
@@ -229,10 +242,11 @@ export const useLine = () => {
                     coordinates[0].x,
                     coordinates[0].y,
                     coordinates[1].x,
-                    coordinates[1].y)
+                    coordinates[1].y,
+                    shape.angle)
             }
 
-            drawLine(canvas, x1, y1, x, y, false, drawingColor)
+            drawLine(canvas, x1, y1, x, y, false, drawingColor, shape.angle)
 
 
             dispatch(changeCoordinates(activeShape.id, coordinates))
@@ -243,18 +257,18 @@ export const useLine = () => {
 
     }
 
-    const selectLine = (plano, x1, y1, x2, y2) => {
+    const selectLine = (plano, x1, y1, x2, y2, angle) => {
         console.log(x1, y1, x2, y2)
         y1 += 3
         y2 += 3
         x1 += 3
         x2 += 3
-        drawLine(plano, x1, y1, x2, y2, true, "yellow")
+        drawLine(plano, x1, y1, x2, y2, true, "yellow", angle)
         y1 += -6
         y2 += -6
         x1 += -6
         x2 += -6
-        drawLine(plano, x1, y1, x2, y2, true, "yellow")
+        drawLine(plano, x1, y1, x2, y2, true, "yellow", angle)
         // plano.moveTo(0, 0)
     }
 
