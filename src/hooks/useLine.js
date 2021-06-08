@@ -128,8 +128,7 @@ export const useLine = () => {
             selectLine(canvas,
                 x1, y1, x2, y2, shape.angle)
         }
-
-        drawLine(canvas, x1, y1, x2, y2, false, shape.drawingColor, shape.angle)
+        drawLine(canvas, x1, y1, x2, y2, false, shape.borderColor, shape.angle)
 
 
         canvas.moveTo(0, 0)
