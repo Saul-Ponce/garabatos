@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { changeCoordinates } from '../actions/shape';
 import { DELETE_COLOR, EVITAR_DIFUMINADO } from '../const/const';
+import { rotateX, rotateY } from '../helpers/rotatePoint';
 import { useLine } from './useLine';
 
 export const useRightTriangle = () => {
@@ -10,7 +11,7 @@ export const useRightTriangle = () => {
 
     const { color, movingCoordinates, activeShape, movingId } = useSelector(state => state.shape)
 
-    const drawRightTriangle = (canvas, x1, y1, x2, y2, drawingColor = color) => {
+    const drawRightTriangle = (canvas, x1, y1, x2, y2, angle, drawingColor = color) => {
 
         if (!canvas) {
             return;
@@ -33,26 +34,46 @@ export const useRightTriangle = () => {
             y3 = y2
         }
 
+        let centerX = (x1 + x2) / 2
+        let centerY = (y1 + y2) / 2
+        let angl = angle
+        let nX1, nY1, nX2, nY2;
+
         canvas.moveTo(0, 0)
 
         // x1,y1 -> x2,y2
-        drawLine(canvas, x1, y1, x2, y2, false, drawingColor)
+        nX1 = rotateX({ angle: angl, centerX, centerY, x: x1, y: y1, });
+        nY1 = rotateY({ angle: angl, centerX, centerY, x: x1, y: y1, });
+        nX2 = rotateX({ angle: angl, centerX, centerY, x: x2, y: y2, });
+        nY2 = rotateY({ angle: angl, centerX, centerY, x: x2, y: y2, });
+
+        drawLine(canvas, nX1, nY1, nX2, nY2, false, drawingColor);
 
         // x2,y2 -> x3,y3
-        drawLine(canvas, x2, y2, x3, y3, false, drawingColor)
+        nX1 = rotateX({ angle: angl, centerX, centerY, x: x2, y: y2, });
+        nY1 = rotateY({ angle: angl, centerX, centerY, x: x2, y: y2, });
+        nX2 = rotateX({ angle: angl, centerX, centerY, x: x3, y: y3, });
+        nY2 = rotateY({ angle: angl, centerX, centerY, x: x3, y: y3, });
+
+        drawLine(canvas, nX1, nY1, nX2, nY2, false, drawingColor);
 
         // x3,y3 -> x1,y1
-        drawLine(canvas, x3, y3, x1, y1, false, drawingColor)
+        nX1 = rotateX({ angle: angl, centerX, centerY, x: x3, y: y3, });
+        nY1 = rotateY({ angle: angl, centerX, centerY, x: x3, y: y3, });
+        nX2 = rotateX({ angle: angl, centerX, centerY, x: x1, y: y1, });
+        nY2 = rotateY({ angle: angl, centerX, centerY, x: x1, y: y1, });
+
+        drawLine(canvas, nX1, nY1, nX2, nY2, false, drawingColor);
     }
 
-    const deleteRightTriangle = (canvas, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
+    const deleteRightTriangle = (canvas, x1, y1, x2, y2, angle, deleteColor = DELETE_COLOR) => {
 
         for (let i = 0; i < EVITAR_DIFUMINADO; i++) {
-            drawRightTriangle(canvas, x1, y1, x2, y2, deleteColor)
+            drawRightTriangle(canvas, x1, y1, x2, y2, angle, deleteColor)
         }
 
         if (activeShape.fill) {
-            fillRightTriangle(canvas, x1, y1, x2, y2, deleteColor, deleteColor)
+            fillRightTriangle(canvas, x1, y1, x2, y2, angle, deleteColor, deleteColor)
         }
 
         canvas.fillStyle = color
@@ -61,7 +82,7 @@ export const useRightTriangle = () => {
 
     }
 
-    const fillRightTriangle = (canvas, x1, y1, x2, y2, fillColor = color, borderColor = color) => {
+    const fillRightTriangle = (canvas, x1, y1, x2, y2, angle, fillColor = color, borderColor = color) => {
 
         canvas.fillStyle = fillColor;
 
@@ -85,6 +106,8 @@ export const useRightTriangle = () => {
             finalY = y1
         }
 
+        let tx1 = x1, tx2 = x2, ty1 = y1, ty2 = y2
+
         const DX = Math.abs(x1 - x2)
         const DY = Math.abs(y1 - y2)
 
@@ -97,11 +120,28 @@ export const useRightTriangle = () => {
         }
 
         for (let x = inicioX; x < (inicioX + DX); x++) {
-            drawLine(canvas, x, menorY, x, inicioY, false, fillColor)
-            inicioY += incremento
+
+            if (x1 > x2) {
+                x1 -= 3;
+                x2 += 3;
+            } else {
+                x1 += 3;
+                x2 -= 3;
+            }
+
+            if (y1 > y2) {
+                y1 -= 3;
+                y2 += 3;
+            } else {
+                y1 += 3;
+                y2 -= 3;
+            }
+
+            drawRightTriangle(canvas, x1, y1, x2, y2, angle, fillColor)
+
         }
 
-        drawRightTriangle(canvas, x1, y1, x2, y2, borderColor)
+        drawRightTriangle(canvas, tx1, ty1, tx2, ty2, angle, borderColor)
 
 
     }
@@ -113,13 +153,13 @@ export const useRightTriangle = () => {
         const x2 = shape.coordinates[1].x
         const y2 = shape.coordinates[1].y
         if (shape.fill) {
-            fillRightTriangle(canvas, x1, y1, x2, y2, shape.fillColor, shape.borderColor)
+            fillRightTriangle(canvas, x1, y1, x2, y2, shape.angle, shape.fillColor, shape.borderColor)
         } else {
-            drawRightTriangle(canvas, x1, y1, x2, y2, shape.borderColor)
+            drawRightTriangle(canvas, x1, y1, x2, y2, shape.angle, shape.borderColor)
         }
 
         if (shape.id === activeShape.id) {
-            selectRightTriangle(canvas, x1, y1, x2, y2)
+            selectRightTriangle(canvas, x1, y1, x2, y2, shape.angle)
         }
 
 
@@ -151,6 +191,7 @@ export const useRightTriangle = () => {
                     y1,
                     x2,
                     y2,
+                    shape.angle,
                     DELETE_COLOR,
                     DELETE_COLOR
                 )
@@ -167,6 +208,7 @@ export const useRightTriangle = () => {
                     shape.coordinates[0].y,
                     shape.coordinates[1].x,
                     shape.coordinates[1].y,
+                    shape.angle,
                     shape.fillColor,
                     shape.borderColor
                 )
@@ -177,6 +219,7 @@ export const useRightTriangle = () => {
                     shape.coordinates[0].y,
                     shape.coordinates[1].x,
                     shape.coordinates[1].y,
+                    shape.angle,
                     shape.borderColor
                 )
             }
@@ -193,6 +236,7 @@ export const useRightTriangle = () => {
                     coordinates[0].y,
                     coordinates[1].x,
                     coordinates[1].y,
+                    shape.angle,
                     shape.fillColor,
                     shape.borderColor
                 )
@@ -205,7 +249,8 @@ export const useRightTriangle = () => {
                     coordinates[0].x,
                     coordinates[0].y,
                     coordinates[1].x,
-                    coordinates[1].y)
+                    coordinates[1].y,
+                    shape.angle)
             }
             dispatch(changeCoordinates(activeShape.id, coordinates))
         }
@@ -228,6 +273,7 @@ export const useRightTriangle = () => {
                     y1,
                     x2,
                     y2,
+                    shape.angle,
                     DELETE_COLOR,
                     DELETE_COLOR
                 )
@@ -244,6 +290,7 @@ export const useRightTriangle = () => {
                     shape.coordinates[0].y,
                     shape.coordinates[1].x,
                     shape.coordinates[1].y,
+                    shape.angle,
                     shape.fillColor,
                     shape.borderColor
                 )
@@ -254,6 +301,7 @@ export const useRightTriangle = () => {
                     shape.coordinates[0].y,
                     shape.coordinates[1].x,
                     shape.coordinates[1].y,
+                    shape.angle,
                     shape.borderColor
                 )
             }
@@ -270,18 +318,20 @@ export const useRightTriangle = () => {
                     coordinates[0].y,
                     coordinates[1].x,
                     coordinates[1].y,
+                    shape.angle,
                     shape.fillColor,
                     shape.borderColor
                 )
             } else {
-                drawRightTriangle(canvas, x1, y1, x, y, shape.borderColor)
+                drawRightTriangle(canvas, x1, y1, x, y, shape.angle, shape.borderColor)
             }
             if (activeShape.id === shape.id) {
                 selectRightTriangle(canvas,
                     coordinates[0].x,
                     coordinates[0].y,
                     coordinates[1].x,
-                    coordinates[1].y)
+                    coordinates[1].y,
+                    shape.angle)
             }
 
 
@@ -293,7 +343,7 @@ export const useRightTriangle = () => {
 
     }
 
-    const selectRightTriangle = (plano, x1, y1, x2, y2) => {
+    const selectRightTriangle = (plano, x1, y1, x2, y2, angle) => {
 
         if (x1 > x2) {
             x1 += 3
@@ -309,7 +359,7 @@ export const useRightTriangle = () => {
             y1 -= 3
             y2 += 3
         }
-        drawRightTriangle(plano, x1, y1, x2, y2, "yellow")
+        drawRightTriangle(plano, x1, y1, x2, y2, angle, "yellow")
         // plano.moveTo(0, 0)
     }
 

@@ -124,6 +124,23 @@ export const shapeReducer = (state = intitialState, action) => {
                     return shape
                 })
             }
+        case types.chnageAngle:
+            return {
+                ...state,
+                activeShape: {
+                    ...state.activeShape,
+                    angle: action.payload.angle
+                },
+                shapes: state.shapes.map((shape) => {
+                    if (shape.id === action.payload.id) {
+                        return {
+                            ...shape,
+                            angle: action.payload.angle
+                        }
+                    }
+                    return shape
+                })
+            }
         case types.removeFillColor:
             return {
                 ...state,

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { redraw, removeActiveShape, setActiveShape, stopMoving } from '../actions/shape'
+import { changeAngle, redraw, removeActiveShape, setActiveShape, stopMoving } from '../actions/shape'
 import { shapesList } from '../helpers/shapesList'
 import { ActionButton } from './ActionButton'
 
@@ -11,8 +11,17 @@ export const ShapeItem = (({
 
     const { activeShape, shapes } = useSelector(state => state.shape)
 
+    const [angle, setAngle] = useState(activeShape.angle)
     const shapesLength = shapes.length
     const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        dispatch(changeAngle(id, angle))
+
+        dispatch(redraw())
+
+    }, [id, angle, dispatch])
 
     const handleClickButton = () => {
 
@@ -24,6 +33,21 @@ export const ShapeItem = (({
         dispatch(stopMoving())
         dispatch(redraw())
     }
+
+    const handleChangeAngle = (e) => {
+        setAngle(e.target.value)
+
+
+        if (e.target.value > 360) {
+            setAngle(360)
+        }
+
+        if (e.target.value < -360) {
+            setAngle(-360)
+        }
+    }
+
+
 
     return (
         <article className="shape-list__item">
@@ -83,6 +107,19 @@ export const ShapeItem = (({
                     activeShape.type.id === shapesList.hyperbole.id &&
                     <ActionButton id={id} text={`Abrir en ${activeShape.hyperbole === 1 ? "Y" : "X"}`} type="open_hyperbole" />
                 }
+
+                <label htmlFor="angle" className="action-button__label">Angulo</label>
+
+                <input
+                    id="angle"
+                    min={-360}
+                    max={360}
+                    step={1}
+                    type="number"
+                    onChange={handleChangeAngle}
+                    className="action-button__angle"
+                    value={angle}
+                />
 
                 <ActionButton id={id} text="Borrar" type="erase" />
                 <ActionButton id={id} text="Tamaño" type="size" />

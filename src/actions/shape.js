@@ -98,6 +98,16 @@ export const eraseHyperbole = (id) => {
     }
 }
 
+export const changeAngle = (id, angle) => {
+    return {
+        type: types.chnageAngle,
+        payload: {
+            id,
+            angle
+        }
+    }
+}
+
 export const deleteShape = (id) => {
     return {
         type: types.deleteShape,

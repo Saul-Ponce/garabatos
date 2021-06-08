@@ -87,6 +87,7 @@ export const useShape = () => {
                     activeShape.coordinates[0].y,
                     activeShape.coordinates[1].x,
                     activeShape.coordinates[1].y,
+                    activeShape.angle,
                     WHITE
                 )
                 dispatch(deleteShape(activeShape.id))

@@ -13,7 +13,7 @@ export const useSquare = () => {
 		(state) => state.shape
 	);
 
-	const fillSquare = (plano, x1, y1, x2, y2, fillColor = color) => {
+	const fillSquare = (plano, x1, y1, x2, y2, angle, fillColor = color) => {
 		// plano.fillStyle = fillColor;
 
 		const menorX = (x1 < x2 ? x1 : x2);
@@ -37,7 +37,7 @@ export const useSquare = () => {
 				y2 -= 1;
 			}
 
-			drawSquare(plano, x1, y1, x2, y2, fillColor);
+			drawSquare(plano, x1, y1, x2, y2, angle, fillColor);
 		}
 		// plano.fillStyle = fillColor;
 	};
@@ -48,6 +48,7 @@ export const useSquare = () => {
 		y1,
 		x2,
 		y2,
+		angle,
 		drawingColor = color
 	) => {
 		if (!plano) {
@@ -66,7 +67,7 @@ export const useSquare = () => {
 		// y1 -= centroY
 		// y2 -= centroY
 
-		let angl = 20
+		let angl = angle
 
 
 		let nX1, nY1, nX2, nY2;
@@ -105,12 +106,12 @@ export const useSquare = () => {
 		drawLine(plano, nX1, nY1, nX2, nY2, false, drawingColor);
 	};
 
-	const deleteSquare = (plano, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
+	const deleteSquare = (plano, x1, y1, x2, y2, angle, deleteColor = DELETE_COLOR) => {
 		for (let i = 0; i < EVITAR_DIFUMINADO; i++) {
-			drawSquare(plano, x1, y1, x2, y2, deleteColor);
+			drawSquare(plano, x1, y1, x2, y2, angle, deleteColor);
 		}
 
-		fillSquare(plano, x1, y1, x2, y2, deleteColor);
+		fillSquare(plano, x1, y1, x2, y2, angle, deleteColor);
 
 		plano.fillStyle = color;
 		plano.moveTo(0, 0);
@@ -130,6 +131,7 @@ export const useSquare = () => {
 				shape.coordinates[0].y,
 				shape.coordinates[1].x,
 				shape.coordinates[1].y,
+				shape.angle,
 				shape.fillColor
 			);
 		}
@@ -140,11 +142,12 @@ export const useSquare = () => {
 			shape.coordinates[0].y,
 			shape.coordinates[1].x,
 			shape.coordinates[1].y,
+			shape.angle,
 			shape.borderColor
 		);
 
 		if (activeShape.id === shape.id) {
-			selectSquare(plano, x1, y1, x2, y2);
+			selectSquare(plano, x1, y1, x2, y2, shape.angle);
 		}
 
 		plano.moveTo(0, 0);
@@ -173,6 +176,7 @@ export const useSquare = () => {
 				shape.coordinates[0].y,
 				shape.coordinates[1].x,
 				shape.coordinates[1].y,
+				shape.angle,
 				shape.borderColor
 			);
 			if (shape.fill) {
@@ -182,6 +186,7 @@ export const useSquare = () => {
 					shape.coordinates[0].y,
 					shape.coordinates[1].x,
 					shape.coordinates[1].y,
+					shape.angle,
 					shape.fillColor
 				);
 			}
@@ -199,7 +204,7 @@ export const useSquare = () => {
 				y - parteY,
 				x + parteX,
 				y + parteY,
-
+				shape.angle,
 				shape.borderColor
 			);
 
@@ -210,6 +215,7 @@ export const useSquare = () => {
 					coordinates[0].y,
 					coordinates[1].x,
 					coordinates[1].y,
+					shape.angle,
 					shape.fillColor
 				);
 			}
@@ -220,7 +226,8 @@ export const useSquare = () => {
 					coordinates[0].x,
 					coordinates[0].y,
 					coordinates[1].x,
-					coordinates[1].y
+					coordinates[1].y,
+					shape.angle
 				);
 			}
 
@@ -248,6 +255,7 @@ export const useSquare = () => {
 				shape.coordinates[0].y,
 				shape.coordinates[1].x,
 				shape.coordinates[1].y,
+				shape.angle,
 				shape.borderColor
 			);
 			if (shape.fill) {
@@ -257,6 +265,7 @@ export const useSquare = () => {
 					shape.coordinates[0].y,
 					shape.coordinates[1].x,
 					shape.coordinates[1].y,
+					shape.angle,
 					shape.fillColor
 				);
 			}
@@ -268,7 +277,7 @@ export const useSquare = () => {
 				{ x, y },
 			];
 
-			drawSquare(plano, x1, y1, x, y, shape.borderColor);
+			drawSquare(plano, x1, y1, x, y, shape.angle, shape.borderColor);
 
 			if (shape.fill) {
 				fillSquare(
@@ -277,6 +286,7 @@ export const useSquare = () => {
 					coordinates[0].y,
 					coordinates[1].x,
 					coordinates[1].y,
+					shape.angle,
 					shape.fillColor
 				);
 			}
@@ -287,7 +297,8 @@ export const useSquare = () => {
 					coordinates[0].x,
 					coordinates[0].y,
 					coordinates[1].x,
-					coordinates[1].y
+					coordinates[1].y,
+					shape.angle
 				);
 			}
 
@@ -297,7 +308,7 @@ export const useSquare = () => {
 		plano.moveTo(0, 0);
 	};
 
-	const selectSquare = (plano, x1, y1, x2, y2) => {
+	const selectSquare = (plano, x1, y1, x2, y2, angle) => {
 		if (x1 > x2) {
 			x1 += 3;
 			x2 -= 3;
@@ -312,7 +323,7 @@ export const useSquare = () => {
 			y1 -= 3;
 			y2 += 3;
 		}
-		drawSquare(plano, x1, y1, x2, y2, "yellow");
+		drawSquare(plano, x1, y1, x2, y2, angle, "yellow");
 		// plano.moveTo(0, 0)
 	};
 

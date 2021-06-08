@@ -9,6 +9,19 @@
     border-radius: 5px;
     cursor: pointer;
 
+
+    &__label{
+        color: $dark;
+    }
+
+    &__angle{
+        width: calc(100% - 2rem);
+        border: 2px solid $dark;
+        margin-bottom: .5rem;
+         border-radius: 5px;
+         padding: .3rem;
+    }
+
     &__img {
         margin-right: .5rem;
     }
