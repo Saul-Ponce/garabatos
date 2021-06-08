@@ -115,17 +115,22 @@ export const ShapeItem = (({
                     activeShape.type.id !== shapesList.circle.id && (
                         <>
                             <label htmlFor="angle" className="action-button__label">Angulo</label>
-
-                            <input
-                                id="angle"
-                                min={-360}
-                                max={360}
-                                step={1}
-                                type="number"
-                                onChange={handleChangeAngle}
-                                className="action-button__angle"
-                                value={angle}
-                            />
+                            <div className="action-button__angle-container">
+                                <img
+                                    className="action-button__img--angle"
+                                    src={require("../assets/img/angle.png").default}
+                                    alt="Angulo" />
+                                <input
+                                    id="angle"
+                                    min={-360}
+                                    max={360}
+                                    step={1}
+                                    type="number"
+                                    onChange={handleChangeAngle}
+                                    className="action-button__angle"
+                                    value={angle}
+                                />
+                            </div>
                         </>
                     )
                 }
