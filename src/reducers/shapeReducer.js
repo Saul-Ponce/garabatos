@@ -51,6 +51,7 @@ export const shapeReducer = (state = intitialState, action) => {
                         coordinates: [
                             ...state.coordinates
                         ],
+                        angle: 0,
                         hyperbole: 1
                     }
                 ],
@@ -118,6 +119,23 @@ export const shapeReducer = (state = intitialState, action) => {
                             ...shape,
                             fill: true,
                             fillColor: state.color,
+                        }
+                    }
+                    return shape
+                })
+            }
+        case types.chnageAngle:
+            return {
+                ...state,
+                activeShape: {
+                    ...state.activeShape,
+                    angle: action.payload.angle
+                },
+                shapes: state.shapes.map((shape) => {
+                    if (shape.id === action.payload.id) {
+                        return {
+                            ...shape,
+                            angle: action.payload.angle
                         }
                     }
                     return shape

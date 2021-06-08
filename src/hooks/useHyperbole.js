@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeCoordinates } from '../actions/shape';
 import { DELETE_COLOR, EVITAR_DIFUMINADO } from '../const/const';
 import { formulaGeneral, formulaGeneralRadioHiperbole } from '../helpers/formulaGeneral';
+import { rotateX, rotateY } from '../helpers/rotatePoint';
 import { usePoint } from './usePoint';
 
 export const useHyperbole = () => {
@@ -11,7 +12,7 @@ export const useHyperbole = () => {
 
     const { color, movingCoordinates, activeShape, movingId } = useSelector(state => state.shape)
 
-    const drawHyperbole = (canvas, x1, y1, x2, y2, axis, drawingColor = color) => {
+    const drawHyperbole = (canvas, x1, y1, x2, y2, axis, angle, drawingColor = color) => {
 
         if (!canvas) {
             return;
@@ -64,6 +65,8 @@ export const useHyperbole = () => {
             fin = x1
         }
 
+        let nX, nY
+        let angl = angle
 
         for (let x = inicio; x <= fin; x++) {
 
@@ -71,8 +74,14 @@ export const useHyperbole = () => {
                 x, h, k, a, b, r, m, n
             })
 
-            drawPoint(canvas, x, y)
-            drawPoint(canvas, x, -(y - k) + b + (k - b))
+            nX = rotateX({ angle: angl, centerX: h, centerY: k, x, y });
+            nY = rotateY({ angle: angl, centerX: h, centerY: k, x, y });
+
+            drawPoint(canvas, nX, nY)
+
+            nX = rotateX({ angle: -angl, centerX: h, centerY: k, x, y, });
+            nY = rotateY({ angle: -angl, centerX: h, centerY: k, x, y, })
+            drawPoint(canvas, nX, -(nY - k) + b + (k - b))
 
         }
 
@@ -96,9 +105,12 @@ export const useHyperbole = () => {
                 n: m,
                 r
             })
-
-            drawPoint(canvas, x, y)
-            drawPoint(canvas, -(x - h) + a + (h - a), y)
+            nX = rotateX({ angle: angl, centerX: h, centerY: k, x, y });
+            nY = rotateY({ angle: angl, centerX: h, centerY: k, x, y });
+            drawPoint(canvas, nX, nY)
+            nX = rotateX({ angle: -angl, centerX: h, centerY: k, x, y, });
+            nY = rotateY({ angle: -angl, centerX: h, centerY: k, x, y, })
+            drawPoint(canvas, -(nX - h) + a + (h - a), nY)
         }
 
 
@@ -106,15 +118,13 @@ export const useHyperbole = () => {
 
     }
 
-    const deleteHyperbole = (canvas, x1, y1, x2, y2, axis, deleteColor = DELETE_COLOR) => {
+    const deleteHyperbole = (canvas, x1, y1, x2, y2, axis, angle, deleteColor = DELETE_COLOR) => {
 
 
-        if (activeShape.fill) {
-            fillHyperbole(canvas, x1, y1, x2, y2, deleteColor, deleteColor)
-        }
+
 
         for (let i = 0; i < EVITAR_DIFUMINADO; i++) {
-            drawHyperbole(canvas, x1, y1, x2, y2, axis, deleteColor)
+            drawHyperbole(canvas, x1, y1, x2, y2, axis, angle, deleteColor)
         }
 
         canvas.fillStyle = color
@@ -123,58 +133,6 @@ export const useHyperbole = () => {
 
     }
 
-    const fillHyperbole = (canvas, x1, y1, x2, y2, axis, fillColor = color, borderColor = color) => {
-        canvas.fillStyle = fillColor;
-
-        if (!canvas) {
-            return;
-        }
-
-
-        if (!x1 || !y1 || !x2 || !y2) {
-            return;
-        }
-
-
-        let x = x2, y = y2
-
-        const r = Math.sqrt(
-            (Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2))
-        )
-
-        let h = x1,
-            k = y1
-
-        for (let newRadius = r; newRadius > 0; newRadius--) {
-
-            if (x1 > x2) {
-                x1--
-                x2++
-            } else {
-                x1++;
-                x2--;
-            }
-
-            if (y1 > y2) {
-                y1 -= 1;
-                y2 += 1;
-            } else {
-                y1 += 1;
-                y2 -= 1;
-            }
-
-            drawHyperbole(canvas, x1, y1, x2, y2, axis, fillColor)
-        }
-
-
-        canvas.fillStyle = borderColor
-
-        drawHyperbole(canvas, h, k, x, y, axis, borderColor)
-
-
-    }
-
-
     const redrawHyperbole = (canvas, shape) => {
 
         const x1 = shape.coordinates[0].x
@@ -182,16 +140,14 @@ export const useHyperbole = () => {
         const x2 = shape.coordinates[1].x
         const y2 = shape.coordinates[1].y
 
-        if (shape.fill) {
-            fillHyperbole(canvas, x1, y1, x2, y2, shape.hyperbole, shape.fillColor, shape.borderColor)
-        } else {
-            drawHyperbole(canvas, x1, y1, x2, y2, shape.hyperbole, shape.borderColor)
-        }
+
+        drawHyperbole(canvas, x1, y1, x2, y2, shape.hyperbole, shape.angle, shape.borderColor)
+
 
 
         if (activeShape.id === shape.id) {
             selectHyperbole(canvas,
-                x1, y1, x2, y2, shape.hyperbole)
+                x1, y1, x2, y2, shape.hyperbole, shape.angle)
         }
         canvas.moveTo(0, 0)
 
@@ -208,56 +164,21 @@ export const useHyperbole = () => {
         let parteX = dx / 2
         let parteY = dy / 2
 
-        if (movingId === shape.id) {
-            fillHyperbole(
-                canvas,
-                x1,
-                y1,
-                x2,
-                y2,
-                shape.hyperbole,
-                DELETE_COLOR,
-                DELETE_COLOR
-            )
-            // if (activeShape.fill) {
-            //     fillHyperbole(
-            //         canvas,
-            //         x1,
-            //         y1,
-            //         x2,
-            //         y2,
-            //         DELETE_COLOR,
-            //         DELETE_COLOR
-            //     )
-            // }
-        }
-
-
 
         if (movingId !== shape.id) {
-            if (shape.fill) {
-                fillHyperbole(
-                    canvas,
-                    shape.coordinates[0].x,
-                    shape.coordinates[0].y,
-                    shape.coordinates[1].x,
-                    shape.coordinates[1].y,
-                    shape.hyperbole,
-                    shape.fillColor,
-                    shape.borderColor
-                )
-            } else {
 
-                drawHyperbole(
-                    canvas,
-                    shape.coordinates[0].x,
-                    shape.coordinates[0].y,
-                    shape.coordinates[1].x,
-                    shape.coordinates[1].y,
-                    shape.hyperbole,
-                    shape.borderColor
-                )
-            }
+
+            drawHyperbole(
+                canvas,
+                shape.coordinates[0].x,
+                shape.coordinates[0].y,
+                shape.coordinates[1].x,
+                shape.coordinates[1].y,
+                shape.hyperbole,
+                shape.angle,
+                shape.borderColor
+            )
+
 
         }
 
@@ -265,20 +186,9 @@ export const useHyperbole = () => {
         if (movingId === shape.id) {
 
             const coordinates = [{ x: x - parteX, y: y - parteY }, { x: x + parteX, y: y + parteY }]
-            if (shape.fill) {
-                fillHyperbole(
-                    canvas,
-                    coordinates[0].x,
-                    coordinates[0].y,
-                    coordinates[1].x,
-                    coordinates[1].y,
-                    shape.hyperbole,
-                    shape.fillColor,
-                    shape.borderColor
-                )
-            } else {
-                drawHyperbole(canvas, x - parteX, y - parteY, x + parteX, y + parteY, shape.hyperbole, shape.borderColor)
-            }
+
+            drawHyperbole(canvas, x - parteX, y - parteY, x + parteX, y + parteY, shape.hyperbole, shape.angle, shape.borderColor)
+
 
 
             if (activeShape.id === shape.id) {
@@ -288,7 +198,8 @@ export const useHyperbole = () => {
                     coordinates[0].y,
                     coordinates[1].x,
                     coordinates[1].y,
-                    shape.hyperbole
+                    shape.hyperbole,
+                    shape.angle
                 )
             }
 
@@ -303,56 +214,20 @@ export const useHyperbole = () => {
     const changeSizeHyperbole = (canvas, x1, y1, x2, y2, shape) => {
         const { x, y } = movingCoordinates
 
-        if (movingId === shape.id) {
-            fillHyperbole(
-                canvas,
-                x1,
-                y1,
-                x2,
-                y2,
-                shape.hyperbole,
-                DELETE_COLOR,
-                DELETE_COLOR
-            )
-            // if (activeShape.fill) {
-            //     fillHyperbole(
-            //         canvas,
-            //         x1,
-            //         y1,
-            //         x2,
-            //         y2,
-            //         DELETE_COLOR,
-            //         DELETE_COLOR
-            //     )
-            // }
-        }
-
-
 
         if (movingId !== shape.id) {
-            if (shape.fill) {
-                fillHyperbole(
-                    canvas,
-                    shape.coordinates[0].x,
-                    shape.coordinates[0].y,
-                    shape.coordinates[1].x,
-                    shape.coordinates[1].y,
-                    shape.hyperbole,
-                    shape.fillColor,
-                    shape.borderColor
-                )
-            } else {
 
-                drawHyperbole(
-                    canvas,
-                    shape.coordinates[0].x,
-                    shape.coordinates[0].y,
-                    shape.coordinates[1].x,
-                    shape.coordinates[1].y,
-                    shape.hyperbole,
-                    shape.borderColor
-                )
-            }
+            drawHyperbole(
+                canvas,
+                shape.coordinates[0].x,
+                shape.coordinates[0].y,
+                shape.coordinates[1].x,
+                shape.coordinates[1].y,
+                shape.hyperbole,
+                shape.angle,
+                shape.borderColor
+            )
+
 
         }
 
@@ -360,20 +235,8 @@ export const useHyperbole = () => {
         if (movingId === shape.id) {
 
             const coordinates = [{ x: x1, y: y1 }, { x, y }]
-            if (shape.fill) {
-                fillHyperbole(
-                    canvas,
-                    coordinates[0].x,
-                    coordinates[0].y,
-                    coordinates[1].x,
-                    coordinates[1].y,
-                    shape.hyperbole,
-                    shape.fillColor,
-                    shape.borderColor
-                )
-            } else {
-                drawHyperbole(canvas, x1, y1, x, y, shape.hyperbole, shape.borderColor)
-            }
+
+            drawHyperbole(canvas, x1, y1, x, y, shape.hyperbole, shape.angle, shape.borderColor)
 
             if (activeShape.id === shape.id) {
                 selectHyperbole(canvas,
@@ -381,7 +244,8 @@ export const useHyperbole = () => {
                     coordinates[0].y,
                     coordinates[1].x,
                     coordinates[1].y,
-                    shape.hyperbole)
+                    shape.hyperbole,
+                    shape.angle)
             }
 
 
@@ -394,7 +258,7 @@ export const useHyperbole = () => {
     }
 
 
-    const selectHyperbole = (plano, x1, y1, x2, y2, axis) => {
+    const selectHyperbole = (plano, x1, y1, x2, y2, axis, angle) => {
         if (x1 > x2) {
             x1 += 3
             x2 -= 3
@@ -409,7 +273,7 @@ export const useHyperbole = () => {
             y1 -= 3
             y2 += 3
         }
-        drawHyperbole(plano, x1, y1, x2, y2, axis, "yellow")
+        drawHyperbole(plano, x1, y1, x2, y2, axis, angle, "yellow")
         // plano.moveTo(0, 0)
     }
 

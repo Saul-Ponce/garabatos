@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeCoordinates } from '../actions/shape';
 import { DELETE_COLOR, EVITAR_DIFUMINADO } from '../const/const';
 import { formulaGeneral, formulaGeneralRadio } from '../helpers/formulaGeneral';
+import { rotateX, rotateY } from '../helpers/rotatePoint';
 import { usePoint } from './usePoint';
 
 export const useEllipse = () => {
@@ -11,7 +12,7 @@ export const useEllipse = () => {
 
     const { color, movingCoordinates, activeShape, movingId } = useSelector(state => state.shape)
 
-    const drawEllipse = (canvas, x1, y1, x2, y2, drawingColor = color) => {
+    const drawEllipse = (canvas, x1, y1, x2, y2, angle, drawingColor = color) => {
 
         if (!canvas) {
             return;
@@ -49,16 +50,22 @@ export const useEllipse = () => {
             m,
             n
         })
-
-
+        let nX, nY
+        let angl = angle
         for (let x = h - a; x <= h + a; x++) {
 
             let y = formulaGeneral({
                 x, h, k, a, b, r, m, n
             })
 
-            drawPoint(canvas, x, y)
-            drawPoint(canvas, x, -(y - k) + b + (k - b))
+            nX = rotateX({ angle: angl, centerX: h, centerY: k, x, y });
+            nY = rotateY({ angle: angl, centerX: h, centerY: k, x, y });
+
+            drawPoint(canvas, nX, nY)
+
+            nX = rotateX({ angle: -angl, centerX: h, centerY: k, x, y, });
+            nY = rotateY({ angle: -angl, centerX: h, centerY: k, x, y, });
+            drawPoint(canvas, nX, -(nY - k) + b + (k - b))
 
         }
 
@@ -74,8 +81,12 @@ export const useEllipse = () => {
                 r
             })
 
-            drawPoint(canvas, x, y)
-            drawPoint(canvas, -(x - h) + a + (h - a), y)
+            nX = rotateX({ angle: angl, centerX: h, centerY: k, x, y });
+            nY = rotateY({ angle: angl, centerX: h, centerY: k, x, y });
+            drawPoint(canvas, nX, nY)
+            nX = rotateX({ angle: -angl, centerX: h, centerY: k, x, y, });
+            nY = rotateY({ angle: -angl, centerX: h, centerY: k, x, y, });
+            drawPoint(canvas, -(nX - h) + a + (h - a), nY)
         }
 
 
@@ -83,7 +94,7 @@ export const useEllipse = () => {
 
     }
 
-    const deleteEllipse = (canvas, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
+    const deleteEllipse = (canvas, x1, y1, x2, y2, angle, deleteColor = DELETE_COLOR) => {
 
 
         if (activeShape.fill) {
@@ -100,7 +111,7 @@ export const useEllipse = () => {
 
     }
 
-    const fillEllipse = (canvas, x1, y1, x2, y2, fillColor = color, borderColor = color) => {
+    const fillEllipse = (canvas, x1, y1, x2, y2, angle, fillColor = color, borderColor = color) => {
         canvas.fillStyle = fillColor;
 
         if (!canvas) {
@@ -140,13 +151,13 @@ export const useEllipse = () => {
                 y2 -= 1;
             }
 
-            drawEllipse(canvas, x1, y1, x2, y2, fillColor)
+            drawEllipse(canvas, x1, y1, x2, y2, angle, fillColor)
         }
 
 
         canvas.fillStyle = borderColor
 
-        drawEllipse(canvas, h, k, x, y, borderColor)
+        drawEllipse(canvas, h, k, x, y, angle, borderColor)
 
 
     }
@@ -160,15 +171,15 @@ export const useEllipse = () => {
         const y2 = shape.coordinates[1].y
 
         if (shape.fill) {
-            fillEllipse(canvas, x1, y1, x2, y2, shape.fillColor, shape.borderColor)
+            fillEllipse(canvas, x1, y1, x2, y2, shape.angle, shape.fillColor, shape.borderColor)
         } else {
-            drawEllipse(canvas, x1, y1, x2, y2, shape.borderColor)
+            drawEllipse(canvas, x1, y1, x2, y2, shape.angle, shape.borderColor)
         }
 
 
         if (activeShape.id === shape.id) {
             selectEllipse(canvas,
-                x1, y1, x2, y2)
+                x1, y1, x2, y2, shape.angle)
         }
         canvas.moveTo(0, 0)
 
@@ -192,6 +203,7 @@ export const useEllipse = () => {
                 y1,
                 x2,
                 y2,
+                shape.angle,
                 DELETE_COLOR,
                 DELETE_COLOR
             )
@@ -218,6 +230,7 @@ export const useEllipse = () => {
                     shape.coordinates[0].y,
                     shape.coordinates[1].x,
                     shape.coordinates[1].y,
+                    shape.angle,
                     shape.fillColor,
                     shape.borderColor
                 )
@@ -229,6 +242,7 @@ export const useEllipse = () => {
                     shape.coordinates[0].y,
                     shape.coordinates[1].x,
                     shape.coordinates[1].y,
+                    shape.angle,
                     shape.borderColor
                 )
             }
@@ -246,11 +260,12 @@ export const useEllipse = () => {
                     coordinates[0].y,
                     coordinates[1].x,
                     coordinates[1].y,
+                    shape.angle,
                     shape.fillColor,
                     shape.borderColor
                 )
             } else {
-                drawEllipse(canvas, x - parteX, y - parteY, x + parteX, y + parteY, shape.borderColor)
+                drawEllipse(canvas, x - parteX, y - parteY, x + parteX, y + parteY, shape.angle, shape.borderColor)
             }
 
 
@@ -259,7 +274,8 @@ export const useEllipse = () => {
                     coordinates[0].x,
                     coordinates[0].y,
                     coordinates[1].x,
-                    coordinates[1].y)
+                    coordinates[1].y,
+                    shape.angle)
             }
 
             dispatch(changeCoordinates(activeShape.id, coordinates))
@@ -281,6 +297,7 @@ export const useEllipse = () => {
                 y1,
                 x2,
                 y2,
+                shape.angle,
                 DELETE_COLOR,
                 DELETE_COLOR
             )
@@ -308,6 +325,7 @@ export const useEllipse = () => {
                     shape.coordinates[1].x,
                     shape.coordinates[1].y,
                     shape.fillColor,
+                    shape.angle,
                     shape.borderColor
                 )
             } else {
@@ -318,6 +336,7 @@ export const useEllipse = () => {
                     shape.coordinates[0].y,
                     shape.coordinates[1].x,
                     shape.coordinates[1].y,
+                    shape.angle,
                     shape.borderColor
                 )
             }
@@ -336,10 +355,11 @@ export const useEllipse = () => {
                     coordinates[1].x,
                     coordinates[1].y,
                     shape.fillColor,
+                    shape.angle,
                     shape.borderColor
                 )
             } else {
-                drawEllipse(canvas, x1, y1, x, y, shape.borderColor)
+                drawEllipse(canvas, x1, y1, x, y, shape.angle, shape.borderColor)
             }
 
             if (activeShape.id === shape.id) {
@@ -347,7 +367,8 @@ export const useEllipse = () => {
                     coordinates[0].x,
                     coordinates[0].y,
                     coordinates[1].x,
-                    coordinates[1].y)
+                    coordinates[1].y,
+                    shape.angle)
             }
 
 
@@ -360,7 +381,7 @@ export const useEllipse = () => {
     }
 
 
-    const selectEllipse = (plano, x1, y1, x2, y2) => {
+    const selectEllipse = (plano, x1, y1, x2, y2, angle) => {
         console.log(x1, y1, x2, y2)
         if (x1 > x2) {
             x1 += 3
@@ -376,7 +397,7 @@ export const useEllipse = () => {
             y1 -= 3
             y2 += 3
         }
-        drawEllipse(plano, x1, y1, x2, y2, "yellow")
+        drawEllipse(plano, x1, y1, x2, y2, angle, "yellow")
         // plano.moveTo(0, 0)
     }
 

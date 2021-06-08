@@ -36,13 +36,13 @@ export const useRightTriangle = () => {
         canvas.moveTo(0, 0)
 
         // x1,y1 -> x2,y2
-        drawLine(canvas, x1, y1, x2, y2, false, drawingColor)
+        drawLine(canvas, x1, y1, x2, y2, false, drawingColor, 0)
 
         // x2,y2 -> x3,y3
-        drawLine(canvas, x2, y2, x3, y3, false, drawingColor)
+        drawLine(canvas, x2, y2, x3, y3, false, drawingColor, 0)
 
         // x3,y3 -> x1,y1
-        drawLine(canvas, x3, y3, x1, y1, false, drawingColor)
+        drawLine(canvas, x3, y3, x1, y1, false, drawingColor, 0)
     }
 
     const deleteRightTriangle = (canvas, x1, y1, x2, y2, deleteColor = DELETE_COLOR) => {
@@ -97,7 +97,7 @@ export const useRightTriangle = () => {
         }
 
         for (let x = inicioX; x < (inicioX + DX); x++) {
-            drawLine(canvas, x, menorY, x, inicioY, false, fillColor)
+            drawLine(canvas, x, menorY, x, inicioY, false, fillColor, 0)
             inicioY += incremento
         }
 

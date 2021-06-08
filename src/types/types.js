@@ -33,4 +33,5 @@ export const types = {
     setSahpes: "[shape] Set Shapes",
     eraseAll: "[shape] Erase All",
     openHyperbole: "[shape] Open Hyperbole",
+    chnageAngle: "[shape] Change Angle",
 }

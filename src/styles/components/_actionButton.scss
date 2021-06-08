@@ -9,6 +9,36 @@
     border-radius: 5px;
     cursor: pointer;
 
+    &__angle-container{
+                box-sizing: border-box;
+        position: relative;
+        margin-bottom: .5rem;
+        width: calc(100% - 2rem);
+    }
+
+    &__label{
+        display: none;
+        color: $dark;
+    }
+
+    &__img--angle{
+        position: absolute;
+        bottom: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-left: 0.5rem;
+        z-index: 1;
+    }
+
+    &__angle{
+
+        width: 100%;
+        border: 2px solid $dark;
+        border-radius: 5px;
+        padding: .3rem .3rem .3rem 1.5rem;
+        position: relative;
+    }
+
     &__img {
         margin-right: .5rem;
     }

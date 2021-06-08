@@ -87,6 +87,7 @@ export const useShape = () => {
                     activeShape.coordinates[0].y,
                     activeShape.coordinates[1].x,
                     activeShape.coordinates[1].y,
+                    activeShape.angle,
                     WHITE
                 )
                 dispatch(deleteShape(activeShape.id))
@@ -413,7 +414,9 @@ export const useShape = () => {
                         coordinates[0].y,
                         coordinates[1].x,
                         coordinates[1].y,
-                        true
+                        true,
+                        undefined,
+                        0
                     )
                     dispatch(clearShapeDrawing())
                     dispatch(setACtiveShapeAfterInsert())
@@ -426,7 +429,7 @@ export const useShape = () => {
                         coordinates[0].y,
                         coordinates[1].x,
                         coordinates[1].y,
-                        true
+                        0
                     )
 
                     dispatch(clearShapeDrawing())
