@@ -354,8 +354,9 @@ export const useEllipse = () => {
                     coordinates[0].y,
                     coordinates[1].x,
                     coordinates[1].y,
-                    shape.fillColor,
                     shape.angle,
+                    shape.fillColor,
+
                     shape.borderColor
                 )
             } else {
